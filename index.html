@@ -1,0 +1,7098 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#58cc02">
+  <meta name="description" content="词跃 WordLeap：四级高频 300 词闯关复习，30 关 / 每关 10 词，选择题、拼写、选词填空与错词复习。">
+  <title>词跃 WordLeap · 四级高频 300 词</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2358cc02'/%3E%3Ctext x='32' y='44' font-size='34' font-family='sans-serif' font-weight='900' text-anchor='middle' fill='%23fff'%3E跃%3C/text%3E%3C/svg%3E">
+  <style>
+/* ==========================================================
+   词跃 WordLeap · 样式表
+   设计方向：多邻国式「游戏化学习」——大圆角、厚底阴影、
+   高饱和绿色、轻松活泼的插画感。
+   ========================================================== */
+
+:root {
+  --green: #58cc02;
+  --green-bright: #61d800;
+  --green-dark: #46a302;
+  --green-deep: #2f7a00;
+  --green-soft: #e9fbd8;
+  --green-mid: #d7ffb8;
+  --blue: #1cb0f6;
+  --blue-dark: #1899d6;
+  --blue-soft: #ddf4ff;
+  --purple: #ce82ff;
+  --purple-dark: #a568cc;
+  --purple-soft: #f3e7ff;
+  --yellow: #ffc800;
+  --yellow-dark: #e0a800;
+  --yellow-soft: #fff4c6;
+  --orange: #ff9600;
+  --red: #ff4b4b;
+  --red-dark: #e03535;
+  --red-soft: #ffe4e5;
+  --ink: #3c3c3c;
+  --ink-2: #5a5a5a;
+  --muted: #8f8f8f;
+  --line: #e5e5e5;
+  --soft: #f7f7f7;
+  --cream: #f1f6e9;
+  --radius: 18px;
+  --frame: 480px;
+  --font: "Segoe UI Variable Display", "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui,
+    -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background:
+    radial-gradient(900px 500px at 12% -10%, #e5f6d2 0%, rgba(229, 246, 210, 0) 60%),
+    radial-gradient(800px 600px at 100% 100%, #e8f2ff 0%, rgba(232, 242, 255, 0) 55%),
+    var(--cream);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button, input { font-family: inherit; }
+button { cursor: pointer; border: 0; background: none; color: inherit; }
+h1, h2, h3, h4, p { margin: 0; }
+svg { display: block; }
+.ico { width: 22px; height: 22px; flex: none; }
+
+/* ============ 应用外壳 ============ */
+
+.app {
+  width: 100%;
+  max-width: var(--frame);
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #fff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 80px rgba(64, 96, 32, 0.10);
+}
+
+.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.screen-host { flex: 1; }
+
+.screen {
+  padding: 10px 20px 104px;
+  animation: screenIn 0.34s cubic-bezier(0.22, 0.9, 0.3, 1) both;
+}
+
+/* 答题 / 结算：隐藏底部标签栏 */
+body.focus-mode .tabbar { display: none; }
+body.focus-mode .screen { padding-bottom: 0; }
+
+/* ============ 通用组件 ============ */
+
+.btn {
+  --btn-shadow: #d0d0d0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 20px;
+  border-radius: 15px;
+  font-size: 15.5px;
+  font-weight: 850;
+  letter-spacing: 0.4px;
+  color: #fff;
+  background: var(--green);
+  box-shadow: 0 4px 0 var(--btn-shadow);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.15s ease;
+  user-select: none;
+}
+.btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--btn-shadow); }
+.btn:disabled { background: #e5e5e5; color: #afafaf; box-shadow: none; cursor: not-allowed; }
+.btn-green { background: linear-gradient(180deg, var(--green-bright), var(--green)); --btn-shadow: var(--green-dark); }
+.btn-green:hover { filter: brightness(1.04); }
+.btn-red { background: linear-gradient(180deg, #ff6b6b, var(--red)); --btn-shadow: var(--red-dark); }
+.btn-blue { background: linear-gradient(180deg, #3ec2ff, var(--blue)); --btn-shadow: var(--blue-dark); }
+.btn-white {
+  background: #fff;
+  color: var(--ink-2);
+  border: 2px solid var(--line);
+  box-shadow: 0 4px 0 #e0e0e0;
+  --btn-shadow: #e0e0e0;
+}
+.btn-white:hover { background: #fafafa; }
+.btn-block { width: 100%; }
+.btn .ico { width: 20px; height: 20px; }
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.icon-btn:hover { background: var(--soft); color: var(--ink-2); }
+.icon-btn .ico { width: 21px; height: 21px; }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 26px;
+  padding: 0 11px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 850;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+.pill-green { background: var(--green-soft); color: var(--green-deep); }
+.pill-purple { background: var(--purple-soft); color: var(--purple-dark); }
+.pill-blue { background: var(--blue-soft); color: var(--blue-dark); }
+.pill-white { background: #fff; color: var(--green-deep); border: 2px solid #dcefc6; }
+.pill-ghost { background: var(--soft); color: var(--muted); }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.6px;
+}
+.tag-4 { background: var(--green-soft); color: var(--green-dark); }
+.tag-6 { background: var(--purple-soft); color: var(--purple-dark); }
+
+.pos {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+
+.mascot { display: block; width: 100%; height: auto; }
+
+/* ============ 顶部栏 ============ */
+
+.appbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0 2px;
+  gap: 8px;
+}
+.brand { display: flex; align-items: center; gap: 9px; }
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 900;
+  background: linear-gradient(160deg, #8ce84a 0%, var(--green) 55%, #46b800 100%);
+  box-shadow: 0 3px 0 var(--green-dark), inset 0 1.5px 0 rgba(255, 255, 255, 0.5);
+  padding-bottom: 1px;
+}
+.brand-txt { display: flex; flex-direction: column; line-height: 1.05; }
+.brand-txt b { font-size: 16px; font-weight: 900; letter-spacing: 0.5px; }
+.brand-txt span {
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.stats { display: flex; align-items: center; gap: 5px; }
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 30px;
+  padding: 0 8px 0 7px;
+  border-radius: 10px;
+  background: var(--soft);
+  font-size: 12.5px;
+  font-weight: 850;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.stat .ico { width: 15px; height: 15px; }
+.stat-flame { color: #d97900; background: #fff3e0; }
+.stat-heart { color: #e33; background: #ffecec; }
+.stats .stat:last-child { padding-right: 9px; }
+
+/* ============ 首页 Hero ============ */
+
+.hero {
+  position: relative;
+  margin-top: 12px;
+  padding: 15px 17px 13px;
+  border-radius: 22px;
+  background:
+    radial-gradient(120px 120px at 88% 18%, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 70%),
+    linear-gradient(135deg, #f3fce8 0%, #e2f8c9 55%, #d3f3b0 100%);
+  overflow: hidden;
+  border: 2px solid #e4f5d2;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  right: -46px;
+  bottom: -60px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+}
+.hero-copy { position: relative; z-index: 2; max-width: 68%; }
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 4px;
+  font-size: 10.5px;
+  font-weight: 850;
+  color: #5c8c22;
+  letter-spacing: 0.4px;
+}
+.hero-eyebrow .ico { width: 13px; height: 13px; color: #f08a00; }
+.hero h1 {
+  margin: 0 0 3px;
+  font-size: 21px;
+  line-height: 1.2;
+  font-weight: 900;
+  letter-spacing: -0.2px;
+  color: #2c4d0a;
+}
+.hero p { font-size: 12px; font-weight: 600; color: #5e7a3c; }
+.hero p b { color: #3f6b0b; font-weight: 900; }
+.hero-mascot {
+  position: absolute;
+  right: 4px;
+  bottom: -8px;
+  width: 104px;
+  z-index: 1;
+  filter: drop-shadow(0 8px 14px rgba(63, 122, 12, 0.16));
+}
+.goal { display: flex; align-items: center; gap: 10px; margin-top: 9px; }
+.ring {
+  --pct: 60;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: conic-gradient(var(--green) calc(var(--pct) * 1%), #d9edc4 0);
+  display: grid;
+  place-items: center;
+  position: relative;
+  flex: none;
+  box-shadow: inset 0 0 0 1px rgba(88, 204, 2, 0.08);
+}
+.ring::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  background: #f6fded;
+  border-radius: 50%;
+}
+.ring span {
+  position: relative;
+  font-size: 11.5px;
+  font-weight: 900;
+  color: var(--green-deep);
+  font-variant-numeric: tabular-nums;
+}
+.goal-txt { display: flex; flex-direction: column; gap: 1px; }
+.goal-txt b { font-size: 14px; font-weight: 900; color: #2c4d0a; font-variant-numeric: tabular-nums; }
+.goal-txt span { font-size: 10px; font-weight: 700; color: #7d9a5c; letter-spacing: 0.3px; }
+
+/* ============ 课程卡 ============ */
+
+.course-card {
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.course-card:hover { border-color: #cfeab4; transform: translateY(-1px); }
+.course-flag {
+  width: 50px;
+  height: 50px;
+  flex: none;
+  border-radius: 13px;
+  background: linear-gradient(160deg, #eafaDA, #d5f4b8);
+  border: 2px solid #c9ecaa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  color: #3f7a0a;
+}
+.course-flag span { font-size: 8px; font-weight: 900; letter-spacing: 1px; }
+.course-flag b { font-size: 22px; font-weight: 900; margin-top: 1px; }
+.course-info { flex: 1; min-width: 0; }
+.course-kicker {
+  font-size: 10.5px;
+  font-weight: 850;
+  color: var(--green-dark);
+  letter-spacing: 0.5px;
+}
+.course-info h2 { font-size: 16.5px; font-weight: 900; margin: 2px 0 6px; letter-spacing: -0.2px; }
+.mini-progress {
+  width: 100%;
+  height: 7px;
+  background: #edf2e7;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.mini-progress span {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #8ce84a, var(--green));
+}
+.course-cta {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green-dark);
+  display: grid;
+  place-items: center;
+}
+.course-cta .ico { width: 18px; height: 18px; }
+
+/* ============ 学习路径 ============ */
+
+.path-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 22px 0 2px;
+}
+.path-count { font-size: 11px; font-weight: 800; color: var(--muted); letter-spacing: 0.3px; }
+
+.path-map {
+  position: relative;
+  width: 300px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+.path-line { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+
+.node {
+  position: absolute;
+  left: calc(50% + var(--x, 0px));
+  top: var(--y, 0px);
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  z-index: 2;
+  background: linear-gradient(180deg, #8ce84a 0%, #5fce10 55%, #4fb800 100%);
+  box-shadow:
+    0 6px 0 #3f9900,
+    0 10px 16px rgba(88, 204, 2, 0.22),
+    inset 0 2px 0 rgba(255, 255, 255, 0.45);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.node:hover { filter: brightness(1.04); }
+.node:active { transform: translate(-50%, -50%) translateY(2px); }
+.node .ico { width: 28px; height: 28px; }
+.node--done { background: linear-gradient(180deg, #9bf056, #58cc02 60%, #4bb500); }
+.node--current {
+  width: 74px;
+  height: 74px;
+  z-index: 3;
+  background: linear-gradient(180deg, #a4f564 0%, #62d407 55%, #4caf00 100%);
+  box-shadow:
+    0 7px 0 #3f9900,
+    0 14px 22px rgba(88, 204, 2, 0.32),
+    inset 0 2px 0 rgba(255, 255, 255, 0.5);
+}
+.node--current::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 2.5px dashed rgba(88, 204, 2, 0.42);
+  animation: spin 24s linear infinite;
+}
+.node--current .ico { width: 30px; height: 30px; }
+.node-start {
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding-left: 2px;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(47, 122, 0, 0.25);
+}
+.node--locked {
+  background: linear-gradient(180deg, #efefef 0%, #e2e2e2 100%);
+  color: #b5b5b5;
+  box-shadow: 0 5px 0 #d2d2d2, inset 0 2px 0 #fff;
+}
+.node--locked .ico { width: 24px; height: 24px; }
+
+.node-num {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border-radius: 11px;
+  background: #fff;
+  border: 2px solid #e4e4e4;
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+  font-weight: 900;
+  color: #9a9a9a;
+  line-height: 1;
+  box-shadow: 0 2px 5px rgba(40, 70, 20, 0.08);
+}
+.node--done .node-num { border-color: #d5ecbf; color: var(--green-dark); }
+.node--locked .node-num { color: #b7b7b7; }
+
+.node-cap {
+  position: absolute;
+  left: calc(50% + var(--x, 0px));
+  top: calc(var(--y, 0px) + 56px);
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 176px;
+  text-align: center;
+  font-size: 10.5px;
+  font-weight: 750;
+  color: #a3a3a3;
+  letter-spacing: 0.2px;
+  line-height: 1.3;
+  padding: 1px 6px;
+  border-radius: 7px;
+  background: #fff;
+  z-index: 3;
+}
+.node-cap b { color: var(--green-dark); font-weight: 900; }
+
+.start-pill {
+  position: absolute;
+  left: calc(50% + var(--x, 0px));
+  top: calc(var(--y, 0px) - 58px);
+  transform: translateX(-50%);
+  z-index: 4;
+  padding: 6px 15px 7px;
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  color: var(--green-dark);
+  box-shadow: 0 5px 0 #ececec, 0 10px 18px rgba(80, 110, 40, 0.08);
+  animation: bob 2.6s ease-in-out infinite;
+}
+.start-pill::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-right: 2px solid var(--line);
+  border-bottom: 2px solid var(--line);
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 0 0 3px 0;
+}
+.path-mascot {
+  position: absolute;
+  left: calc(50% + var(--x, 0px) + 70px);
+  top: calc(var(--y, 0px) - 2px);
+  width: 74px;
+  transform: translate(-6%, -50%);
+  z-index: 1;
+  filter: drop-shadow(0 8px 10px rgba(70, 120, 20, 0.14));
+  animation: floaty 4s ease-in-out infinite;
+}
+
+.chapter-mini {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 14px 0 0;
+}
+.chapter-mini-info { font-size: 10px; font-weight: 800; color: var(--muted); letter-spacing: 0.2px; }
+
+/* ============ 章节 / 课程目录 ============ */
+
+.chapter-banner {
+  position: relative;
+  margin-top: 22px;
+  padding: 15px 16px 13px;
+  border-radius: 20px;
+  background:
+    radial-gradient(130px 120px at 95% 0%, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 70%),
+    linear-gradient(135deg, #f4fce9 0%, #e6f8d2 100%);
+  border: 2px solid #e0f2ca;
+  overflow: hidden;
+}
+.chapter-banner-main { padding-right: 72px; }
+.chapter-kicker {
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.7px;
+  color: var(--green-dark);
+}
+.chapter-banner h2 {
+  margin: 3px 0 2px;
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: -0.3px;
+  color: #2f4f10;
+}
+.chapter-banner p { font-size: 10.5px; font-weight: 650; color: #7c915f; }
+.chapter-badge {
+  position: absolute;
+  right: 15px;
+  top: 14px;
+  text-align: right;
+  line-height: 1;
+}
+.chapter-badge b {
+  font-size: 27px;
+  font-weight: 900;
+  color: var(--green-dark);
+  font-variant-numeric: tabular-nums;
+}
+.chapter-badge b i { font-style: normal; font-size: 12px; color: #94ac7b; font-weight: 850; }
+.chapter-badge span { display: block; margin-top: 3px; font-size: 9px; font-weight: 800; color: #94ac7b; letter-spacing: 0.3px; }
+.chapter-line {
+  height: 7px;
+  margin-top: 11px;
+  background: #dcecc9;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.chapter-line span {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #8ce84a, var(--green));
+}
+
+.chapter-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
+.chapter-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 10px 12px;
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  text-align: left;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.chapter-row:hover { border-color: #cfeab4; }
+.chapter-row.active { border-color: #b5e494; background: var(--green-soft); }
+.chapter-row.locked { opacity: 0.55; }
+.chapter-no {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 10px;
+  background: var(--soft);
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  font-size: 10.5px;
+  font-weight: 900;
+}
+.chapter-row.active .chapter-no { background: #fff; color: var(--green-dark); }
+.chapter-main { flex: 1; min-width: 0; }
+.chapter-main b { display: block; font-size: 12.5px; font-weight: 850; letter-spacing: 0.1px; }
+.chapter-main span { display: block; margin-top: 2px; font-size: 9.5px; font-weight: 650; color: var(--muted); }
+.chapter-state {
+  flex: none;
+  font-size: 10px;
+  font-weight: 900;
+  color: var(--green-dark);
+  font-variant-numeric: tabular-nums;
+}
+.chapter-state .ico { width: 15px; height: 15px; }
+.chapter-row.locked .chapter-state { color: #b0b0b0; }
+.chapter-arrow { flex: none; display: grid; place-items: center; }
+.chapter-arrow .ico { width: 16px; height: 16px; color: #b9b9b9; }
+.chapter-row.active .chapter-arrow .ico { color: var(--green-dark); }
+
+.tag-unit { background: #eef3ff; color: #5a7fc4; }
+
+.course-progress {
+  margin-top: 12px;
+  padding: 13px 14px 12px;
+  border: 2px solid var(--line);
+  border-radius: 16px;
+}
+.course-progress-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.course-progress-head b { font-size: 12.5px; font-weight: 900; }
+.course-progress-head span { font-size: 10px; font-weight: 800; color: var(--muted); }
+.course-progress p { margin-top: 7px; font-size: 10px; font-weight: 650; color: var(--muted); }
+
+/* ============ 桌面端侧栏 ============ */
+
+.rail { display: none; }
+
+/* ============ 底部标签栏 ============ */
+
+.tabbar {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--frame);
+  z-index: 40;
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  padding: 7px 10px calc(7px + env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 2px solid #eef0ea;
+}
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 5px 0 4px;
+  border-radius: 12px;
+  color: #b0b0b0;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.4px;
+  transition: color 0.15s ease;
+}
+.tab-ico {
+  width: 40px;
+  height: 26px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  transition: background 0.15s ease;
+}
+.tab .ico { width: 23px; height: 23px; }
+.tab.active { color: var(--green-dark); }
+.tab.active .tab-ico { background: var(--green-soft); }
+
+/* ============ 答题页 ============ */
+
+.quiz { min-height: 100vh; display: flex; flex-direction: column; }
+.quiz-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px 8px;
+}
+.qbar {
+  flex: 1;
+  height: 14px;
+  border-radius: 99px;
+  background: #e8e8e8;
+  overflow: hidden;
+  position: relative;
+}
+.qbar span {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #8ce84a, var(--green));
+  position: relative;
+  transition: width 0.4s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+.qbar span::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 3px;
+  height: 3px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.45);
+}
+.hearts {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 900;
+  color: #e33;
+  min-width: 38px;
+  justify-content: flex-end;
+  font-variant-numeric: tabular-nums;
+}
+.hearts .ico { width: 18px; height: 18px; }
+
+.quiz-body {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 4px 20px 268px;
+  flex: 1;
+}
+.qmeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.combo {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11.5px;
+  font-weight: 900;
+  color: #d97900;
+  background: #fff3e0;
+  padding: 4px 9px;
+  border-radius: 999px;
+}
+.combo .ico { width: 13px; height: 13px; }
+.qcount { font-size: 11.5px; font-weight: 750; color: var(--muted); letter-spacing: 0.2px; }
+.qtitle {
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: -0.2px;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.qword-block { text-align: center; padding: 14px 0 4px; }
+.tag-row { display: flex; align-items: center; justify-content: center; gap: 7px; margin-bottom: 6px; }
+.qword {
+  font-size: 40px;
+  line-height: 1.15;
+  font-weight: 900;
+  letter-spacing: -1.2px;
+  color: #2e2e2e;
+  word-break: break-word;
+}
+.qcn {
+  font-size: 30px;
+  line-height: 1.25;
+  font-weight: 900;
+  letter-spacing: -0.4px;
+  color: #2e2e2e;
+}
+.qsub {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13.5px;
+  font-weight: 650;
+  letter-spacing: 0.2px;
+}
+.speak {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 3px 0 #b9e4f7;
+  transition: transform 0.12s ease;
+}
+.speak:active { transform: translateY(2px); box-shadow: 0 1px 0 #b9e4f7; }
+.speak .ico { width: 20px; height: 20px; }
+
+.cloze-card {
+  margin-top: 10px;
+  padding: 18px 16px;
+  background: var(--soft);
+  border: 2px solid #eee;
+  border-radius: 18px;
+  text-align: left;
+}
+.cloze-sentence {
+  font-size: 19px;
+  line-height: 1.55;
+  font-weight: 700;
+  color: #333;
+  letter-spacing: 0.1px;
+}
+.blank {
+  display: inline-block;
+  min-width: 74px;
+  border-bottom: 3px solid var(--green);
+  color: var(--green-dark);
+  text-align: center;
+  font-weight: 900;
+  line-height: 1.2;
+}
+.cloze-hint { margin-top: 9px; font-size: 11px; font-weight: 700; color: var(--muted); }
+
+.options { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+.option {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  min-height: 58px;
+  padding: 9px 14px 13px;
+  background: #fff;
+  border: 2px solid var(--line);
+  border-bottom-width: 4px;
+  border-radius: 16px;
+  text-align: left;
+  color: var(--ink);
+  transition: border-color 0.14s ease, background 0.14s ease, transform 0.1s ease, opacity 0.2s ease;
+}
+.option:active { transform: translateY(2px); border-bottom-width: 2px; padding-bottom: 15px; }
+.opt-key {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 8px;
+  background: var(--soft);
+  border: 2px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-size: 11.5px;
+  font-weight: 900;
+  color: #9a9a9a;
+  transition: all 0.14s ease;
+}
+.opt-text { flex: 1; font-size: 15.5px; font-weight: 700; line-height: 1.35; }
+.opt-en .opt-text { font-size: 17px; font-weight: 800; letter-spacing: 0.1px; }
+.opt-mark { width: 22px; height: 22px; flex: none; opacity: 0; color: #fff; }
+.opt-mark .ico { width: 22px; height: 22px; }
+.opt-mark .ico path { stroke-width: 3.6; }
+
+.option.is-selected {
+  border-color: #7fd6ff;
+  background: #f2fbff;
+  border-bottom-color: #52c4f5;
+}
+.option.is-selected .opt-key { background: var(--blue); border-color: var(--blue); color: #fff; }
+.option.is-correct {
+  border-color: #89d94f;
+  background: var(--green-soft);
+  border-bottom-color: var(--green);
+}
+.option.is-correct .opt-key { background: var(--green); border-color: var(--green); color: #fff; }
+.option.is-correct .opt-mark { opacity: 1; color: var(--green-dark); }
+.option.is-wrong {
+  border-color: #ff9a9b;
+  background: var(--red-soft);
+  border-bottom-color: var(--red);
+}
+.option.is-wrong .opt-key { background: var(--red); border-color: var(--red); color: #fff; }
+.option.is-wrong .opt-text { color: #b82b2b; }
+.option.is-wrong .opt-mark { opacity: 1; color: var(--red); }
+.option.is-dim { opacity: 0.5; }
+
+/* 拼写题 */
+.spell-wrap { margin-top: 14px; }
+.spell-input {
+  width: 100%;
+  height: 62px;
+  border: 2px solid var(--line);
+  border-bottom-width: 4px;
+  border-radius: 16px;
+  background: #fff;
+  padding: 0 18px;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.spell-input::placeholder { color: #c9c9c9; font-size: 15px; font-weight: 650; letter-spacing: 0.2px; }
+.spell-input:focus { border-color: #8fd9ff; background: #fbfeff; }
+.spell-input.is-correct { border-color: var(--green); background: var(--green-soft); }
+.spell-input.is-wrong { border-color: var(--red); background: var(--red-soft); }
+.spell-hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 9px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.spell-hint b { color: var(--ink-2); font-weight: 850; }
+
+/* 答题底部反馈条 */
+.quiz-foot {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--frame);
+  z-index: 30;
+  padding: 15px 20px calc(16px + env(safe-area-inset-bottom));
+  background: #fff;
+  border-top: 2px solid #f0f0f0;
+  animation: footIn 0.28s cubic-bezier(0.22, 0.9, 0.3, 1) both;
+}
+.quiz-foot.is-right { background: #f2fde8; border-color: #d9f3bf; }
+.quiz-foot.is-wrong { background: #fff0f0; border-color: #ffd2d3; }
+.quiz-foot .btn-block { margin-top: 13px; }
+.fb-head { display: flex; align-items: center; gap: 9px; }
+.fb-badge {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  flex: none;
+}
+.fb-badge.ok { background: var(--green); box-shadow: 0 2px 0 var(--green-dark); }
+.fb-badge.bad { background: var(--red); box-shadow: 0 2px 0 var(--red-dark); }
+.fb-badge .ico { width: 17px; height: 17px; }
+.fb-head h3 { font-size: 17px; font-weight: 900; letter-spacing: -0.2px; }
+.fb-head .fb-xp {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--green-dark);
+  background: #fff;
+  border-radius: 999px;
+  padding: 3px 9px;
+}
+.fb-head .fb-combo {
+  font-size: 11px;
+  font-weight: 900;
+  color: #d97900;
+  background: #fff3e0;
+  border-radius: 999px;
+  padding: 3px 8px;
+}
+.quiz-foot.is-right .fb-head h3 { color: #37740a; }
+.quiz-foot.is-wrong .fb-head h3 { color: #c53030; }
+.fb-word {
+  margin-top: 7px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4d4d4d;
+}
+.fb-word b { font-size: 15px; font-weight: 900; color: var(--ink); }
+.fb-word span { color: #7f7f7f; font-weight: 650; }
+.quiz-foot.is-wrong .fb-word { color: #a33; }
+.fb-answer {
+  margin-top: 7px;
+  font-size: 13.5px;
+  font-weight: 650;
+  color: #9c3b3b;
+}
+.fb-answer b { color: #c53030; font-weight: 900; }
+.fb-ex {
+  margin-top: 5px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  font-weight: 600;
+  color: #6f6f6f;
+}
+.fb-ex b { color: var(--green-dark); font-weight: 850; }
+.quiz-foot.is-wrong .fb-ex b { color: #c53030; }
+.fb-excn { margin-top: 2px; font-size: 11.5px; color: #9a9a9a; font-weight: 600; }
+.quiz-foot.idle { padding-top: 13px; }
+.foot-note {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #b5b5b5;
+  margin-top: 9px;
+  letter-spacing: 0.3px;
+}
+
+/* ============ 结算页 ============ */
+
+.result {
+  padding: 14px 22px 26px;
+  max-width: 560px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  animation: screenIn 0.4s ease both;
+}
+.result-top { display: flex; align-items: center; justify-content: space-between; }
+.result-hero { position: relative; text-align: center; padding: 6px 0 4px; }
+.result-mascot {
+  width: 132px;
+  margin: 0 auto 2px;
+  filter: drop-shadow(0 12px 18px rgba(63, 122, 12, 0.18));
+  animation: popIn 0.55s cubic-bezier(0.22, 1.2, 0.4, 1) both;
+}
+.result-hero h1 {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.6px;
+  color: #2c4d0a;
+}
+.result-sub { margin-top: 4px; font-size: 12.5px; font-weight: 650; color: var(--muted); }
+.confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.confetti i {
+  position: absolute;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0.9;
+  animation: confetti 2.8s ease-in-out infinite;
+}
+.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin: 18px 0 16px; }
+.stat-tile {
+  border-radius: 16px;
+  padding: 12px 6px 10px;
+  text-align: center;
+  border: 2px solid transparent;
+}
+.stat-tile-icon {
+  width: 30px;
+  height: 30px;
+  margin: 0 auto 6px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+.stat-tile-icon .ico { width: 17px; height: 17px; }
+.stat-tile b { display: block; font-size: 21px; font-weight: 900; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stat-tile small { display: block; margin-top: 2px; font-size: 10.5px; font-weight: 750; opacity: 0.72; }
+.t-green { background: var(--green-soft); color: #37740a; }
+.t-green .stat-tile-icon { background: #cdf3a9; color: #37740a; }
+.t-yellow { background: var(--yellow-soft); color: #8a6200; }
+.t-yellow .stat-tile-icon { background: #ffe485; color: #8a6200; }
+.t-orange { background: #ffeedd; color: #a85b00; }
+.t-orange .stat-tile-icon { background: #ffd3a3; color: #a85b00; }
+
+.review-card {
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+.review-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.review-card-head h3 { font-size: 13.5px; font-weight: 900; }
+.review-card-head span { font-size: 10.5px; font-weight: 750; color: var(--muted); }
+.review-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 2px solid #f4f4f4;
+}
+.review-row:first-of-type { border-top: 0; }
+.review-row .rw { flex: 1; min-width: 0; }
+.review-row .rw b { font-size: 14.5px; font-weight: 850; letter-spacing: 0.1px; }
+.review-row .rw span { display: block; font-size: 11.5px; color: var(--muted); font-weight: 600; margin-top: 1px; }
+.review-row .speak { width: 32px; height: 32px; box-shadow: none; background: var(--soft); color: var(--muted); }
+.review-row .speak .ico { width: 16px; height: 16px; }
+
+.perfect-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 16px;
+  background: linear-gradient(120deg, #f6ffe9, #e8fbd5);
+  border: 2px solid #d9f3bf;
+  margin-bottom: 16px;
+}
+.perfect-card .ico { width: 26px; height: 26px; color: var(--green); }
+.perfect-card b { font-size: 13.5px; font-weight: 900; color: #37740a; }
+.perfect-card p { font-size: 11.5px; color: #6c8a4d; font-weight: 600; margin-top: 2px; }
+
+.goal-card {
+  margin-bottom: 2px;
+  padding: 13px 14px 12px;
+  border-radius: 16px;
+  background: #fbfef7;
+  border: 2px solid #e6f4d6;
+}
+.goal-card-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+.goal-card-head b { font-size: 12.5px; font-weight: 900; color: #3f6b0b; }
+.goal-card-head span { font-size: 11px; font-weight: 850; color: #7d9a5c; font-variant-numeric: tabular-nums; }
+.goal-card p { margin-top: 7px; font-size: 10.5px; font-weight: 650; color: #8a9f72; }
+
+.next-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #fbfcf8;
+  border: 2px solid var(--line);
+}
+.next-copy { flex: 1; min-width: 0; }
+.next-copy span { display: block; font-size: 9.5px; font-weight: 850; color: var(--green-dark); letter-spacing: 0.5px; }
+.next-copy b { display: block; margin-top: 2px; font-size: 13px; font-weight: 900; }
+.next-copy small { display: block; margin-top: 1px; font-size: 9.5px; font-weight: 650; color: var(--muted); }
+.next-arrow { width: 30px; height: 30px; border-radius: 50%; background: var(--green-soft); color: var(--green-dark); display: grid; place-items: center; flex: none; }
+.next-arrow .ico { width: 16px; height: 16px; }
+
+.result-actions { display: flex; flex-direction: column; gap: 10px; margin-top: auto; padding-top: 16px; }
+
+/* ============ 页面标题 ============ */
+
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 8px 0 12px;
+}
+.page-kicker {
+  font-size: 10.5px;
+  font-weight: 850;
+  letter-spacing: 1.2px;
+  color: var(--green-dark);
+  text-transform: uppercase;
+}
+.page-head h1 {
+  font-size: 27px;
+  font-weight: 900;
+  letter-spacing: -0.8px;
+  margin-top: 3px;
+  color: #2e2e2e;
+}
+.count-badge {
+  font-size: 11px;
+  font-weight: 850;
+  color: var(--muted);
+  background: var(--soft);
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+
+/* ============ 词库 ============ */
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 48px;
+  padding: 0 12px;
+  background: var(--soft);
+  border: 2px solid transparent;
+  border-radius: 14px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.search:focus-within { background: #fff; border-color: #9cdc6b; }
+.search .ico { width: 19px; height: 19px; color: #a8a8a8; }
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: none;
+  outline: none;
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--ink);
+}
+.search input::placeholder { color: #a8a8a8; }
+.search-clear {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #e2e2e2;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.chips {
+  display: flex;
+  gap: 7px;
+  margin: 12px 0 4px;
+  overflow-x: auto;
+  padding: 2px 0 6px;
+  scrollbar-width: none;
+}
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex: none;
+  height: 33px;
+  padding: 0 13px;
+  border-radius: 999px;
+  border: 2px solid var(--line);
+  background: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--muted);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.chip b { font-weight: 900; margin-left: 3px; opacity: 0.65; }
+.chip.active {
+  background: var(--green-soft);
+  border-color: #b9e896;
+  color: var(--green-deep);
+}
+.chip.active b { opacity: 0.8; }
+
+.word-list { margin-top: 2px; }
+.word-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 2px solid #f3f3f3;
+}
+.word-main { flex: 1; min-width: 0; }
+.word-line { display: flex; align-items: center; gap: 6px; }
+.word-line b { font-size: 16px; font-weight: 850; letter-spacing: 0.1px; }
+.word-ph {
+  font-size: 11.5px;
+  color: #a0a0a0;
+  font-weight: 600;
+  margin-top: 1px;
+  letter-spacing: 0.1px;
+}
+.word-cn { font-size: 12px; color: var(--ink-2); font-weight: 650; margin-top: 2px; }
+.star-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: #c9c9c9;
+  flex: none;
+}
+.star-btn:hover { background: #fffaeb; color: var(--yellow-dark); }
+.star-btn.on { color: var(--yellow); }
+.star-btn .ico { width: 20px; height: 20px; }
+.empty {
+  text-align: center;
+  padding: 34px 10px;
+}
+.empty .mascot { width: 92px; margin: 0 auto 8px; opacity: 0.9; }
+.empty b { display: block; font-size: 14px; font-weight: 850; }
+.empty span { display: block; font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+
+/* ============ 复习 ============ */
+
+.review-hero {
+  position: relative;
+  border-radius: 22px;
+  padding: 18px;
+  background:
+    radial-gradient(140px 140px at 92% 10%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 70%),
+    linear-gradient(135deg, #eaf7ff 0%, #d8efff 60%, #c6e7ff 100%);
+  border: 2px solid #d5ecfb;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.review-copy { flex: 1; position: relative; z-index: 2; }
+.review-hero h2 {
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 900;
+  color: #144a68;
+  letter-spacing: -0.4px;
+  margin: 8px 0 5px;
+}
+.review-hero p { font-size: 11.5px; color: #5b83a0; font-weight: 600; line-height: 1.5; }
+.review-badge {
+  flex: none;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #c9e8ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 8px 18px rgba(28, 176, 246, 0.14);
+  z-index: 2;
+}
+.review-badge b { font-size: 30px; font-weight: 900; color: var(--blue-dark); font-variant-numeric: tabular-nums; }
+.review-badge span { font-size: 9.5px; font-weight: 800; color: #7ba3bd; margin-top: 4px; letter-spacing: 0.5px; }
+.review-hero + .btn { margin-top: 14px; }
+
+.section-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 22px 0 2px;
+}
+.section-title h2 { font-size: 15px; font-weight: 900; }
+.section-title span { font-size: 10.5px; font-weight: 700; color: var(--muted); }
+
+.mistake-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 0;
+  border-bottom: 2px solid #f3f3f3;
+}
+.mistake-row .mk-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: var(--red-soft);
+  color: var(--red-dark);
+  display: grid;
+  place-items: center;
+  flex: none;
+  font-size: 13px;
+  font-weight: 900;
+}
+.mistake-row .mk-main { flex: 1; min-width: 0; }
+.mistake-row .mk-main b { font-size: 14.5px; font-weight: 850; }
+.mistake-row .mk-main span { display: block; font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+.mistake-row .speak { width: 32px; height: 32px; box-shadow: none; background: var(--soft); color: var(--muted); }
+.mistake-row .speak .ico { width: 15px; height: 15px; }
+.tip-card {
+  margin-top: 20px;
+  padding: 14px;
+  border-radius: 16px;
+  background: #fffaf0;
+  border: 2px solid #ffe9b8;
+  display: flex;
+  gap: 10px;
+}
+.tip-card .ico { width: 20px; height: 20px; color: var(--orange); flex: none; }
+.tip-card b { display: block; font-size: 12px; font-weight: 900; color: #8a6200; }
+.tip-card p { font-size: 11px; line-height: 1.55; color: #9b7c3a; font-weight: 600; margin-top: 2px; }
+
+/* ============ 我的 ============ */
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 12px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #f7fce9, #eaf8d8);
+  border: 2px solid #e2f3cb;
+}
+.avatar {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #e2f3cb;
+  display: grid;
+  place-items: center;
+  padding: 5px;
+  flex: none;
+  overflow: hidden;
+}
+.profile-main { flex: 1; min-width: 0; }
+.profile-main h2 { font-size: 18px; font-weight: 900; letter-spacing: -0.3px; }
+.profile-main p { font-size: 11px; color: #7d9560; font-weight: 650; margin-top: 3px; }
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  font-size: 9.5px;
+  font-weight: 900;
+  color: #5c8c22;
+  background: #fff;
+  border: 1.5px solid #d9efc0;
+  padding: 2px 7px;
+  border-radius: 999px;
+  letter-spacing: 0.4px;
+}
+.level-badge .ico { width: 12px; height: 12px; }
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+.stat-cell { padding: 10px 4px 9px; text-align: center; border-left: 2px solid #f0f0f0; }
+.stat-cell:first-child { border-left: 0; }
+.stat-cell b { display: block; font-size: 19px; font-weight: 900; color: var(--ink); font-variant-numeric: tabular-nums; }
+.stat-cell span { display: block; margin-top: 2px; font-size: 10px; font-weight: 750; color: var(--muted); }
+
+.chart-card {
+  margin-top: 14px;
+  padding: 12px 14px 8px;
+  border: 2px solid var(--line);
+  border-radius: 18px;
+}
+.chart-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.chart-head h3 { font-size: 13.5px; font-weight: 900; }
+.chart-head span { font-size: 10.5px; font-weight: 700; color: var(--muted); }
+.bars { display: flex; align-items: flex-end; justify-content: space-between; gap: 6px; height: 68px; }
+.bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; height: 100%; justify-content: flex-end; }
+.bar {
+  width: 100%;
+  max-width: 26px;
+  border-radius: 7px 7px 4px 4px;
+  background: #e6f7d4;
+  position: relative;
+  transition: height 0.4s ease;
+}
+.bar.on { background: linear-gradient(180deg, #97ea5c, var(--green)); }
+.bar.today { background: linear-gradient(180deg, #7fdc3d, #4bb800); box-shadow: 0 3px 0 #3f9900; }
+.bar-wrap span { font-size: 9px; font-weight: 800; color: var(--muted); }
+.bar-wrap.today span { color: var(--green-dark); }
+
+.badges { display: flex; gap: 8px; margin-top: 12px; }
+.badge {
+  flex: 1;
+  padding: 9px 6px 8px;
+  border-radius: 14px;
+  text-align: center;
+  border: 2px solid var(--line);
+  background: #fff;
+}
+.badge.on { border-color: #ffe08a; background: #fffdf4; }
+.badge-ico {
+  width: 34px;
+  height: 34px;
+  margin: 0 auto 5px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--soft);
+  color: #b5b5b5;
+}
+.badge.on .badge-ico { background: var(--yellow-soft); color: var(--yellow-dark); }
+.badge b { display: block; font-size: 10.5px; font-weight: 850; color: var(--ink-2); }
+.badge span { display: block; margin-top: 1px; font-size: 8.5px; font-weight: 650; color: var(--muted); }
+
+.settings { margin-top: 16px; border: 2px solid var(--line); border-radius: 18px; overflow: hidden; }
+.setting-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 12px 14px;
+  text-align: left;
+  border-top: 2px solid #f3f3f3;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.setting-row:first-child { border-top: 0; }
+.setting-row .ico { width: 19px; height: 19px; color: #a8a8a8; }
+.setting-row .val { margin-left: auto; font-size: 11px; font-weight: 800; color: var(--muted); }
+.setting-row:hover { background: #fcfcfc; }
+.foot-note-app {
+  text-align: center;
+  padding: 20px 0 8px;
+  font-size: 10px;
+  font-weight: 650;
+  color: #c2c2c2;
+  letter-spacing: 0.3px;
+}
+
+/* ============ 首页桌面侧栏内容 ============ */
+
+.home-grid { display: block; }
+.home-aside { display: none; }
+.aside-card {
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.aside-card h3 { font-size: 12px; font-weight: 900; letter-spacing: 0.4px; color: var(--muted); }
+.aside-word { margin-top: 8px; }
+.aside-word b { font-size: 20px; font-weight: 900; letter-spacing: -0.4px; }
+.aside-word .ph { font-size: 11.5px; color: var(--muted); font-weight: 650; margin-top: 2px; }
+.aside-word .cn { font-size: 12px; color: var(--ink-2); font-weight: 700; margin-top: 4px; }
+.aside-word .speak { width: 32px; height: 32px; box-shadow: none; margin-top: 8px; }
+.aside-word .speak .ico { width: 16px; height: 16px; }
+.aside-tip { font-size: 11.5px; line-height: 1.6; color: #7e8f68; font-weight: 600; margin-top: 7px; }
+.mini-bars { display: flex; align-items: flex-end; gap: 5px; height: 54px; margin-top: 10px; }
+.mini-bars i {
+  flex: 1;
+  border-radius: 4px 4px 2px 2px;
+  background: #e6f7d4;
+  display: block;
+}
+.mini-bars i.on { background: linear-gradient(180deg, #97ea5c, var(--green)); }
+.streak-line { display: flex; align-items: baseline; gap: 5px; margin-top: 6px; }
+.streak-line b { font-size: 30px; font-weight: 900; color: #e07a00; font-variant-numeric: tabular-nums; }
+.streak-line span { font-size: 11px; font-weight: 750; color: var(--muted); }
+
+/* ============ 弹层 / Toast ============ */
+
+#layer { position: fixed; inset: 0; z-index: 80; display: none; }
+#layer.open { display: block; }
+.modal-mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(30, 40, 20, 0.42);
+  backdrop-filter: blur(2px);
+  animation: fade 0.2s ease both;
+}
+.modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(340px, calc(100vw - 40px));
+  background: #fff;
+  border-radius: 22px;
+  padding: 22px 20px 18px;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(20, 30, 10, 0.28);
+  animation: popIn 0.3s cubic-bezier(0.22, 1.2, 0.4, 1) both;
+}
+.modal .mascot { width: 84px; margin: 0 auto 6px; }
+.modal h3 { font-size: 18px; font-weight: 900; }
+.modal p { font-size: 12px; line-height: 1.6; color: var(--muted); font-weight: 600; margin: 6px 0 16px; }
+.modal-actions { display: flex; flex-direction: column; gap: 8px; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 96px;
+  transform: translate(-50%, 12px);
+  z-index: 90;
+  max-width: calc(100vw - 40px);
+  background: #2e2e2e;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 10px 16px;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ============ 动画 ============ */
+
+@keyframes screenIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes footIn {
+  from { opacity: 0; transform: translate(-50%, 14px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.86); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes bob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-4px); }
+}
+@keyframes floaty {
+  0%, 100% { transform: translate(-6%, -50%) translateY(0); }
+  50% { transform: translate(-6%, -50%) translateY(-4px); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes confetti {
+  0%, 100% { transform: translateY(0) rotate(8deg); opacity: 0.9; }
+  50% { transform: translateY(10px) rotate(-14deg); opacity: 0.65; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+/* ============ 平板 / 桌面 ============ */
+
+@media (min-width: 960px) {
+  body { padding: 20px; }
+  .app {
+    max-width: 1180px;
+    min-height: calc(100vh - 40px);
+    flex-direction: row;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 24px 70px rgba(48, 80, 20, 0.14), 0 2px 0 rgba(255, 255, 255, 0.8) inset;
+  }
+  .rail {
+    display: flex;
+    flex-direction: column;
+    width: 236px;
+    flex: none;
+    padding: 24px 18px;
+    border-right: 2px solid #f1f1f1;
+    background: #fdfefb;
+  }
+  .rail-brand { display: flex; align-items: center; gap: 10px; padding: 0 6px 22px; }
+  .rail-brand .logo { width: 40px; height: 40px; font-size: 21px; }
+  .rail-brand b { display: block; font-size: 17px; font-weight: 900; letter-spacing: 0.4px; }
+  .rail-brand span { display: block; font-size: 8.5px; font-weight: 800; letter-spacing: 2px; color: var(--muted); margin-top: 1px; }
+  .rail-nav { display: flex; flex-direction: column; gap: 5px; }
+  .rail-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 12px;
+    border-radius: 13px;
+    font-size: 13.5px;
+    font-weight: 800;
+    color: #8a8a8a;
+    border: 2px solid transparent;
+    text-align: left;
+    transition: all 0.15s ease;
+  }
+  .rail-item .ico { width: 22px; height: 22px; }
+  .rail-item:hover { background: var(--soft); color: var(--ink-2); }
+  .rail-item.active {
+    background: var(--green-soft);
+    border-color: #dcf3c6;
+    color: var(--green-deep);
+  }
+  .rail-item .rail-count {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 900;
+    background: #fff;
+    color: var(--muted);
+    border-radius: 999px;
+    padding: 2px 7px;
+    border: 1.5px solid var(--line);
+  }
+  .rail-foot { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+  .rail-goal {
+    padding: 13px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f4fce9, #e6f8d1);
+    border: 2px solid #e0f2ca;
+  }
+  .rail-goal .streak-line { margin-top: 2px; }
+  .rail-goal p { font-size: 10.5px; font-weight: 700; color: #74924f; }
+  .rail-goal .mini-progress { margin-top: 9px; background: #d9ecc5; }
+  .rail-reset {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #b7b7b7;
+    text-align: left;
+    padding: 4px 6px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .rail-version { font-size: 9px; color: #c8c8c8; font-weight: 650; padding: 0 6px; letter-spacing: 0.4px; }
+  .tabbar { display: none; }
+  .screen { padding: 16px 40px 40px; max-width: 860px; margin: 0 auto; }
+  .appbar { padding-top: 2px; justify-content: flex-end; }
+  .appbar .brand { display: none; }
+  .home-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 252px;
+    gap: 28px;
+    align-items: start;
+  }
+  .home-main { min-width: 0; }
+  .home-aside { display: block; position: sticky; top: 24px; margin-top: 22px; }
+  .hero { padding: 20px 22px; }
+  .hero h1 { font-size: 24px; }
+  .hero-copy { max-width: 64%; }
+  .hero-mascot { width: 132px; right: 8px; bottom: -12px; }
+  .path-map { width: 320px; margin: 0 auto; }
+  .quiz { min-height: calc(100vh - 40px); }
+  .quiz-body { max-width: 560px; padding-bottom: 250px; }
+  .quiz-foot {
+    position: sticky;
+    left: auto;
+    bottom: 0;
+    transform: none;
+    max-width: 100%;
+    border-radius: 0;
+    margin-top: auto;
+  }
+  .result { padding: 18px 30px 30px; min-height: calc(100vh - 40px); }
+  .word-list { max-width: 680px; }
+}
+
+@media (min-width: 1220px) {
+  .home-grid { grid-template-columns: minmax(0, 1fr) 280px; gap: 36px; }
+}
+
+  </style>
+  <script>
+    // 某些内置预览会过滤 <link rel="stylesheet"> 或内联样式，这里做两级兜底。
+    document.addEventListener('DOMContentLoaded', function () {
+      function unstyled() {
+        var app = document.querySelector('.app');
+        return !!app && getComputedStyle(app).maxWidth === 'none';
+      }
+      function injectLink() {
+        var l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = 'styles.css';
+        document.head.appendChild(l);
+      }
+      function injectText() {
+        fetch('styles.css')
+          .then(function (r) { return r.text(); })
+          .then(function (css) {
+            var s = document.createElement('style');
+            s.textContent = css;
+            document.head.appendChild(s);
+          })
+          .catch(function () {});
+      }
+      setTimeout(function () {
+        if (!unstyled()) return;
+        injectLink();
+        setTimeout(function () { if (unstyled()) injectText(); }, 400);
+      }, 120);
+    });
+  </script>
+</head>
+<body>
+  <div class="app" id="app">
+    <aside class="rail" id="rail" aria-label="主导航"></aside>
+    <div class="main">
+      <div id="screen" class="screen-host"></div>
+      <nav class="tabbar" id="tabbar" aria-label="底部导航"></nav>
+    </div>
+  </div>
+
+  <div id="layer" aria-live="polite"></div>
+  <div id="toast" class="toast" role="status"></div>
+
+  <noscript>
+    <p style="padding:24px;font-family:sans-serif">请开启 JavaScript 以使用词跃。</p>
+  </noscript>
+
+  <script>
+/* 词跃 WordLeap · 四级高频 300 词
+   数据来源：KyleBing/dict 四级词库（例句/音标）+ 人工校订释义
+   按通用词频排序，分为 6 个阶段 / 30 关 / 每关 10 词 */
+
+const WORDS = [
+  {
+    "id": "policy",
+    "w": "policy",
+    "ph": "/ˈpɑləsi/",
+    "pos": "n.",
+    "cn": "政策；方针；保险单",
+    "ex": "The government has announced a new policy on education.",
+    "exCn": "政府宣布了一项新的教育政策。",
+    "cloze": true,
+    "u": 1
+  },
+  {
+    "id": "available",
+    "w": "available",
+    "ph": "/əˈveləbl/",
+    "pos": "adj.",
+    "cn": "可利用的；现有的；可获得的",
+    "ex": "Tickets are available from the box office.",
+    "exCn": "售票处有票出售。",
+    "cloze": true,
+    "u": 1
+  },
+  {
+    "id": "support",
+    "w": "support",
+    "ph": "/səˈpɔrt/",
+    "pos": "n./v.",
+    "cn": "支持；支撑物；支持者",
+    "ex": "We strongly support the peace process.",
+    "exCn": "我们大力拥护和平进程。",
+    "cloze": true,
+    "u": 1
+  },
+  {
+    "id": "community",
+    "w": "community",
+    "ph": "/kəˈmjʊnəti/",
+    "pos": "n.",
+    "cn": "社区；社会；公社",
+    "ex": "The new arts centre will serve the whole community.",
+    "exCn": "这座新的艺术中心将为整个社区服务。",
+    "cloze": true,
+    "u": 1
+  },
+  {
+    "id": "technology",
+    "w": "technology",
+    "ph": "/tɛkˈnɑlədʒɪ/",
+    "pos": "n.",
+    "cn": "技术；科技；工艺",
+    "ex": "Modern technology makes moving money around much easier than it used to be.",
+    "exCn": "现代科技使货币流动比以前便捷得多。",
+    "cloze": true,
+    "u": 1
+  },
+  {
+    "id": "version",
+    "w": "version",
+    "ph": "/ˈvɝʒn/",
+    "pos": "n.",
+    "cn": "版本；译文；说法",
+    "ex": "Could Donna’s version of what happened that night be correct?",
+    "exCn": "唐娜对那晚发生的事情的描述是否正确呢？",
+    "cloze": true,
+    "u": 1
+  },
+  {
+    "id": "network",
+    "w": "network",
+    "ph": "/ˈnɛtwɝk/",
+    "pos": "n.",
+    "cn": "网状物；网络；广播网",
+    "ex": "The city has a fast rail network.",
+    "exCn": "这座城市有快捷的铁路网。",
+    "cloze": true,
+    "u": 1
+  },
+  {
+    "id": "access",
+    "w": "access",
+    "ph": "/ˈæksɛs/",
+    "pos": "n./v.",
+    "cn": "通道；入口；使用权；访问",
+    "ex": "Users can access their voice mail remotely.",
+    "exCn": "用户可以远程获取语音邮件。",
+    "cloze": true,
+    "u": 1
+  },
+  {
+    "id": "previous",
+    "w": "previous",
+    "ph": "/ˈprivɪəs/",
+    "pos": "adj.",
+    "cn": "以前的；先前的",
+    "ex": "She has a teenage daughter from a previous marriage.",
+    "exCn": "她有个出自前一次婚姻的十几岁的女儿。",
+    "cloze": true,
+    "u": 1
+  },
+  {
+    "id": "provide",
+    "w": "provide",
+    "ph": "/prəˈvaɪd/",
+    "pos": "v.",
+    "cn": "提供；装备；供给",
+    "ex": "Tea and biscuits will be provided.",
+    "exCn": "有茶水和饼干供应。",
+    "cloze": false,
+    "u": 1
+  },
+  {
+    "id": "source",
+    "w": "source",
+    "ph": "/sɔrs/",
+    "pos": "n.",
+    "cn": "来源；河的源头；根源",
+    "ex": "They get their money from various sources.",
+    "exCn": "他们从各种途径弄到钱。",
+    "cloze": false,
+    "u": 2
+  },
+  {
+    "id": "process",
+    "w": "process",
+    "ph": "/ˈprɑsɛs/",
+    "pos": "n./v.",
+    "cn": "过程；进程；工序",
+    "ex": "Repetition can help the learning process.",
+    "exCn": "重复对学习过程会有帮助。",
+    "cloze": true,
+    "u": 2
+  },
+  {
+    "id": "select",
+    "w": "select",
+    "ph": "/səˈlɛkt/",
+    "pos": "v./adj.",
+    "cn": "选择；挑选；精选的",
+    "ex": "The party was small and select.",
+    "exCn": "团里人员不多，都是经过精心挑选的。",
+    "cloze": true,
+    "u": 2
+  },
+  {
+    "id": "category",
+    "w": "category",
+    "ph": "/ˈkætəɡɔri/",
+    "pos": "n.",
+    "cn": "种类；类；类别",
+    "ex": "Williams’ style does not fit easily into the category of jazz.",
+    "exCn": "威廉斯的风格不能轻易归入爵士乐的范畴。",
+    "cloze": true,
+    "u": 2
+  },
+  {
+    "id": "industry",
+    "w": "industry",
+    "ph": "/ˈɪndəstri/",
+    "pos": "n.",
+    "cn": "工业；行业；产业",
+    "ex": "I work in the oil industry.",
+    "exCn": "我在石油行业工作。",
+    "cloze": true,
+    "u": 2
+  },
+  {
+    "id": "legal",
+    "w": "legal",
+    "ph": "/ˈligl/",
+    "pos": "adj.",
+    "cn": "法律的；合法的",
+    "ex": "What the company has done is perfectly legal.",
+    "exCn": "公司所做的这一切完全合法。",
+    "cloze": true,
+    "u": 2
+  },
+  {
+    "id": "status",
+    "w": "status",
+    "ph": "/ˈstætəs/",
+    "pos": "n.",
+    "cn": "地位；身分",
+    "ex": "These documents have no legal status in Britain.",
+    "exCn": "这些文件在英国并无法律效力。",
+    "cloze": true,
+    "u": 2
+  },
+  {
+    "id": "issue",
+    "w": "issue",
+    "ph": "/ˈɪʃu/",
+    "pos": "n./v.",
+    "cn": "问题；发行；分发",
+    "ex": "Abortion is a highly controversial issue.",
+    "exCn": "堕胎是个很有争议的话题。",
+    "cloze": true,
+    "u": 2
+  },
+  {
+    "id": "range",
+    "w": "range",
+    "ph": "/rendʒ/",
+    "pos": "n./v.",
+    "cn": "范围；一系列；在…范围内变化",
+    "ex": "They range in price from $3 to $15.",
+    "exCn": "它们的价格在$3到$15之间变化。",
+    "cloze": true,
+    "u": 2
+  },
+  {
+    "id": "release",
+    "w": "release",
+    "ph": "/rɪˈlis/",
+    "pos": "v.",
+    "cn": "发布；释放；放松",
+    "ex": "Police arrested several men, who were later released.",
+    "exCn": "警察逮捕了几个人，后来都释放了。",
+    "cloze": false,
+    "u": 2
+  },
+  {
+    "id": "specific",
+    "w": "specific",
+    "ph": "/spɪˈsɪfɪk/",
+    "pos": "adj.",
+    "cn": "特定的；具体的；明确的",
+    "ex": "games suitable for specific age groups",
+    "exCn": "适合特定年龄组的游戏",
+    "cloze": false,
+    "u": 3
+  },
+  {
+    "id": "region",
+    "w": "region",
+    "ph": "/ˈridʒən/",
+    "pos": "n.",
+    "cn": "地区；地带；领域",
+    "ex": "efforts to bring peace to the region",
+    "exCn": "给这个地区带来和平的努力",
+    "cloze": false,
+    "u": 3
+  },
+  {
+    "id": "environment",
+    "w": "environment",
+    "ph": "/ɪnˈvaɪrənmənt/",
+    "pos": "n.",
+    "cn": "环境；外界；围绕",
+    "ex": "Some of these chemicals are very damaging to the environment.",
+    "exCn": "这些化学品中有些对环境非常有害。",
+    "cloze": true,
+    "u": 3
+  },
+  {
+    "id": "resource",
+    "w": "resource",
+    "ph": "/ˈrisɔrs/",
+    "pos": "n.",
+    "cn": "资源；财力；资料",
+    "ex": "a country rich in natural resources",
+    "exCn": "自然资源丰富的国家",
+    "cloze": false,
+    "u": 3
+  },
+  {
+    "id": "federal",
+    "w": "federal",
+    "ph": "/ˈfɛdərəl/",
+    "pos": "adj.",
+    "cn": "联邦的；联盟的",
+    "ex": "Switzerland is a federal republic.",
+    "exCn": "瑞士是一个联邦共和国。",
+    "cloze": true,
+    "u": 3
+  },
+  {
+    "id": "finance",
+    "w": "finance",
+    "ph": "/ˈfaɪnæns/",
+    "pos": "n./v.",
+    "cn": "财政；金融；财源",
+    "ex": "leasing and other forms of business finance",
+    "exCn": "租赁及其他商业金融形式",
+    "cloze": false,
+    "u": 3
+  },
+  {
+    "id": "individual",
+    "w": "individual",
+    "ph": "/ˌɪndɪˈvɪdʒuəl/",
+    "pos": "n./adj.",
+    "cn": "个人；个体；个别的",
+    "ex": "Each individual receives two genes, one inherited from each parent.",
+    "exCn": "每个人都有两种基因，分别来自父亲和母亲。",
+    "cloze": true,
+    "u": 3
+  },
+  {
+    "id": "function",
+    "w": "function",
+    "ph": "/ˈfʌŋkʃən/",
+    "pos": "n./v.",
+    "cn": "功能；运行；职务",
+    "ex": "Bauhaus architects thought that function was more important than form.",
+    "exCn": "包豪斯学派的建筑师认为功能重于形式。",
+    "cloze": true,
+    "u": 3
+  },
+  {
+    "id": "global",
+    "w": "global",
+    "ph": "/ˈɡlobl/",
+    "pos": "adj.",
+    "cn": "全球的；全世界的；全面的",
+    "ex": "Climate change is a global problem.",
+    "exCn": "气候变化是一个全球性问题。",
+    "cloze": true,
+    "u": 3
+  },
+  {
+    "id": "submit",
+    "w": "submit",
+    "ph": "/səbˈmɪt/",
+    "pos": "v.",
+    "cn": "提交；使服从",
+    "ex": "They submitted their reports to the chancellor yesterday.",
+    "exCn": "他们昨天向财政大臣提交了他们的报告。",
+    "cloze": false,
+    "u": 3
+  },
+  {
+    "id": "commercial",
+    "w": "commercial",
+    "ph": "/kəˈmɝʃəl/",
+    "pos": "adj.",
+    "cn": "商业的；商品化的；商务的",
+    "ex": "Our top priorities must be profit and commercial growth.",
+    "exCn": "我们必须把利润和贸易增长作为我们的第一要务。",
+    "cloze": true,
+    "u": 4
+  },
+  {
+    "id": "annual",
+    "w": "annual",
+    "ph": "/ˈænjuəl/",
+    "pos": "adj.",
+    "cn": "每年的；年度的；一年一次的",
+    "ex": "The school trip has become an annual event.",
+    "exCn": "学校组织的旅行成了一年一度的活动。",
+    "cloze": true,
+    "u": 4
+  },
+  {
+    "id": "corporate",
+    "w": "corporate",
+    "ph": "/ˈkɔːrpərət/",
+    "pos": "adj.",
+    "cn": "公司的；法人的；企业的",
+    "ex": "She works in corporate finance.",
+    "exCn": "她从事公司金融工作。",
+    "cloze": true,
+    "u": 4
+  },
+  {
+    "id": "summary",
+    "w": "summary",
+    "ph": "/ˈsʌməri/",
+    "pos": "n.",
+    "cn": "摘要；总结；概要",
+    "ex": "Write a short summary of the article.",
+    "exCn": "写一篇这篇文章的简短摘要。",
+    "cloze": true,
+    "u": 4
+  },
+  {
+    "id": "overall",
+    "w": "overall",
+    "ph": "/ˌovəˈrɔl/",
+    "pos": "adj./adv.",
+    "cn": "全面的；总体的；总共",
+    "ex": "The overall cost of the exhibition was £400,000.",
+    "exCn": "展览会的全部费用是40万英镑。",
+    "cloze": true,
+    "u": 4
+  },
+  {
+    "id": "administration",
+    "w": "administration",
+    "ph": "/ədˌmɪnɪˈstreʃən/",
+    "pos": "n.",
+    "cn": "管理；政府；管理部门",
+    "ex": "We’re looking for someone with experience in administration.",
+    "exCn": "我们正在寻找一个有管理经验的人。",
+    "cloze": true,
+    "u": 4
+  },
+  {
+    "id": "institute",
+    "w": "institute",
+    "ph": "/ˈɪnstɪtut/",
+    "pos": "n./v.",
+    "cn": "建立；研究所；学院",
+    "ex": "We will institute a number of measures to better safeguard the public.",
+    "exCn": "我们将制定许多措施更好地保护公众。",
+    "cloze": true,
+    "u": 4
+  },
+  {
+    "id": "volume",
+    "w": "volume",
+    "ph": "/ˈvɑljum/",
+    "pos": "n.",
+    "cn": "体积；容量；卷；音量",
+    "ex": "the volume of trade",
+    "exCn": "贸易量",
+    "cloze": false,
+    "u": 4
+  },
+  {
+    "id": "mature",
+    "w": "mature",
+    "ph": "/məˈtʃʊr/",
+    "pos": "v./adj.",
+    "cn": "使成熟；成熟的；成年人的",
+    "ex": "Laura is very mature for her age .",
+    "exCn": "相对她的年龄来说劳拉是很成熟的。",
+    "cloze": true,
+    "u": 4
+  },
+  {
+    "id": "supply",
+    "w": "supply",
+    "ph": "/səˈplaɪ/",
+    "pos": "n./v.",
+    "cn": "供给；供应",
+    "ex": "To protect the food supply , the government ordered the slaughter of affected cattle.",
+    "exCn": "为保护食品供应，政府下令宰杀被感染的牛。",
+    "cloze": true,
+    "u": 4
+  },
+  {
+    "id": "particular",
+    "w": "particular",
+    "ph": "/pɚˈtɪkjəlɚ/",
+    "pos": "adj.",
+    "cn": "特定的；特别的；挑剔的",
+    "ex": "In this particular case, no one else was involved.",
+    "exCn": "这件事没有其他人牵涉其中。",
+    "cloze": true,
+    "u": 5
+  },
+  {
+    "id": "appropriate",
+    "w": "appropriate",
+    "ph": "/əˈpropriɪt/",
+    "pos": "adj.",
+    "cn": "适当的；恰当的",
+    "ex": "The timing of the announcement was particularly appropriate .",
+    "exCn": "通告发布的时机很合适。",
+    "cloze": true,
+    "u": 5
+  },
+  {
+    "id": "structure",
+    "w": "structure",
+    "ph": "/ˈstrʌktʃɚ/",
+    "pos": "n./v.",
+    "cn": "结构；构造；建造",
+    "ex": "A new management structure has been introduced.",
+    "exCn": "已推行一种新的管理结构。",
+    "cloze": true,
+    "u": 5
+  },
+  {
+    "id": "contract",
+    "w": "contract",
+    "ph": "/ˈkɑntrækt/",
+    "pos": "n./v.",
+    "cn": "合同；契约；婚约",
+    "ex": "Employees who refuse to relocate are in breach of contract (= have done something not allowed by their contracts ) .",
+    "exCn": "员工拒绝调动岗位是违反合约的。",
+    "cloze": true,
+    "u": 5
+  },
+  {
+    "id": "potential",
+    "w": "potential",
+    "ph": "/pəˈtɛnʃl/",
+    "pos": "n./adj.",
+    "cn": "潜力；潜能；有可能的",
+    "ex": "The company has identified 60 potential customers.",
+    "exCn": "该公司已确定了60位潜在的客户。",
+    "cloze": true,
+    "u": 5
+  },
+  {
+    "id": "focus",
+    "w": "focus",
+    "ph": "/ˈfokəs/",
+    "pos": "n./v.",
+    "cn": "焦点；中心；聚焦",
+    "ex": "His eyes were focussed straight ahead.",
+    "exCn": "他的双眼盯着正前方。",
+    "cloze": false,
+    "u": 5
+  },
+  {
+    "id": "primary",
+    "w": "primary",
+    "ph": "/ˈpraɪmɛri/",
+    "pos": "adj.",
+    "cn": "主要的；基本的；最初的",
+    "ex": "Our primary concern is to provide the refugees with food and health care.",
+    "exCn": "我们的头等大事是向难民提供食品和医疗。",
+    "cloze": true,
+    "u": 5
+  },
+  {
+    "id": "foundation",
+    "w": "foundation",
+    "ph": "/faʊnˈdeʃən/",
+    "pos": "n.",
+    "cn": "地基；基础；基金会",
+    "ex": "It took the builders three weeks to lay the foundations .",
+    "exCn": "建筑工人花了三星期的时间打地基。",
+    "cloze": false,
+    "u": 5
+  },
+  {
+    "id": "feature",
+    "w": "feature",
+    "ph": "/ˈfitʃɚ/",
+    "pos": "n./v.",
+    "cn": "特点；特征；特色",
+    "ex": "Air bags are a standard feature in most new cars.",
+    "exCn": "气囊是大多数新车的标准配置。",
+    "cloze": true,
+    "u": 5
+  },
+  {
+    "id": "approach",
+    "w": "approach",
+    "ph": "/əˈprotʃ/",
+    "pos": "n./v.",
+    "cn": "方法；途径；接近",
+    "ex": "As I approached the house, I noticed a light on upstairs.",
+    "exCn": "我走近那幢房子的时候注意到楼上有灯光。",
+    "cloze": false,
+    "u": 5
+  },
+  {
+    "id": "unique",
+    "w": "unique",
+    "ph": "/jʊˈnik/",
+    "pos": "adj.",
+    "cn": "独特的；唯一的；独一无二的",
+    "ex": "a unique opportunity to study these rare creatures",
+    "exCn": "研究这些珍稀动物的难得机会",
+    "cloze": false,
+    "u": 6
+  },
+  {
+    "id": "survey",
+    "w": "survey",
+    "ph": "/ˈsɝˌve/",
+    "pos": "n./v.",
+    "cn": "勘测；测量；测绘",
+    "ex": "Of the 100 companies surveyed, 10% had a turnover of £50 m to £99 m.",
+    "exCn": "被调查的 100 家公司中，10% 的公司营业额在 5,000 万到 9,900 万英镑之间。",
+    "cloze": false,
+    "u": 6
+  },
+  {
+    "id": "secure",
+    "w": "secure",
+    "ph": "/səˈkjʊr/",
+    "pos": "adj./v.",
+    "cn": "安全的；牢固的；确保",
+    "ex": "Troops were sent to secure the border.",
+    "exCn": "军队被派去保卫边境。",
+    "cloze": true,
+    "u": 6
+  },
+  {
+    "id": "evidence",
+    "w": "evidence",
+    "ph": "/ˈɛvɪdəns/",
+    "pos": "n.",
+    "cn": "根据；证据；迹象",
+    "ex": "Murrow’s evidence was enough to convict Hayes of murder.",
+    "exCn": "默罗的证词足以证明海斯犯了谋杀罪。",
+    "cloze": true,
+    "u": 6
+  },
+  {
+    "id": "option",
+    "w": "option",
+    "ph": "/ˈɑpʃən/",
+    "pos": "n.",
+    "cn": "选择；选择权",
+    "ex": "This was not the only option open to him.",
+    "exCn": "这并非是他的唯一选择。",
+    "cloze": true,
+    "u": 6
+  },
+  {
+    "id": "impact",
+    "w": "impact",
+    "ph": "/ɪmˈpækt/",
+    "pos": "n.",
+    "cn": "影响；作用；冲击",
+    "ex": "They say they expect the meeting to have a marked impact on the future of the country.",
+    "exCn": "他们说期望这次会议对国家的未来产生显著的影响。",
+    "cloze": true,
+    "u": 6
+  },
+  {
+    "id": "ensure",
+    "w": "ensure",
+    "ph": "/ɪnˈʃʊr/",
+    "pos": "v.",
+    "cn": "确保；保证；保护",
+    "ex": "facilities to ensure the safety of cyclists",
+    "exCn": "确保骑车人安全的设施",
+    "cloze": false,
+    "u": 6
+  },
+  {
+    "id": "budget",
+    "w": "budget",
+    "ph": "/ˈbʌdʒɪt/",
+    "pos": "n./v.",
+    "cn": "预算；预算拨款；编预算",
+    "ex": "We had a really tight budget .",
+    "exCn": "我们的预算很紧。",
+    "cloze": true,
+    "u": 6
+  },
+  {
+    "id": "significant",
+    "w": "significant",
+    "ph": "/sɪɡˈnɪfɪkənt/",
+    "pos": "adj.",
+    "cn": "重要的；显著的；有意义的",
+    "ex": "His most significant political achievement was the abolition of the death penalty.",
+    "exCn": "他政治上最重大的成就是废除了死刑。",
+    "cloze": true,
+    "u": 6
+  },
+  {
+    "id": "authority",
+    "w": "authority",
+    "ph": "/əˈθɔrəti/",
+    "pos": "n.",
+    "cn": "当局；官方；权力",
+    "ex": "an agreement between the US and Colombian authorities",
+    "exCn": "美国和哥伦比亚当局的一份协议",
+    "cloze": false,
+    "u": 6
+  },
+  {
+    "id": "strategy",
+    "w": "strategy",
+    "ph": "/ˈstrætədʒi/",
+    "pos": "n.",
+    "cn": "策略；战略",
+    "ex": "the government’s long-term economic strategy",
+    "exCn": "政府的长期经济策略",
+    "cloze": false,
+    "u": 7
+  },
+  {
+    "id": "valid",
+    "w": "valid",
+    "ph": "/ˈvælɪd/",
+    "pos": "adj.",
+    "cn": "有效的；正当的",
+    "ex": "Your return ticket is valid for three months.",
+    "exCn": "你的往返票有效期为三个月。",
+    "cloze": true,
+    "u": 7
+  },
+  {
+    "id": "senior",
+    "w": "senior",
+    "ph": "/ˈsinɪɚ/",
+    "pos": "adj./n.",
+    "cn": "年长的；资深的；老年人",
+    "ex": "White men hold most of the jobs in senior management .",
+    "exCn": "白人占据高级管理层的大部分职位。",
+    "cloze": true,
+    "u": 7
+  },
+  {
+    "id": "abstract",
+    "w": "abstract",
+    "ph": "/ˈæbstrækt/",
+    "pos": "adj./n.",
+    "cn": "抽象的；摘要；抽象概念",
+    "ex": "By the age of seven, children are capable of thinking in abstract terms .",
+    "exCn": "儿童到了七岁就具有抽象思维的能力。",
+    "cloze": true,
+    "u": 7
+  },
+  {
+    "id": "alternative",
+    "w": "alternative",
+    "ph": "/ɔlˈtɝnətɪv/",
+    "pos": "adj./n.",
+    "cn": "可供替代的；替代品；选择",
+    "ex": "New ways to treat arthritis may provide an alternative to painkillers.",
+    "exCn": "治疗关节炎的新方法可能会提供一种止痛药的替代品。",
+    "cloze": true,
+    "u": 7
+  },
+  {
+    "id": "academic",
+    "w": "academic",
+    "ph": "/ˌækəˈdɛmɪk/",
+    "pos": "adj.",
+    "cn": "学校的；学术的；学院的",
+    "ex": "He possessed no academic qualifications.",
+    "exCn": "他没有学历。",
+    "cloze": true,
+    "u": 7
+  },
+  {
+    "id": "vehicle",
+    "w": "vehicle",
+    "ph": "/ˈviːɪkl/",
+    "pos": "n.",
+    "cn": "车辆；机动车",
+    "ex": "a description of the stolen vehicle",
+    "exCn": "对被盗车辆的描述",
+    "cloze": false,
+    "u": 7
+  },
+  {
+    "id": "require",
+    "w": "require",
+    "ph": "/rɪˈkwaɪr/",
+    "pos": "v.",
+    "cn": "要求；命令；需要",
+    "ex": "Campbell’s broken leg will probably require surgery.",
+    "exCn": "坎贝尔的一条腿骨折，可能需要手术。",
+    "cloze": true,
+    "u": 7
+  },
+  {
+    "id": "target",
+    "w": "target",
+    "ph": "/ˈtɑrɡɪt/",
+    "pos": "n./v.",
+    "cn": "目标；把…作为目标；瞄准",
+    "ex": "There is no target date for completion of the new project.",
+    "exCn": "这个新的项目何时完工没有预定日期。",
+    "cloze": true,
+    "u": 7
+  },
+  {
+    "id": "virtual",
+    "w": "virtual",
+    "ph": "/[ˈvɜːrtʃuəl]/",
+    "pos": "adj.",
+    "cn": "虚拟的；实质上的；事实上的",
+    "ex": "The website allows you to take a virtual tour of the art gallery.",
+    "exCn": "这个网站可让你对美术馆作一番虚拟参观。",
+    "cloze": true,
+    "u": 7
+  },
+  {
+    "id": "device",
+    "w": "device",
+    "ph": "/dɪˈvaɪs/",
+    "pos": "n.",
+    "cn": "装置；设备；器械",
+    "ex": "A remote control device was used to detonate the bomb.",
+    "exCn": "用遥控装置引爆炸弹。",
+    "cloze": true,
+    "u": 8
+  },
+  {
+    "id": "external",
+    "w": "external",
+    "ph": "/ɪkˈstɝnl/",
+    "pos": "adj.",
+    "cn": "外部的；外面的",
+    "ex": "the external appearance of the building",
+    "exCn": "大楼的外观",
+    "cloze": false,
+    "u": 8
+  },
+  {
+    "id": "theory",
+    "w": "theory",
+    "ph": "/ˈθiəri/",
+    "pos": "n.",
+    "cn": "理论；原理；学说",
+    "ex": "Freudian theory has had a great influence on psychology.",
+    "exCn": "弗洛伊德理论对心理学产生过巨大影响。",
+    "cloze": true,
+    "u": 8
+  },
+  {
+    "id": "remove",
+    "w": "remove",
+    "ph": "/rɪˈmuv/",
+    "pos": "v.",
+    "cn": "消除；移除；移动",
+    "ex": "Remove the old wallpaper and fill any holes in the walls.",
+    "exCn": "撕下旧墙纸，把墙上的洞都填平。",
+    "cloze": true,
+    "u": 8
+  },
+  {
+    "id": "minimum",
+    "w": "minimum",
+    "ph": "/ˈmɪnɪməm/",
+    "pos": "n./adj.",
+    "cn": "最小量；最低限度；最小的",
+    "ex": "This will take a minimum of one hour.",
+    "exCn": "这最少要用一个小时。",
+    "cloze": true,
+    "u": 8
+  },
+  {
+    "id": "capacity",
+    "w": "capacity",
+    "ph": "/kəˈpæsəti/",
+    "pos": "n.",
+    "cn": "容量；能力；能量",
+    "ex": "The room had seating capacity for about 80.",
+    "exCn": "这房间能坐80个人左右。",
+    "cloze": true,
+    "u": 8
+  },
+  {
+    "id": "benefit",
+    "w": "benefit",
+    "ph": "/ˈbɛnɪfɪt/",
+    "pos": "n./v.",
+    "cn": "利益；恩惠；津贴",
+    "ex": "They are working together to benefit the whole community.",
+    "exCn": "他们在为整个社区的利益共同努力。",
+    "cloze": true,
+    "u": 8
+  },
+  {
+    "id": "transport",
+    "w": "transport",
+    "ph": "/ˈtrænspɔrt/",
+    "pos": "n./v.",
+    "cn": "运输；运输工具",
+    "ex": "trucks used for transporting oil",
+    "exCn": "运输石油的卡车",
+    "cloze": false,
+    "u": 8
+  },
+  {
+    "id": "critical",
+    "w": "critical",
+    "ph": "/ˈkrɪtɪkl/",
+    "pos": "adj.",
+    "cn": "批评的；爱挑剔的；决定性的",
+    "ex": "He made some highly critical remarks.",
+    "exCn": "他发表了一些严厉的批判性言论。",
+    "cloze": true,
+    "u": 8
+  },
+  {
+    "id": "relevant",
+    "w": "relevant",
+    "ph": "/ˈrɛləvənt/",
+    "pos": "adj.",
+    "cn": "有关的；中肯的；贴切的",
+    "ex": "Relevant documents were presented in court.",
+    "exCn": "法庭上出示了相关的文件。",
+    "cloze": true,
+    "u": 8
+  },
+  {
+    "id": "monitor",
+    "w": "monitor",
+    "ph": "/ˈmɔnɪtɚ/",
+    "pos": "v./n.",
+    "cn": "监控；监视器；班长",
+    "ex": "Patients who are given the new drug will be asked to monitor their progress.",
+    "exCn": "使用这种新药的病人将被要求监测病情进展。",
+    "cloze": true,
+    "u": 9
+  },
+  {
+    "id": "determine",
+    "w": "determine",
+    "ph": "/dɪˈtɝmɪn/",
+    "pos": "v.",
+    "cn": "决定；下决心；查明",
+    "ex": "Investigators are still trying to determine the cause of the fire.",
+    "exCn": "调查人员仍在设法弄清失火的原因。",
+    "cloze": true,
+    "u": 9
+  },
+  {
+    "id": "architecture",
+    "w": "architecture",
+    "ph": "/ˈɑrkəˈtɛktʃɚ/",
+    "pos": "n.",
+    "cn": "建筑学；建筑式样；建筑风格",
+    "ex": "He studied architecture at university.",
+    "exCn": "他在大学里读的是建筑学。",
+    "cloze": true,
+    "u": 9
+  },
+  {
+    "id": "initial",
+    "w": "initial",
+    "ph": "/ɪˈnɪʃəl/",
+    "pos": "n./adj.",
+    "cn": "首字母；最初的；词首的",
+    "ex": "The initial response has been encouraging.",
+    "exCn": "最初的反应情况很乐观。",
+    "cloze": true,
+    "u": 9
+  },
+  {
+    "id": "phase",
+    "w": "phase",
+    "ph": "/fez/",
+    "pos": "n.",
+    "cn": "阶段；方面；相位",
+    "ex": "It’s just a phase he’s going through .",
+    "exCn": "这只是他要经历的一个阶段。",
+    "cloze": true,
+    "u": 9
+  },
+  {
+    "id": "context",
+    "w": "context",
+    "ph": "/ˈkɑntɛkst/",
+    "pos": "n.",
+    "cn": "背景；环境",
+    "ex": "The meaning of ‘mad’ depends on its context. mad",
+    "exCn": "一词的意义要视上下文而定。",
+    "cloze": false,
+    "u": 9
+  },
+  {
+    "id": "install",
+    "w": "install",
+    "ph": "/ɪnˈstɔl/",
+    "pos": "v.",
+    "cn": "安装；设置",
+    "ex": "They’ve installed the new computer network at last.",
+    "exCn": "他们终于安装了新电脑网络。",
+    "cloze": false,
+    "u": 9
+  },
+  {
+    "id": "reduce",
+    "w": "reduce",
+    "ph": "/rɪˈdʊs/",
+    "pos": "v.",
+    "cn": "减少；减小；简化",
+    "ex": "The governor announced a new plan to reduce crime.",
+    "exCn": "州长宣布了一项降低犯罪率的新计划。",
+    "cloze": true,
+    "u": 9
+  },
+  {
+    "id": "component",
+    "w": "component",
+    "ph": "/kəmˈponənt/",
+    "pos": "n.",
+    "cn": "组成部分；成分；部件",
+    "ex": "Gorbachev failed to keep the component parts of the Soviet Union together.",
+    "exCn": "戈尔巴乔夫没能使苏联各组成部分保持在一起。",
+    "cloze": true,
+    "u": 9
+  },
+  {
+    "id": "enable",
+    "w": "enable",
+    "ph": "/ɪˈnebl/",
+    "pos": "v.",
+    "cn": "使能够；使成为可能",
+    "ex": "The new test should enable doctors to detect the disease early.",
+    "exCn": "新的检验使医生能在早期发现该种疾病。",
+    "cloze": true,
+    "u": 9
+  },
+  {
+    "id": "guarantee",
+    "w": "guarantee",
+    "ph": "/ˌɡærənˈti/",
+    "pos": "n./v.",
+    "cn": "保证；担保；担保物",
+    "ex": "The bank will only lend me money if my parents guarantee the loan.",
+    "exCn": "只有我父母作担保，银行才会给我贷款。",
+    "cloze": true,
+    "u": 10
+  },
+  {
+    "id": "factor",
+    "w": "factor",
+    "ph": "/ˈfæktɚ/",
+    "pos": "n.",
+    "cn": "因素；因子；系数",
+    "ex": "The rise in crime is mainly due to social and economic factors.",
+    "exCn": "犯罪率上升主要由社会和经济因素造成。",
+    "cloze": false,
+    "u": 10
+  },
+  {
+    "id": "protect",
+    "w": "protect",
+    "ph": "/prəˈtɛkt/",
+    "pos": "v.",
+    "cn": "保护；保卫；警戒",
+    "ex": "Are we doing enough to protect the environment?",
+    "exCn": "我们在保护环境方面做得够吗？",
+    "cloze": true,
+    "u": 10
+  },
+  {
+    "id": "campaign",
+    "w": "campaign",
+    "ph": "/kæmˈpen/",
+    "pos": "n./v.",
+    "cn": "活动；战役；运动",
+    "ex": "Police have launched a campaign to crack down on drug dealers.",
+    "exCn": "警方发起了一场严厉打击毒贩的运动。",
+    "cloze": true,
+    "u": 10
+  },
+  {
+    "id": "challenge",
+    "w": "challenge",
+    "ph": "/ˈtʃælɪndʒ/",
+    "pos": "n./v.",
+    "cn": "挑战；质疑；要求",
+    "ex": "They threw down the challenge that he couldn’t wash 40 cars in one hour (= invited him to try to do it ) .",
+    "exCn": "他们激将他，说他不可能在1小时内擦洗40辆汽车。",
+    "cloze": true,
+    "u": 10
+  },
+  {
+    "id": "manage",
+    "w": "manage",
+    "ph": "/ˈmænɪdʒ/",
+    "pos": "v.",
+    "cn": "管理；设法；对付",
+    "ex": "He was asked to manage a new department.",
+    "exCn": "他被要求去管理一个新的部门。",
+    "cloze": true,
+    "u": 10
+  },
+  {
+    "id": "procedure",
+    "w": "procedure",
+    "ph": "/prəˈsidʒɚ/",
+    "pos": "n.",
+    "cn": "程序；手续；过程",
+    "ex": "Follow the correct procedure when applying for a visa.",
+    "exCn": "申请签证时要遵循正确的程序。",
+    "cloze": true,
+    "u": 10
+  },
+  {
+    "id": "define",
+    "w": "define",
+    "ph": "/dɪˈfaɪn/",
+    "pos": "v.",
+    "cn": "定义；界定；明确",
+    "ex": "The duties of the post are difficult to define.",
+    "exCn": "这一职位的职责很难界定。",
+    "cloze": true,
+    "u": 10
+  },
+  {
+    "id": "identify",
+    "w": "identify",
+    "ph": "/aɪˈdɛntɪfaɪ/",
+    "pos": "v.",
+    "cn": "认出；识别；视为",
+    "ex": "He was too far away to be able to identify faces.",
+    "exCn": "他离得太远，没法看面孔认出谁是谁。",
+    "cloze": true,
+    "u": 10
+  },
+  {
+    "id": "sequence",
+    "w": "sequence",
+    "ph": "/ˈsikwəns/",
+    "pos": "n.",
+    "cn": "顺序；序列；一连串",
+    "ex": "Be careful to perform the actions in the correct sequence .",
+    "exCn": "注意要按正确的顺序来完成动作。",
+    "cloze": true,
+    "u": 10
+  },
+  {
+    "id": "reserve",
+    "w": "reserve",
+    "ph": "/rɪˈzɝv/",
+    "pos": "n./v.",
+    "cn": "储备；保留；预订",
+    "ex": "Do you have to reserve tickets in advance?",
+    "exCn": "你必须预先订票吗？",
+    "cloze": true,
+    "u": 11
+  },
+  {
+    "id": "promote",
+    "w": "promote",
+    "ph": "/prəˈmot/",
+    "pos": "v.",
+    "cn": "促进；提升；推销",
+    "ex": "You don't have to sacrifice environmental protection to promote economic growth.",
+    "exCn": "你们没有必要牺牲环保来促进经济增长。",
+    "cloze": true,
+    "u": 11
+  },
+  {
+    "id": "maintain",
+    "w": "maintain",
+    "ph": "/menˈten/",
+    "pos": "v.",
+    "cn": "维持；主张；赡养",
+    "ex": "Careers Officers maintain contact with young people when they have left school.",
+    "exCn": "年轻人离开学校以后，职业指导员和他们保持联系。",
+    "cloze": true,
+    "u": 11
+  },
+  {
+    "id": "priority",
+    "w": "priority",
+    "ph": "/praɪˈɔrəti/",
+    "pos": "n.",
+    "cn": "优先；优先权；重点",
+    "ex": "The club’s priority is to win the League.",
+    "exCn": "该俱乐部首先考虑的是要赢得联赛。",
+    "cloze": true,
+    "u": 11
+  },
+  {
+    "id": "revenue",
+    "w": "revenue",
+    "ph": "/ˈrɛvənu/",
+    "pos": "n.",
+    "cn": "收入；收益；税收",
+    "ex": "Strikes have cost £20 million in lost revenues .",
+    "exCn": "罢工造成的收入损失达到2,000万英镑。",
+    "cloze": false,
+    "u": 11
+  },
+  {
+    "id": "concept",
+    "w": "concept",
+    "ph": "/ˈkɑnsɛpt/",
+    "pos": "n.",
+    "cn": "观点；观念；概念",
+    "ex": "It’s very simple, once you grasp the concept .",
+    "exCn": "你一旦掌握了这个概念之后就很简单了。",
+    "cloze": true,
+    "u": 11
+  },
+  {
+    "id": "obtain",
+    "w": "obtain",
+    "ph": "/əbˈten/",
+    "pos": "v.",
+    "cn": "获得；得到；买到",
+    "ex": "Evans was trying to obtain a false passport and other documents.",
+    "exCn": "埃文斯当时正试图获取假护照和其他文件。",
+    "cloze": true,
+    "u": 11
+  },
+  {
+    "id": "negative",
+    "w": "negative",
+    "ph": "/ˈnɛɡətɪv/",
+    "pos": "adj./n.",
+    "cn": "消极的；负面的；否定的",
+    "ex": "They have a uniformly negative image of the police.",
+    "exCn": "他们都对警察印象不好。",
+    "cloze": true,
+    "u": 11
+  },
+  {
+    "id": "perform",
+    "w": "perform",
+    "ph": "/pɚˈfɔrm/",
+    "pos": "v.",
+    "cn": "履行；执行；演出",
+    "ex": "The children perform two plays each school year.",
+    "exCn": "孩子们一学年表演两部话剧。",
+    "cloze": true,
+    "u": 11
+  },
+  {
+    "id": "conduct",
+    "w": "conduct",
+    "ph": "/kənˈdʌkt/",
+    "pos": "v./n.",
+    "cn": "进行；实施；行为",
+    "ex": "The Senator’s conduct is being investigated by the Ethics Committee.",
+    "exCn": "该参议员的行为正受到道德委员会的调查。",
+    "cloze": true,
+    "u": 11
+  },
+  {
+    "id": "permanent",
+    "w": "permanent",
+    "ph": "/ˈpɝmənənt/",
+    "pos": "adj.",
+    "cn": "永久的；持久的",
+    "ex": "He gave up a permanent job in order to freelance.",
+    "exCn": "他放弃了固定工作，为的是当一名自由职业者。",
+    "cloze": true,
+    "u": 12
+  },
+  {
+    "id": "appeal",
+    "w": "appeal",
+    "ph": "/əˈpil/",
+    "pos": "n./v.",
+    "cn": "吸引力；呼吁；上诉",
+    "ex": "The girl’s family have made a public appeal for help to try and catch her killer.",
+    "exCn": "那名遇害女孩的家人吁请公众协助捉拿凶手。",
+    "cloze": true,
+    "u": 12
+  },
+  {
+    "id": "achieve",
+    "w": "achieve",
+    "ph": "/əˈtʃiv/",
+    "pos": "v.",
+    "cn": "完成；实现；达到",
+    "ex": "Frances achieved very good exam results.",
+    "exCn": "弗朗西丝考试取得了优异成绩。",
+    "cloze": false,
+    "u": 12
+  },
+  {
+    "id": "contemporary",
+    "w": "contemporary",
+    "ph": "/kənˈtɛmpərɛri/",
+    "pos": "n./adj.",
+    "cn": "同代人；当代人；当代的",
+    "ex": "She writes a lot of contemporary music for people like Whitney Houston.",
+    "exCn": "她为惠特尼·休斯敦等人创作大量当代音乐作品。",
+    "cloze": true,
+    "u": 12
+  },
+  {
+    "id": "refer",
+    "w": "refer",
+    "ph": "/rɪˈfɝ/",
+    "pos": "v.",
+    "cn": "提到；参考；涉及",
+    "ex": "In his speech, he referred to a recent trip to Canada.",
+    "exCn": "在他的讲话中，他提到了最近的加拿大之行。",
+    "cloze": false,
+    "u": 12
+  },
+  {
+    "id": "influence",
+    "w": "influence",
+    "ph": "/ˈɪnfluəns/",
+    "pos": "n./v.",
+    "cn": "影响；势力",
+    "ex": "As a scientist, his influence was immense.",
+    "exCn": "身为一名科学家，他的影响力极大。",
+    "cloze": true,
+    "u": 12
+  },
+  {
+    "id": "instance",
+    "w": "instance",
+    "ph": "/ˈɪnstəns/",
+    "pos": "n.",
+    "cn": "情况；例子；实例",
+    "ex": "We need to rethink the way we consume energy. Take, for instance, our approach to transport.",
+    "exCn": "我们需要重新考虑我们使用能源的方式，例如我们的运输方式。",
+    "cloze": true,
+    "u": 12
+  },
+  {
+    "id": "aware",
+    "w": "aware",
+    "ph": "/əˈwɛr/",
+    "pos": "adj.",
+    "cn": "知道的；意识到的",
+    "ex": "Mr Braley has been made aware of the need for absolute secrecy.",
+    "exCn": "布雷利先生被告知需要绝对保密。",
+    "cloze": true,
+    "u": 12
+  },
+  {
+    "id": "attempt",
+    "w": "attempt",
+    "ph": "/əˈtɛmpt/",
+    "pos": "n./v.",
+    "cn": "尝试；试图；企图",
+    "ex": "Weather conditions prevented them from attempting the jump.",
+    "exCn": "天气状况使他们无法尝试跳伞。",
+    "cloze": false,
+    "u": 12
+  },
+  {
+    "id": "accurate",
+    "w": "accurate",
+    "ph": "/ˈækjərət/",
+    "pos": "adj.",
+    "cn": "精确的；准确的；正确无误的",
+    "ex": "The brochure tries to give a fair and accurate description of each hotel.",
+    "exCn": "该手册尽量公正、准确地介绍每一家酒店。",
+    "cloze": true,
+    "u": 12
+  },
+  {
+    "id": "establish",
+    "w": "establish",
+    "ph": "/ɪˈstæblɪʃ/",
+    "pos": "v.",
+    "cn": "建立；创办；设立",
+    "ex": "Our goal is to establish a new research centre in the North.",
+    "exCn": "我们的目标是在北方建立一个新的研究中心。",
+    "cloze": true,
+    "u": 13
+  },
+  {
+    "id": "conflict",
+    "w": "conflict",
+    "ph": "/ˈkɑnflɪkt/",
+    "pos": "n./v.",
+    "cn": "争论；冲突；斗争",
+    "ex": "Personal ethics and professional ethics sometimes conflict.",
+    "exCn": "个人道德与职业道德之间有时会相冲突。",
+    "cloze": true,
+    "u": 13
+  },
+  {
+    "id": "occur",
+    "w": "occur",
+    "ph": "/əˈkɝ/",
+    "pos": "v.",
+    "cn": "发生；出现；存在",
+    "ex": "A third of accidental deaths occur in the home.",
+    "exCn": "有三分之一的意外死亡发生在家里。",
+    "cloze": true,
+    "u": 13
+  },
+  {
+    "id": "expand",
+    "w": "expand",
+    "ph": "/ɪkˈspænd/",
+    "pos": "v.",
+    "cn": "扩大；扩展；膨胀",
+    "ex": "exercises that expand the chest muscles",
+    "exCn": "扩展胸肌的运动",
+    "cloze": false,
+    "u": 13
+  },
+  {
+    "id": "participate",
+    "w": "participate",
+    "ph": "/pɑrˈtɪsəˈpet/",
+    "pos": "v.",
+    "cn": "参与；参加；分享",
+    "ex": "Some members refused to participate.",
+    "exCn": "有些会员拒绝参加。",
+    "cloze": true,
+    "u": 13
+  },
+  {
+    "id": "affect",
+    "w": "affect",
+    "ph": "/əˈfɛkt/",
+    "pos": "v.",
+    "cn": "影响；感动",
+    "ex": "decisions which affect our lives",
+    "exCn": "影响我们生活的决定",
+    "cloze": false,
+    "u": 13
+  },
+  {
+    "id": "indicate",
+    "w": "indicate",
+    "ph": "/ˈɪndɪket/",
+    "pos": "v.",
+    "cn": "表明；标示；表示",
+    "ex": "The study indicates a connection between poverty and crime.",
+    "exCn": "研究显示贫穷和犯罪有关联。",
+    "cloze": false,
+    "u": 13
+  },
+  {
+    "id": "seek",
+    "w": "seek",
+    "ph": "/sik/",
+    "pos": "v.",
+    "cn": "寻找；探索；试图",
+    "ex": "She decided to seek help from a lawyer.",
+    "exCn": "她决定向律师寻求帮助。",
+    "cloze": true,
+    "u": 13
+  },
+  {
+    "id": "respond",
+    "w": "respond",
+    "ph": "/rɪˈspɑnd/",
+    "pos": "v.",
+    "cn": "作答；响应；回答",
+    "ex": "They are likely to respond positively to the president's request for aid.",
+    "exCn": "他们有可能积极地回应该总统的援助请求。",
+    "cloze": true,
+    "u": 13
+  },
+  {
+    "id": "symbol",
+    "w": "symbol",
+    "ph": "/ˈsɪmbl/",
+    "pos": "n.",
+    "cn": "象征；标志；符号",
+    "ex": "The symbol on the packet is a guarantee that the food has been produced organically.",
+    "exCn": "包装盒上的这个标识保证这种食物是有机生产的。",
+    "cloze": true,
+    "u": 13
+  },
+  {
+    "id": "efficient",
+    "w": "efficient",
+    "ph": "/ɪˈfɪʃnt/",
+    "pos": "adj.",
+    "cn": "效率高的；有能力的",
+    "ex": "Lighting is now more energy efficient.",
+    "exCn": "如今的照明设备更加节能。",
+    "cloze": true,
+    "u": 14
+  },
+  {
+    "id": "reflect",
+    "w": "reflect",
+    "ph": "/rɪˈflɛkt/",
+    "pos": "v.",
+    "cn": "反映；反射；思考",
+    "ex": "The drop in consumer spending reflects concern about the economy.",
+    "exCn": "消费支出的下降反映出人们对经济的担忧。",
+    "cloze": false,
+    "u": 14
+  },
+  {
+    "id": "reform",
+    "w": "reform",
+    "ph": "/rɪˈfɔrm/",
+    "pos": "n./v.",
+    "cn": "改革；改良；改造",
+    "ex": "plans to radically reform the tax system",
+    "exCn": "彻底改革税收制度的计划",
+    "cloze": false,
+    "u": 14
+  },
+  {
+    "id": "assume",
+    "w": "assume",
+    "ph": "/əˈsum/",
+    "pos": "v.",
+    "cn": "假定；认为；承担",
+    "ex": "I think we can safely assume (=  it is almost certain  ) that interest rates will go up again soon.",
+    "exCn": "我想我们几乎可以肯定，利率很快会再次上调。",
+    "cloze": true,
+    "u": 14
+  },
+  {
+    "id": "confidence",
+    "w": "confidence",
+    "ph": "/ˈkɑnfɪdəns/",
+    "pos": "n.",
+    "cn": "信心；信任；信赖",
+    "ex": "I felt I was doing well and my confidence began to grow.",
+    "exCn": "我觉得自己干得不错，自信心就开始增加了。",
+    "cloze": true,
+    "u": 14
+  },
+  {
+    "id": "confirm",
+    "w": "confirm",
+    "ph": "/kənˈfɝm/",
+    "pos": "v.",
+    "cn": "确认；证实；批准",
+    "ex": "To confirm my diagnosis I need to do some tests.",
+    "exCn": "为了证实我的诊断，我要做一些化验。",
+    "cloze": true,
+    "u": 14
+  },
+  {
+    "id": "objective",
+    "w": "objective",
+    "ph": "/əbˈdʒɛktɪv/",
+    "pos": "n./adj.",
+    "cn": "目标；目的；客观的",
+    "ex": "Scientists need to be objective when doing research.",
+    "exCn": "科学家做研究时要客观。",
+    "cloze": true,
+    "u": 14
+  },
+  {
+    "id": "enhance",
+    "w": "enhance",
+    "ph": "/ɪnˈhæns/",
+    "pos": "v.",
+    "cn": "提高；加强；增加",
+    "ex": "Good lighting will enhance any room.",
+    "exCn": "良好的照明能给房间增色不少。",
+    "cloze": true,
+    "u": 14
+  },
+  {
+    "id": "contribute",
+    "w": "contribute",
+    "ph": "/kənˈtrɪbjut/",
+    "pos": "v.",
+    "cn": "贡献；促成；捐献",
+    "ex": "The three sons also contribute to the family business.",
+    "exCn": "3个儿子也为家族企业做贡献。",
+    "cloze": true,
+    "u": 14
+  },
+  {
+    "id": "estimate",
+    "w": "estimate",
+    "ph": "/ˈɛstəˌmet/",
+    "pos": "n./v.",
+    "cn": "估计；评价；看法",
+    "ex": "Try to estimate how many steps it will take to get to a close object.",
+    "exCn": "估计一下需要多少步才能到达一个近距目标。",
+    "cloze": true,
+    "u": 14
+  },
+  {
+    "id": "modify",
+    "w": "modify",
+    "ph": "/ˈmɑdɪfaɪ/",
+    "pos": "v.",
+    "cn": "更改；修改；修饰",
+    "ex": "The feedback will be used to modify the course for next year.",
+    "exCn": "这些反馈意见将用于修改明年的课程。",
+    "cloze": true,
+    "u": 15
+  },
+  {
+    "id": "perspective",
+    "w": "perspective",
+    "ph": "/pɚˈspɛktɪv/",
+    "pos": "n.",
+    "cn": "视角；观点；远景",
+    "ex": "the artist’s use of perspective",
+    "exCn": "那位画家对透视法的运用",
+    "cloze": false,
+    "u": 15
+  },
+  {
+    "id": "vary",
+    "w": "vary",
+    "ph": "/ˈveri/",
+    "pos": "v.",
+    "cn": "变化；不同；改变",
+    "ex": "Test scores vary from school to school.",
+    "exCn": "测验成绩各校不同。",
+    "cloze": true,
+    "u": 15
+  },
+  {
+    "id": "implement",
+    "w": "implement",
+    "ph": "/ˈɪmplɪmɛnt/",
+    "pos": "v./n.",
+    "cn": "实施；执行；工具",
+    "ex": "The government promised to implement a new system to control financial loan institutions.",
+    "exCn": "政府许诺要实施新的制度来控制金融贷款机构。",
+    "cloze": true,
+    "u": 15
+  },
+  {
+    "id": "temporary",
+    "w": "temporary",
+    "ph": "/ˈtɛmpəˈrɛri/",
+    "pos": "adj.",
+    "cn": "暂时的；临时的",
+    "ex": "I’m living with my parents, but it’s only temporary.",
+    "exCn": "我和父母住在一起，但这只是暂时的。",
+    "cloze": true,
+    "u": 15
+  },
+  {
+    "id": "sufficient",
+    "w": "sufficient",
+    "ph": "/səˈfɪʃənt/",
+    "pos": "adj.",
+    "cn": "足够的；充分的",
+    "ex": "We can only prosecute if there is sufficient evidence.",
+    "exCn": "有了足够的证据，我们才能提出起诉。",
+    "cloze": true,
+    "u": 15
+  },
+  {
+    "id": "flexible",
+    "w": "flexible",
+    "ph": "/ˈflɛksəbl/",
+    "pos": "adj.",
+    "cn": "灵活的；易弯曲的",
+    "ex": "We can be flexible about your starting date.",
+    "exCn": "你具体从哪天开始，我们可以灵活一点。",
+    "cloze": true,
+    "u": 15
+  },
+  {
+    "id": "revolution",
+    "w": "revolution",
+    "ph": "/ˈrɛvəˈlʊʃən/",
+    "pos": "n.",
+    "cn": "革命；旋转；绕转",
+    "ex": "the French Revolution of 1789",
+    "exCn": "1789年法国大革命",
+    "cloze": false,
+    "u": 15
+  },
+  {
+    "id": "technique",
+    "w": "technique",
+    "ph": "/tɛkˈnik/",
+    "pos": "n.",
+    "cn": "技术；技能；技巧",
+    "ex": "He’s a great player, with brilliant technique.",
+    "exCn": "他是个伟大的球员，球技十分精湛。",
+    "cloze": true,
+    "u": 15
+  },
+  {
+    "id": "regard",
+    "w": "regard",
+    "ph": "/rɪˈɡɑrd/",
+    "pos": "v.",
+    "cn": "认为；看待；尊敬",
+    "ex": "He was regarded as the most successful president of modern times.",
+    "exCn": "他被看成是近代最成功的总统。",
+    "cloze": false,
+    "u": 15
+  },
+  {
+    "id": "stable",
+    "w": "stable",
+    "ph": "/ˈstebl/",
+    "pos": "adj.",
+    "cn": "稳定的；牢固的；马厩",
+    "ex": "A wide base will make the structure much more stable.",
+    "exCn": "宽大的底座会使结构牢固许多。",
+    "cloze": true,
+    "u": 16
+  },
+  {
+    "id": "generate",
+    "w": "generate",
+    "ph": "/ˈdʒɛnəret/",
+    "pos": "v.",
+    "cn": "产生；发生；引起",
+    "ex": "The program would generate a lot of new jobs.",
+    "exCn": "这个项目将创造许多新的就业岗位。",
+    "cloze": true,
+    "u": 16
+  },
+  {
+    "id": "contrast",
+    "w": "contrast",
+    "ph": "/ˈkɑntræst/",
+    "pos": "n./v.",
+    "cn": "对比；反差；对照",
+    "ex": "The sauce is quite sweet, so add dried thyme as a contrast.",
+    "exCn": "这调味汁很甜，所以要加点干百里香作为陪衬。",
+    "cloze": true,
+    "u": 16
+  },
+  {
+    "id": "mechanism",
+    "w": "mechanism",
+    "ph": "/ˈmɛkənɪzəm/",
+    "pos": "n.",
+    "cn": "机制；机能；机械装置",
+    "ex": "The body has a natural defence mechanism against infection.",
+    "exCn": "身体有对抗感染的自然防御机制。",
+    "cloze": true,
+    "u": 16
+  },
+  {
+    "id": "welfare",
+    "w": "welfare",
+    "ph": "/ˈwɛlˈfɛr/",
+    "pos": "n.",
+    "cn": "福利；幸福",
+    "ex": "Our only concern is the children’s welfare.",
+    "exCn": "我们唯一关心的是孩子们的幸福。",
+    "cloze": true,
+    "u": 16
+  },
+  {
+    "id": "eventually",
+    "w": "eventually",
+    "ph": "/ɪˈvɛntʃuəli/",
+    "pos": "adv.",
+    "cn": "终于；最后",
+    "ex": "He eventually escaped and made his way back to England.",
+    "exCn": "他终于逃脱并返回英格兰。",
+    "cloze": true,
+    "u": 16
+  },
+  {
+    "id": "commit",
+    "w": "commit",
+    "ph": "/kəˈmɪt/",
+    "pos": "v.",
+    "cn": "承诺；犯（罪）；投入",
+    "ex": "Women commit fewer crimes than men.",
+    "exCn": "女性犯罪比男性少。",
+    "cloze": true,
+    "u": 16
+  },
+  {
+    "id": "convert",
+    "w": "convert",
+    "ph": "/kənˈvɝt/",
+    "pos": "v.",
+    "cn": "使转变；使改变；转变",
+    "ex": "a 19th-century converted barn",
+    "exCn": "由19世纪谷仓改建的房子",
+    "cloze": false,
+    "u": 16
+  },
+  {
+    "id": "principle",
+    "w": "principle",
+    "ph": "/ˈprɪnsəpl/",
+    "pos": "n.",
+    "cn": "原则；原理；主义",
+    "ex": "The general principle is that education should be available to all children up to the age of 16.",
+    "exCn": "总的原则是，16 岁以下儿童都应该能接受教育。",
+    "cloze": true,
+    "u": 16
+  },
+  {
+    "id": "prove",
+    "w": "prove",
+    "ph": "/pruv/",
+    "pos": "v.",
+    "cn": "证明；结果是",
+    "ex": "You’re wrong, and I can prove it.",
+    "exCn": "你错了，我可以证明。",
+    "cloze": true,
+    "u": 16
+  },
+  {
+    "id": "evaluate",
+    "w": "evaluate",
+    "ph": "/ɪˈvæljʊˈet/",
+    "pos": "v.",
+    "cn": "评价；估…的价",
+    "ex": "You should be able to evaluate your own work.",
+    "exCn": "你应该能够评估自己的工作。",
+    "cloze": true,
+    "u": 17
+  },
+  {
+    "id": "exhibit",
+    "w": "exhibit",
+    "ph": "/ɪɡˈzɪbɪt/",
+    "pos": "n./v.",
+    "cn": "展览品；显示；陈列",
+    "ex": "Her paintings have been exhibited all over the world.",
+    "exCn": "她的绘画作品在世界各地展出。",
+    "cloze": false,
+    "u": 17
+  },
+  {
+    "id": "trend",
+    "w": "trend",
+    "ph": "/trɛnd/",
+    "pos": "n./v.",
+    "cn": "倾向；伸向",
+    "ex": "He characterized briefly the main trend in the world today.",
+    "exCn": "他简单扼要地描述了当前世界的主要倾向。",
+    "cloze": true,
+    "u": 17
+  },
+  {
+    "id": "visible",
+    "w": "visible",
+    "ph": "/ˈvɪzəbl/",
+    "pos": "adj.",
+    "cn": "看得见的；可见的",
+    "ex": "Check the plant for any visible signs of disease.",
+    "exCn": "检查一下植物是否有患病的迹象。",
+    "cloze": true,
+    "u": 17
+  },
+  {
+    "id": "fundamental",
+    "w": "fundamental",
+    "ph": "/ˌfʌndəˈmɛntl/",
+    "pos": "n./adj.",
+    "cn": "基本原则；基础的；基本的",
+    "ex": "We have to tackle the fundamental cause of the problem.",
+    "exCn": "我们必须解决问题的根本原因。",
+    "cloze": true,
+    "u": 17
+  },
+  {
+    "id": "substantial",
+    "w": "substantial",
+    "ph": "/səbˈstænʃəl/",
+    "pos": "adj.",
+    "cn": "大量的；物质的；坚固的",
+    "ex": "We have the support of a substantial number of parents.",
+    "exCn": "我们有相当多家长的支持。",
+    "cloze": true,
+    "u": 17
+  },
+  {
+    "id": "obvious",
+    "w": "obvious",
+    "ph": "/ˈɑbvɪəs/",
+    "pos": "adj.",
+    "cn": "明显的；显而易见的",
+    "ex": "The obvious way of reducing pollution is to use cars less.",
+    "exCn": "减少污染显而易见的办法就是少用汽车。",
+    "cloze": true,
+    "u": 17
+  },
+  {
+    "id": "emphasis",
+    "w": "emphasis",
+    "ph": "/ˈɛmfəsɪs/",
+    "pos": "n.",
+    "cn": "强调；重点；重要性",
+    "ex": "a change of emphasis in government policy",
+    "exCn": "政府政策重心的变化",
+    "cloze": false,
+    "u": 17
+  },
+  {
+    "id": "extend",
+    "w": "extend",
+    "ph": "/ɪkˈstɛnd/",
+    "pos": "v.",
+    "cn": "延伸；扩展；延长",
+    "ex": "Management have agreed to extend the deadline.",
+    "exCn": "管理层已同意延长最后期限。",
+    "cloze": true,
+    "u": 17
+  },
+  {
+    "id": "adequate",
+    "w": "adequate",
+    "ph": "/ˈædɪkwət/",
+    "pos": "adj.",
+    "cn": "足够的；可以胜任的",
+    "ex": "Farmers have been slow to make adequate provision for their retirement.",
+    "exCn": "农民们迟迟没有为退休做好适当安排。",
+    "cloze": true,
+    "u": 17
+  },
+  {
+    "id": "conservative",
+    "w": "conservative",
+    "ph": "/kənˈsɝvətɪv/",
+    "pos": "n./adj.",
+    "cn": "保守的人；保守的；传统的",
+    "ex": "a very conservative attitude to education",
+    "exCn": "对待教育非常守旧的态度",
+    "cloze": false,
+    "u": 18
+  },
+  {
+    "id": "demonstrate",
+    "w": "demonstrate",
+    "ph": "/ˈdɛmənˈstret/",
+    "pos": "v.",
+    "cn": "证明；展示；说明",
+    "ex": "The government now has an opportunity to demonstrate its commitment to reform.",
+    "exCn": "政府现在有机会表明改革的决心了。",
+    "cloze": true,
+    "u": 18
+  },
+  {
+    "id": "ignore",
+    "w": "ignore",
+    "ph": "/ɪɡˈnɔr/",
+    "pos": "v.",
+    "cn": "忽视；不顾；不理",
+    "ex": "You can’t ignore the fact that many criminals never go to prison.",
+    "exCn": "你不能无视很多罪犯从未获刑的事实。",
+    "cloze": true,
+    "u": 18
+  },
+  {
+    "id": "publish",
+    "w": "publish",
+    "ph": "/ˈpʌblɪʃ/",
+    "pos": "v.",
+    "cn": "公布；发表；出版",
+    "ex": "The first edition was published in 1765.",
+    "exCn": "第一版于1765年出版。",
+    "cloze": false,
+    "u": 18
+  },
+  {
+    "id": "outcome",
+    "w": "outcome",
+    "ph": "/ˈaʊtˈkʌm/",
+    "pos": "n.",
+    "cn": "结果；后果；成果",
+    "ex": "People who had heard the evidence at the trial were surprised at the outcome.",
+    "exCn": "在审判过程中听过证词的人都对此结果感到吃惊。",
+    "cloze": true,
+    "u": 18
+  },
+  {
+    "id": "tend",
+    "w": "tend",
+    "ph": "/tɛnd/",
+    "pos": "v.",
+    "cn": "倾向于；往往会；照料",
+    "ex": "People tend to eat more in winter.",
+    "exCn": "人们在冬天往往吃得更多。",
+    "cloze": true,
+    "u": 18
+  },
+  {
+    "id": "diverse",
+    "w": "diverse",
+    "ph": "/daɪˈvɝs/",
+    "pos": "adj.",
+    "cn": "各种各样的；不一样的；相异的",
+    "ex": "subjects as diverse as pop music and archaeology",
+    "exCn": "像流行音乐和考古学这样各不相同的学科",
+    "cloze": false,
+    "u": 18
+  },
+  {
+    "id": "exceed",
+    "w": "exceed",
+    "ph": "/ɪkˈsid/",
+    "pos": "v.",
+    "cn": "超过；胜过；超出",
+    "ex": "Working hours must not exceed 42 hours a week.",
+    "exCn": "工作时间每周不得超过42小时。",
+    "cloze": true,
+    "u": 18
+  },
+  {
+    "id": "communicate",
+    "w": "communicate",
+    "ph": "/kəˈmjunɪket/",
+    "pos": "v.",
+    "cn": "通讯；传达；传播",
+    "ex": "A baby communicates its needs by crying.",
+    "exCn": "婴儿用哭来表达需要。",
+    "cloze": false,
+    "u": 18
+  },
+  {
+    "id": "dimension",
+    "w": "dimension",
+    "ph": "/dɪˈmɛnʃ(ə)n/",
+    "pos": "n.",
+    "cn": "维度；尺寸；方面",
+    "ex": "You can have a spiritual dimension to your life without being religious.",
+    "exCn": "即使你不信宗教，也可以在生命中拥有精神层面的内容。",
+    "cloze": true,
+    "u": 18
+  },
+  {
+    "id": "assess",
+    "w": "assess",
+    "ph": "/əˈsɛs/",
+    "pos": "v.",
+    "cn": "评估；评价；估算",
+    "ex": "The test was to assess aptitude rather than academic achievement.",
+    "exCn": "该测试将评估能力而不是学业成绩。",
+    "cloze": true,
+    "u": 19
+  },
+  {
+    "id": "attitude",
+    "w": "attitude",
+    "ph": "/ˈætɪtʊd/",
+    "pos": "n.",
+    "cn": "态度；看法；姿势",
+    "ex": "As soon as they found out I was a doctor, their whole attitude changed.",
+    "exCn": "他们一听说我是医生，态度就完全改变了。",
+    "cloze": true,
+    "u": 19
+  },
+  {
+    "id": "involve",
+    "w": "involve",
+    "ph": "/ɪnˈvɑlv/",
+    "pos": "v.",
+    "cn": "卷入；包含；使卷入",
+    "ex": "What will the job involve?",
+    "exCn": "这份工作包括什么？",
+    "cloze": true,
+    "u": 19
+  },
+  {
+    "id": "consult",
+    "w": "consult",
+    "ph": "/kənˈsʌlt/",
+    "pos": "v.",
+    "cn": "咨询；请教；查阅",
+    "ex": "If symptoms persist, consult a doctor without delay.",
+    "exCn": "如果症状持续的话，马上咨询医生。",
+    "cloze": true,
+    "u": 19
+  },
+  {
+    "id": "decline",
+    "w": "decline",
+    "ph": "/dɪˈklaɪn/",
+    "pos": "n./v.",
+    "cn": "下降；减少；衰退",
+    "ex": "Spending on information technology has declined.",
+    "exCn": "用于信息技术的支出减少了。",
+    "cloze": false,
+    "u": 19
+  },
+  {
+    "id": "facilitate",
+    "w": "facilitate",
+    "ph": "/fəˈsɪləˈtet/",
+    "pos": "v.",
+    "cn": "使便利；促进",
+    "ex": "The new airport will facilitate the development of tourism.",
+    "exCn": "新机场将促进旅游业的发展。",
+    "cloze": true,
+    "u": 19
+  },
+  {
+    "id": "adopt",
+    "w": "adopt",
+    "ph": "/əˈdɑpt/",
+    "pos": "v.",
+    "cn": "收养；采用；采取",
+    "ex": "The couple are unable to have children of their own, but hope to adopt.",
+    "exCn": "那对夫妇自己无法生育，但希望领养孩子。",
+    "cloze": true,
+    "u": 19
+  },
+  {
+    "id": "restore",
+    "w": "restore",
+    "ph": "/rɪˈstɔr/",
+    "pos": "v.",
+    "cn": "修复；恢复；归还",
+    "ex": "She was hoping that the Mediterranean climate would restore her to full health.",
+    "exCn": "她希望地中海的气候能使她的身体完全复原。",
+    "cloze": true,
+    "u": 19
+  },
+  {
+    "id": "eliminate",
+    "w": "eliminate",
+    "ph": "/ɪˈlɪmɪnet/",
+    "pos": "v.",
+    "cn": "消除；消灭；排除",
+    "ex": "Our team was eliminated in the first round.",
+    "exCn": "我们队第一轮就被淘汰了。",
+    "cloze": false,
+    "u": 19
+  },
+  {
+    "id": "neutral",
+    "w": "neutral",
+    "ph": "/ˈnʊtrəl/",
+    "pos": "adj.",
+    "cn": "中立的；中性的",
+    "ex": "I always tried to remain neutral when they started arguing.",
+    "exCn": "他们争论起来的时候我总是努力保持中立。",
+    "cloze": true,
+    "u": 19
+  },
+  {
+    "id": "artificial",
+    "w": "artificial",
+    "ph": "/ˌɑrtɪˈfɪʃl/",
+    "pos": "adj.",
+    "cn": "人工的；娇揉造作的；人为的",
+    "ex": "Artificial intelligence is changing the way we work.",
+    "exCn": "人工智能正在改变我们的工作方式。",
+    "cloze": true,
+    "u": 20
+  },
+  {
+    "id": "considerable",
+    "w": "considerable",
+    "ph": "/kənˈsɪdərəbl/",
+    "pos": "adj.",
+    "cn": "相当大的；重要的",
+    "ex": "Michael has already spent considerable time in Barcelona.",
+    "exCn": "迈克尔在巴塞罗那已经待了相当长的时间了。",
+    "cloze": true,
+    "u": 20
+  },
+  {
+    "id": "resolve",
+    "w": "resolve",
+    "ph": "/rɪˈzɑlv/",
+    "pos": "n./v.",
+    "cn": "决心；解决；解答",
+    "ex": "Barnet was desperate for money to resolve his financial problems.",
+    "exCn": "巴尼特急需钱来解决他的经济问题。",
+    "cloze": true,
+    "u": 20
+  },
+  {
+    "id": "proportion",
+    "w": "proportion",
+    "ph": "/prəˈpɔrʃən/",
+    "pos": "n.",
+    "cn": "比例；部分；比",
+    "ex": "A large proportion of the dolphins in that area will eventually die.",
+    "exCn": "那个地区的很大一部分海豚最终都会死去。",
+    "cloze": true,
+    "u": 20
+  },
+  {
+    "id": "invest",
+    "w": "invest",
+    "ph": "/ɪnˈvɛst/",
+    "pos": "v.",
+    "cn": "投资；投入",
+    "ex": "I’ve got a few thousand dollars I’m looking to invest.",
+    "exCn": "我有几千美元想作投资。",
+    "cloze": true,
+    "u": 20
+  },
+  {
+    "id": "suspect",
+    "w": "suspect",
+    "ph": "/sʌspɛkt/",
+    "pos": "n./v.",
+    "cn": "嫌疑犯；可疑分子；怀疑",
+    "ex": "She’s not going to be very happy about this, I suspect .",
+    "exCn": "我想对于此事她不会太高兴。",
+    "cloze": true,
+    "u": 20
+  },
+  {
+    "id": "crucial",
+    "w": "crucial",
+    "ph": "/ˈkrʊʃəl/",
+    "pos": "adj.",
+    "cn": "至关重要的；决定性的",
+    "ex": "The conservation of tropical forests is of crucial importance .",
+    "exCn": "保护热带雨林至关重要。",
+    "cloze": true,
+    "u": 20
+  },
+  {
+    "id": "apparent",
+    "w": "apparent",
+    "ph": "/əˈpærənt/",
+    "pos": "adj.",
+    "cn": "表面上的；明显的",
+    "ex": "The difference in quality was immediately apparent .",
+    "exCn": "质量的差异显而易见。",
+    "cloze": true,
+    "u": 20
+  },
+  {
+    "id": "recover",
+    "w": "recover",
+    "ph": "/rɪˈkʌvɚ/",
+    "pos": "v.",
+    "cn": "恢复；重新获得；挽回",
+    "ex": "After a few days of fever, she began to recover.",
+    "exCn": "发烧几天之后，她开始恢复。",
+    "cloze": true,
+    "u": 20
+  },
+  {
+    "id": "attach",
+    "w": "attach",
+    "ph": "/əˈtætʃ/",
+    "pos": "v.",
+    "cn": "附上；系上；重视",
+    "ex": "We attach labels to things before we file them away.",
+    "exCn": "我们在把东西归档前先给它们贴上标签。",
+    "cloze": true,
+    "u": 20
+  },
+  {
+    "id": "approve",
+    "w": "approve",
+    "ph": "/əˈprʊv/",
+    "pos": "v.",
+    "cn": "赞成；同意；称许",
+    "ex": "You've never approved of Henry, have you?",
+    "exCn": "你从未赞赏过亨利，是吧？",
+    "cloze": false,
+    "u": 21
+  },
+  {
+    "id": "compete",
+    "w": "compete",
+    "ph": "/kəmˈpit/",
+    "pos": "v.",
+    "cn": "竞争；比赛；对抗",
+    "ex": "Me: What do you mean \"compete\"?",
+    "exCn": "我：你的“竞争”是什么意思？",
+    "cloze": true,
+    "u": 21
+  },
+  {
+    "id": "profession",
+    "w": "profession",
+    "ph": "/prəˈfɛʃən/",
+    "pos": "n.",
+    "cn": "职业；行业；专业",
+    "ex": "Harper was a teacher by profession.",
+    "exCn": "哈珀的职业是教师。",
+    "cloze": true,
+    "u": 21
+  },
+  {
+    "id": "rely",
+    "w": "rely",
+    "ph": "/rɪˈlaɪ/",
+    "pos": "v.",
+    "cn": "依赖；依靠；信赖",
+    "ex": "You can rely on her to keep a secret.",
+    "exCn": "你可以指望她保守秘密。",
+    "cloze": true,
+    "u": 21
+  },
+  {
+    "id": "adjust",
+    "w": "adjust",
+    "ph": "/əˈdʒʌst/",
+    "pos": "v.",
+    "cn": "调整；调节；校正",
+    "ex": "Check and adjust the brakes regularly.",
+    "exCn": "经常检查并调节刹车装置。",
+    "cloze": true,
+    "u": 21
+  },
+  {
+    "id": "preserve",
+    "w": "preserve",
+    "ph": "/prɪˈzɝv/",
+    "pos": "v.",
+    "cn": "保护；保存；腌渍",
+    "ex": "We must encourage the planting of new trees and preserve our existing woodlands.",
+    "exCn": "我们必须鼓励栽种新树木，同时也要保护现有的林地。",
+    "cloze": true,
+    "u": 21
+  },
+  {
+    "id": "acquire",
+    "w": "acquire",
+    "ph": "/əˈkwaɪr/",
+    "pos": "v.",
+    "cn": "获得；取得；学到",
+    "ex": "Manning hoped to acquire valuable works of art as cheaply as possible.",
+    "exCn": "曼宁希望以尽可能低的价格买到有价值的艺术品。",
+    "cloze": true,
+    "u": 21
+  },
+  {
+    "id": "analyze",
+    "w": "analyze",
+    "ph": "/ˈænəˌlaɪz/",
+    "pos": "v.",
+    "cn": "分析",
+    "ex": "How do you analyze this change?",
+    "exCn": "你该如何分析这种变化？",
+    "cloze": true,
+    "u": 21
+  },
+  {
+    "id": "relate",
+    "w": "relate",
+    "ph": "/rɪˈlet/",
+    "pos": "v.",
+    "cn": "叙述；使联系；有关",
+    "ex": "I don’t understand how the two ideas relate.",
+    "exCn": "我不明白这两个观点有什么联系。",
+    "cloze": true,
+    "u": 21
+  },
+  {
+    "id": "retain",
+    "w": "retain",
+    "ph": "/rɪˈten/",
+    "pos": "v.",
+    "cn": "保留；留用；保持",
+    "ex": "You have the right to retain possession of the goods.",
+    "exCn": "你有权保留这些物品。",
+    "cloze": true,
+    "u": 21
+  },
+  {
+    "id": "distribute",
+    "w": "distribute",
+    "ph": "/dɪˈstrɪbjut/",
+    "pos": "v.",
+    "cn": "分发；分送；分布",
+    "ex": "a man distributing leaflets to passers-by",
+    "exCn": "一个向路人派发传单的男子",
+    "cloze": false,
+    "u": 22
+  },
+  {
+    "id": "radical",
+    "w": "radical",
+    "ph": "/ˈrædɪkl/",
+    "pos": "adj./n.",
+    "cn": "激进的；根本的；激进分子",
+    "ex": "radicals on the extreme left wing of the party",
+    "exCn": "党内极左翼激进分子",
+    "cloze": false,
+    "u": 22
+  },
+  {
+    "id": "coordinate",
+    "w": "coordinate",
+    "ph": "/koˈɔrdɪnet/",
+    "pos": "n./v.",
+    "cn": "坐标；使协调；调节",
+    "ex": "coordinate clauses joined by ‘and’",
+    "exCn": "用 and 连接的并列分句",
+    "cloze": false,
+    "u": 22
+  },
+  {
+    "id": "construct",
+    "w": "construct",
+    "ph": "/kənˈstrʌkt/",
+    "pos": "v./n.",
+    "cn": "建造；构造；建筑物",
+    "ex": "There are plans to construct a new road bridge across the river.",
+    "exCn": "有计划要建造一条新的跨河公路桥。",
+    "cloze": true,
+    "u": 22
+  },
+  {
+    "id": "collapse",
+    "w": "collapse",
+    "ph": "/kəˈlæps/",
+    "pos": "n./v.",
+    "cn": "突然失败；突然瓦解；倒坍",
+    "ex": "Uncle Ted’s chair collapsed under his weight.",
+    "exCn": "椅子承受不了特德叔叔的重量，塌架了。",
+    "cloze": false,
+    "u": 22
+  },
+  {
+    "id": "argue",
+    "w": "argue",
+    "ph": "/ˈɑrgjʊ/",
+    "pos": "v.",
+    "cn": "争论；争辩；辩论",
+    "ex": "We could hear the neighbours arguing.",
+    "exCn": "我们听到邻居在争吵。",
+    "cloze": false,
+    "u": 22
+  },
+  {
+    "id": "arise",
+    "w": "arise",
+    "ph": "/əˈraɪz/",
+    "pos": "v.",
+    "cn": "出现；由…引起；起身",
+    "ex": "More problems like those at the nuclear power plant are certain to arise.",
+    "exCn": "核电厂肯定还会出现那样的问题。",
+    "cloze": true,
+    "u": 22
+  },
+  {
+    "id": "survive",
+    "w": "survive",
+    "ph": "/sɚˈvaɪv/",
+    "pos": "v.",
+    "cn": "幸免于；活下来",
+    "ex": "When the market economy is introduced, many factories will not survive.",
+    "exCn": "一旦推行市场经济，很多工厂将无法存活下去。",
+    "cloze": true,
+    "u": 22
+  },
+  {
+    "id": "reveal",
+    "w": "reveal",
+    "ph": "/rɪˈvil/",
+    "pos": "v.",
+    "cn": "揭露；揭示；展现",
+    "ex": "a test that can reveal a teacher’s hidden skills",
+    "exCn": "能够展现老师潜在技能的测试",
+    "cloze": false,
+    "u": 22
+  },
+  {
+    "id": "intense",
+    "w": "intense",
+    "ph": "/ɪnˈtɛns/",
+    "pos": "adj.",
+    "cn": "强烈的；紧张的",
+    "ex": "Young people today are under intense pressure to succeed.",
+    "exCn": "如今的年轻人面临要出人头地的巨大压力。",
+    "cloze": true,
+    "u": 22
+  },
+  {
+    "id": "incentive",
+    "w": "incentive",
+    "ph": "/ɪnˈsɛntɪv/",
+    "pos": "n.",
+    "cn": "动机；刺激",
+    "ex": "As an added incentive, there’s a bottle of champagne for the best team.",
+    "exCn": "给最优秀的队发一瓶香槟作为额外的鼓励。",
+    "cloze": true,
+    "u": 23
+  },
+  {
+    "id": "assure",
+    "w": "assure",
+    "ph": "/əˈʃʊr/",
+    "pos": "v.",
+    "cn": "使确信；向…保证；确保",
+    "ex": "The document is genuine, I can assure you .",
+    "exCn": "我能向你保证，这文件是真的。",
+    "cloze": true,
+    "u": 23
+  },
+  {
+    "id": "organize",
+    "w": "organize",
+    "ph": "/ɔrɡənˌaɪz/",
+    "pos": "v.",
+    "cn": "组织；编组；把…编组",
+    "ex": "Students need to learn how to organize their work.",
+    "exCn": "学生要学会如何安排好自己的学习。",
+    "cloze": true,
+    "u": 23
+  },
+  {
+    "id": "advocate",
+    "w": "advocate",
+    "ph": "/ˈædvəkeɪt；-et/",
+    "pos": "n./v.",
+    "cn": "倡导；拥护者；提倡者",
+    "ex": "Mr. Williams is a conservative who advocates fewer government controls on business.",
+    "exCn": "威廉斯先生是一位提倡减少政府对商业的控制的保守人士。",
+    "cloze": false,
+    "u": 23
+  },
+  {
+    "id": "precise",
+    "w": "precise",
+    "ph": "/prɪˈsaɪs/",
+    "pos": "adj.",
+    "cn": "精确的；准确的；严谨的",
+    "ex": "It was difficult to get precise information.",
+    "exCn": "很难得到确切的消息。",
+    "cloze": true,
+    "u": 23
+  },
+  {
+    "id": "pursue",
+    "w": "pursue",
+    "ph": "/pəˈsʊ/",
+    "pos": "v.",
+    "cn": "追求；追赶；追踪",
+    "ex": "She plans to pursue a career in politics.",
+    "exCn": "她计划从政。",
+    "cloze": true,
+    "u": 23
+  },
+  {
+    "id": "attract",
+    "w": "attract",
+    "ph": "/əˈtrækt/",
+    "pos": "v.",
+    "cn": "吸引；引起；诱惑",
+    "ex": "I’m not usually attracted to blondes.",
+    "exCn": "我一般不喜欢金发女子。",
+    "cloze": false,
+    "u": 23
+  },
+  {
+    "id": "integrate",
+    "w": "integrate",
+    "ph": "/ˈɪntɪɡret/",
+    "pos": "v.",
+    "cn": "成为一体；合并",
+    "ex": "He didn't integrate successfully into the Italian way of life.",
+    "exCn": "他没有成功融入到意大利的生活方式中去。",
+    "cloze": true,
+    "u": 23
+  },
+  {
+    "id": "transform",
+    "w": "transform",
+    "ph": "/trænsˈfɔrm/",
+    "pos": "v.",
+    "cn": "改变；改造；变换",
+    "ex": "Increased population has transformed the landscape.",
+    "exCn": "人口的增加使景观发生了变化。",
+    "cloze": false,
+    "u": 23
+  },
+  {
+    "id": "encounter",
+    "w": "encounter",
+    "ph": "/ɪnˈkaʊntɚ/",
+    "pos": "n./v.",
+    "cn": "遭遇；遇到",
+    "ex": "The doctor had encountered several similar cases in the past.",
+    "exCn": "那位医生过去曾碰到过好几个类似病例。",
+    "cloze": false,
+    "u": 23
+  },
+  {
+    "id": "notion",
+    "w": "notion",
+    "ph": "/ˈnoʃən/",
+    "pos": "n.",
+    "cn": "概念；观念；意图",
+    "ex": "She had no notion what he meant.",
+    "exCn": "她根本不明白他是什么意思。",
+    "cloze": true,
+    "u": 24
+  },
+  {
+    "id": "deny",
+    "w": "deny",
+    "ph": "/dɪˈnai/",
+    "pos": "v.",
+    "cn": "否定；拒绝相信；否认",
+    "ex": "He denied that he had taken the money.",
+    "exCn": "他否认拿了那笔钱。",
+    "cloze": true,
+    "u": 24
+  },
+  {
+    "id": "prospect",
+    "w": "prospect",
+    "ph": "/ˈprɑspɛkt/",
+    "pos": "n./v.",
+    "cn": "前景；展望；前程",
+    "ex": "I had no job, no education, and no prospects .",
+    "exCn": "我没有工作，没受过什么教育，前途渺茫。",
+    "cloze": false,
+    "u": 24
+  },
+  {
+    "id": "assign",
+    "w": "assign",
+    "ph": "/əˈsaɪn/",
+    "pos": "v.",
+    "cn": "分配；布置；指派",
+    "ex": "When I taught, I would assign a topic to children that they would write about.",
+    "exCn": "教书时，我会给孩子们布置个写作题。",
+    "cloze": true,
+    "u": 24
+  },
+  {
+    "id": "accommodate",
+    "w": "accommodate",
+    "ph": "/əˈkɑmədet/",
+    "pos": "v.",
+    "cn": "适合；提供住宿；容纳",
+    "ex": "The island was used to accommodate child refugees.",
+    "exCn": "该岛用于收容儿童难民。",
+    "cloze": true,
+    "u": 24
+  },
+  {
+    "id": "consist",
+    "w": "consist",
+    "ph": "/kənˈsɪst/",
+    "pos": "v.",
+    "cn": "由……组成；由…组成；在于",
+    "ex": "My diet consisted almost exclusively of chocolate-covered cookies and glasses of milk.",
+    "exCn": "我的饮食几乎只包含裹上巧克力的曲奇饼和一杯杯牛奶。",
+    "cloze": false,
+    "u": 24
+  },
+  {
+    "id": "acknowledge",
+    "w": "acknowledge",
+    "ph": "/əkˈnɑlɪdʒ/",
+    "pos": "v.",
+    "cn": "承认；承认…的权威；告知收到",
+    "ex": "The family acknowledge the need for change.",
+    "exCn": "全家人都承认需要改变一下。",
+    "cloze": true,
+    "u": 24
+  },
+  {
+    "id": "consequence",
+    "w": "consequence",
+    "ph": "/ˈkɑnsəkwɛns/",
+    "pos": "n.",
+    "cn": "结果；成果；后果",
+    "ex": "I don’t suppose it is of any consequence now.",
+    "exCn": "现在我觉得这事一点都无所谓了。",
+    "cloze": true,
+    "u": 24
+  },
+  {
+    "id": "arbitrary",
+    "w": "arbitrary",
+    "ph": "/ˈɑːrbətreri/",
+    "pos": "adj.",
+    "cn": "随心所欲的；专断的",
+    "ex": "the arbitrary arrests of political opponents",
+    "exCn": "对政敌的任意逮捕",
+    "cloze": false,
+    "u": 24
+  },
+  {
+    "id": "reject",
+    "w": "reject",
+    "ph": "/rɪˈdʒɛkt/",
+    "pos": "n./v.",
+    "cn": "次品；拒绝；驳回",
+    "ex": "Sarah rejected her brother’s offer of help.",
+    "exCn": "萨拉拒绝了她弟弟的帮助。",
+    "cloze": false,
+    "u": 24
+  },
+  {
+    "id": "conclude",
+    "w": "conclude",
+    "ph": "/kənˈklud/",
+    "pos": "v.",
+    "cn": "推断出；结束；推论出",
+    "ex": "When the investigation is concluded, the results will be sent to the US Attorney’s office.",
+    "exCn": "等到调查结束后，结果会被送到联邦检察官办公室。",
+    "cloze": false,
+    "u": 25
+  },
+  {
+    "id": "propose",
+    "w": "propose",
+    "ph": "/prəˈpoz/",
+    "pos": "v.",
+    "cn": "提议；求婚",
+    "ex": "the changes currently proposed by the local planning authorities",
+    "exCn": "目前由地方规划局提议的改革",
+    "cloze": false,
+    "u": 25
+  },
+  {
+    "id": "widespread",
+    "w": "widespread",
+    "ph": "/ˈwʌɪdsprɛd/",
+    "pos": "adj.",
+    "cn": "普遍的；广泛的；分布广的",
+    "ex": "the widespread use of chemicals in agriculture",
+    "exCn": "化学品在农业中的广泛使用",
+    "cloze": false,
+    "u": 25
+  },
+  {
+    "id": "predict",
+    "w": "predict",
+    "ph": "/prɪˈdɪkt/",
+    "pos": "v.",
+    "cn": "预言；预测；预告",
+    "ex": "Sales were five percent lower than predicted.",
+    "exCn": "销售额比预期低5%。",
+    "cloze": false,
+    "u": 25
+  },
+  {
+    "id": "accomplish",
+    "w": "accomplish",
+    "ph": "/əˈkɑmplɪʃ/",
+    "pos": "v.",
+    "cn": "完成；达到",
+    "ex": "We have accomplished all we set out to do.",
+    "exCn": "所有计划要做的事情，我们都已完成。",
+    "cloze": false,
+    "u": 25
+  },
+  {
+    "id": "phenomenon",
+    "w": "phenomenon",
+    "ph": "/fəˈnɑmɪnən/",
+    "pos": "n.",
+    "cn": "现象",
+    "ex": "Homelessness is not a new phenomenon .",
+    "exCn": "无家可归已不是什么新现象。",
+    "cloze": true,
+    "u": 25
+  },
+  {
+    "id": "employ",
+    "w": "employ",
+    "ph": "/ɪmˈplɔɪ/",
+    "pos": "v.",
+    "cn": "雇用；使用；采用",
+    "ex": "The factory employs over 2,000 people.",
+    "exCn": "这家工厂雇用了2,000多名员工。",
+    "cloze": false,
+    "u": 25
+  },
+  {
+    "id": "concentrate",
+    "w": "concentrate",
+    "ph": "/ˈkɑnsnˈtret/",
+    "pos": "n./v.",
+    "cn": "浓缩物；浓缩液；集中",
+    "ex": "Adrian was finding it difficult to concentrate.",
+    "exCn": "阿德里安觉得自己很难集中注意力。",
+    "cloze": true,
+    "u": 25
+  },
+  {
+    "id": "undertake",
+    "w": "undertake",
+    "ph": "/ˌʌndɚˈtek/",
+    "pos": "v.",
+    "cn": "承担；从事；保证",
+    "ex": "The company agreed to undertake the project.",
+    "exCn": "公司同意承接这个项目。",
+    "cloze": true,
+    "u": 25
+  },
+  {
+    "id": "restrict",
+    "w": "restrict",
+    "ph": "/rɪˈstrɪkt/",
+    "pos": "v.",
+    "cn": "限制；限定；约束",
+    "ex": "The agreement will restrict competition.",
+    "exCn": "这个协议将限制竞争。",
+    "cloze": true,
+    "u": 25
+  },
+  {
+    "id": "justify",
+    "w": "justify",
+    "ph": "/ˈdʒʌstəˈfai/",
+    "pos": "v.",
+    "cn": "证明……正当；证明…是正当的",
+    "ex": "Ministers must appear before Parliament and justify their actions.",
+    "exCn": "大臣们必须就自己的行为向议会作出解释。",
+    "cloze": true,
+    "u": 26
+  },
+  {
+    "id": "impose",
+    "w": "impose",
+    "ph": "/ɪmˈpoz/",
+    "pos": "v.",
+    "cn": "强加；把…强加；征",
+    "ex": "The court can impose a fine.",
+    "exCn": "法庭可以强制执行罚款。",
+    "cloze": true,
+    "u": 26
+  },
+  {
+    "id": "abandon",
+    "w": "abandon",
+    "ph": "/əˈbændən/",
+    "pos": "n./v.",
+    "cn": "放任；纵情；丢弃",
+    "ex": "How could she abandon her own child?",
+    "exCn": "她怎么能抛弃自己的孩子？",
+    "cloze": true,
+    "u": 26
+  },
+  {
+    "id": "absorb",
+    "w": "absorb",
+    "ph": "/æbˈsɔrb/",
+    "pos": "v.",
+    "cn": "吸收；使专心",
+    "ex": "Plants absorb nutrients from the soil.",
+    "exCn": "植物从土壤中吸收养分。",
+    "cloze": true,
+    "u": 26
+  },
+  {
+    "id": "accelerate",
+    "w": "accelerate",
+    "ph": "/əkˈsɛləˌret/",
+    "pos": "v.",
+    "cn": "加速；加快；促进",
+    "ex": "measures to accelerate the rate of economic growth",
+    "exCn": "加快经济增长速度的措施",
+    "cloze": false,
+    "u": 26
+  },
+  {
+    "id": "accompany",
+    "w": "accompany",
+    "ph": "/əˈkʌmpəni/",
+    "pos": "v.",
+    "cn": "陪伴；陪同；伴随",
+    "ex": "Wherever her husband went, she would accompany him.",
+    "exCn": "不论丈夫去哪里，她都陪伴左右。",
+    "cloze": true,
+    "u": 26
+  },
+  {
+    "id": "accumulate",
+    "w": "accumulate",
+    "ph": "/əˈkjumjəlet/",
+    "pos": "v.",
+    "cn": "积累；增加",
+    "ex": "It is unjust that a privileged few should continue to accumulate wealth.",
+    "exCn": "少数特权阶级继续积聚财富，这是不公平的。",
+    "cloze": true,
+    "u": 26
+  },
+  {
+    "id": "adapt",
+    "w": "adapt",
+    "ph": "/əˈdæpt/",
+    "pos": "v.",
+    "cn": "适应于；使适应；改编",
+    "ex": "The ability to adapt is a definite asset in this job.",
+    "exCn": "适应能力是做这份工作的绝对有利条件。",
+    "cloze": true,
+    "u": 26
+  },
+  {
+    "id": "allocate",
+    "w": "allocate",
+    "ph": "/ˈæləket/",
+    "pos": "v.",
+    "cn": "分配；分派；把…拨给",
+    "ex": "Tickets are limited and will be allocated to those who apply first.",
+    "exCn": "票数有限，将分配给那些先申请的人。",
+    "cloze": false,
+    "u": 26
+  },
+  {
+    "id": "ambitious",
+    "w": "ambitious",
+    "ph": "/æmˈbɪʃəs/",
+    "pos": "adj.",
+    "cn": "有雄心的；野心勃勃的",
+    "ex": "Alfred was intensely ambitious, obsessed with the idea of becoming rich.",
+    "exCn": "艾尔弗雷德雄心勃勃，一心想着发财。",
+    "cloze": true,
+    "u": 26
+  },
+  {
+    "id": "anticipate",
+    "w": "anticipate",
+    "ph": "/ænˈtɪsəˈpet/",
+    "pos": "v.",
+    "cn": "预感；预料；预期",
+    "ex": "A good speaker is able to anticipate an audience’s needs and concerns.",
+    "exCn": "好的演讲者能够预先考虑到听众需要什么、关注什么。",
+    "cloze": true,
+    "u": 27
+  },
+  {
+    "id": "assemble",
+    "w": "assemble",
+    "ph": "/əˈsɛmbl/",
+    "pos": "v.",
+    "cn": "组装；集合；召集",
+    "ex": "A large crowd had assembled outside the American embassy.",
+    "exCn": "一大群人聚集在美国大使馆外。",
+    "cloze": false,
+    "u": 27
+  },
+  {
+    "id": "attain",
+    "w": "attain",
+    "ph": "/əˈten/",
+    "pos": "v.",
+    "cn": "达到；获得；完成",
+    "ex": "More women are attaining positions of power.",
+    "exCn": "越来越多的女性获得要职。",
+    "cloze": false,
+    "u": 27
+  },
+  {
+    "id": "circumstance",
+    "w": "circumstance",
+    "ph": "/ˈsɝkəmstæns/",
+    "pos": "n.",
+    "cn": "环境；境遇；情况",
+    "ex": "He was a victim of circumstance .",
+    "exCn": "他是客观环境的牺牲品。",
+    "cloze": true,
+    "u": 27
+  },
+  {
+    "id": "compel",
+    "w": "compel",
+    "ph": "/kəmˈpɛl/",
+    "pos": "v.",
+    "cn": "强迫；迫使屈服",
+    "ex": "the introduction of legislation to compel cyclists to wear a helmet.",
+    "exCn": "…强制骑车人戴头盔的法律的引入。",
+    "cloze": false,
+    "u": 27
+  },
+  {
+    "id": "compensate",
+    "w": "compensate",
+    "ph": "/ˈkɑmpɛnset/",
+    "pos": "v.",
+    "cn": "弥补；补偿",
+    "ex": "Because my left eye is so weak, my right eye has to work harder to compensate.",
+    "exCn": "因为我左眼视力差，右眼就要辛苦点来弥补一下。",
+    "cloze": true,
+    "u": 27
+  },
+  {
+    "id": "comprise",
+    "w": "comprise",
+    "ph": "/kəmˈpraɪz/",
+    "pos": "v.",
+    "cn": "包含；包括；构成",
+    "ex": "The house comprises two bedrooms, a kitchen, and a living room.",
+    "exCn": "这座房子有两间卧室、一间厨房和一间起居室。",
+    "cloze": false,
+    "u": 27
+  },
+  {
+    "id": "confront",
+    "w": "confront",
+    "ph": "/kənˈfrʌnt/",
+    "pos": "v.",
+    "cn": "面对；迎面遇到；遭遇",
+    "ex": "The problems confronting the new government were enormous.",
+    "exCn": "新政府面临的难题是巨大的。",
+    "cloze": false,
+    "u": 27
+  },
+  {
+    "id": "consume",
+    "w": "consume",
+    "ph": "/kənˈsum/",
+    "pos": "v.",
+    "cn": "消费；消耗；消灭",
+    "ex": "Only 27% of the paper we consume is recycled.",
+    "exCn": "我们消耗的纸张只有 27% 得到回收利用。",
+    "cloze": true,
+    "u": 27
+  },
+  {
+    "id": "convince",
+    "w": "convince",
+    "ph": "/kənˈvɪns/",
+    "pos": "v.",
+    "cn": "使相信；使确信；使信服",
+    "ex": "Her arguments didn’t convince everyone, but changes were made.",
+    "exCn": "她的论点不能说服每个人，但还是引起了一些变化。",
+    "cloze": true,
+    "u": 27
+  },
+  {
+    "id": "cooperate",
+    "w": "cooperate",
+    "ph": "/koʊˈɑːpəreɪt/",
+    "pos": "v.",
+    "cn": "合作；协作；配合",
+    "ex": "The two teams agreed to cooperate on the research.",
+    "exCn": "两个团队同意在这项研究上合作。",
+    "cloze": true,
+    "u": 28
+  },
+  {
+    "id": "correspond",
+    "w": "correspond",
+    "ph": "/ˌkɔrəˈspɑnd/",
+    "pos": "v.",
+    "cn": "相符合；相当；通信",
+    "ex": "The two halves of the document did not correspond.",
+    "exCn": "这份文件的前后两部分不相符。",
+    "cloze": true,
+    "u": 28
+  },
+  {
+    "id": "derive",
+    "w": "derive",
+    "ph": "/dɪˈraɪv/",
+    "pos": "v.",
+    "cn": "得到；导出；取得",
+    "ex": "Mr. Ying is one of those happy people who derive pleasure from helping others.",
+    "exCn": "英先生是那种助人为乐的快活人。",
+    "cloze": true,
+    "u": 28
+  },
+  {
+    "id": "devote",
+    "w": "devote",
+    "ph": "/dɪˈvot/",
+    "pos": "v.",
+    "cn": "奉献；致力于；将…奉献",
+    "ex": "He decided to devote the rest of his life to scientific investigation.",
+    "exCn": "他决定把余生奉献给科学研究。",
+    "cloze": true,
+    "u": 28
+  },
+  {
+    "id": "distinguish",
+    "w": "distinguish",
+    "ph": "/dɪˈstɪŋɡwɪʃ/",
+    "pos": "v.",
+    "cn": "区别；区分；辨别",
+    "ex": "Could he distinguish right from wrong?",
+    "exCn": "他能辨别是非吗？",
+    "cloze": true,
+    "u": 28
+  },
+  {
+    "id": "dominate",
+    "w": "dominate",
+    "ph": "/ˈdɑmɪnet/",
+    "pos": "v.",
+    "cn": "拥有优势；在…中占首要地位；支配",
+    "ex": "The industry is dominated by five multinational companies.",
+    "exCn": "这个行业受五家跨国公司控制。",
+    "cloze": false,
+    "u": 28
+  },
+  {
+    "id": "emerge",
+    "w": "emerge",
+    "ph": "/ɪˈmɝdʒ/",
+    "pos": "v.",
+    "cn": "出现；涌现；冒出",
+    "ex": "The flowers emerge in the spring.",
+    "exCn": "花儿在春天开放。",
+    "cloze": true,
+    "u": 28
+  },
+  {
+    "id": "enforce",
+    "w": "enforce",
+    "ph": "/ɪnˈfɔrs/",
+    "pos": "v.",
+    "cn": "实施；执行；强制",
+    "ex": "Parking restrictions will be strictly enforced.",
+    "exCn": "停车限制将会严格执行。",
+    "cloze": false,
+    "u": 28
+  },
+  {
+    "id": "evolve",
+    "w": "evolve",
+    "ph": "/ɪˈvɑlv/",
+    "pos": "v.",
+    "cn": "使发展；使进化",
+    "ex": "Businesses need to evolve rapidly.",
+    "exCn": "各项业务需要快速发展。",
+    "cloze": true,
+    "u": 28
+  },
+  {
+    "id": "exploit",
+    "w": "exploit",
+    "ph": "/ɪkˈsplɔɪt/",
+    "pos": "v./n.",
+    "cn": "利用；开发；剥削",
+    "ex": "the urgent need to exploit the resources of the Irish Sea",
+    "exCn": "开发爱尔兰海资源的迫切需要",
+    "cloze": false,
+    "u": 28
+  },
+  {
+    "id": "expose",
+    "w": "expose",
+    "ph": "/ɪkˈspoz；ek-/",
+    "pos": "v.",
+    "cn": "暴露；使暴露；揭露",
+    "ex": "He lifted his T-shirt to expose a jagged scar across his chest.",
+    "exCn": "他撩起T恤衫，露出横贯胸部的锯齿状伤疤。",
+    "cloze": true,
+    "u": 29
+  },
+  {
+    "id": "illustrate",
+    "w": "illustrate",
+    "ph": "/ˈɪləstret/",
+    "pos": "v.",
+    "cn": "说明；阐明",
+    "ex": "Let me give an example to illustrate the point.",
+    "exCn": "让我举个例子来说明这一点。",
+    "cloze": true,
+    "u": 29
+  },
+  {
+    "id": "imply",
+    "w": "imply",
+    "ph": "/ɪmˈplai/",
+    "pos": "v.",
+    "cn": "意味；暗示；意指",
+    "ex": "I didn't mean to imply that you were wrong.",
+    "exCn": "我并不是想暗示你错了。",
+    "cloze": true,
+    "u": 29
+  },
+  {
+    "id": "inevitable",
+    "w": "inevitable",
+    "ph": "/ɪnˈɛvɪtəbl/",
+    "pos": "adj.",
+    "cn": "不可避免的；必然的",
+    "ex": "A further escalation of the crisis now seems inevitable.",
+    "exCn": "危机的进一步升级现在看来已不可避免。",
+    "cloze": true,
+    "u": 29
+  },
+  {
+    "id": "innovate",
+    "w": "innovate",
+    "ph": "/ˈɪnəvet/",
+    "pos": "v.",
+    "cn": "创新；革新",
+    "ex": "the need for large businesses to innovate",
+    "exCn": "大公司革新的需要",
+    "cloze": false,
+    "u": 29
+  },
+  {
+    "id": "insist",
+    "w": "insist",
+    "ph": "/ɪnˈsɪst/",
+    "pos": "v.",
+    "cn": "主张；坚持；坚持要求",
+    "ex": "Stay for supper – I insist!",
+    "exCn": "留下来吃晚餐——一定的！",
+    "cloze": true,
+    "u": 29
+  },
+  {
+    "id": "inspire",
+    "w": "inspire",
+    "ph": "/ɪnˈspaɪɚ/",
+    "pos": "v.",
+    "cn": "激发；鼓舞；使产生灵感",
+    "ex": "We need someone who can inspire the team.",
+    "exCn": "我们需要一个能鼓舞团队士气的人。",
+    "cloze": true,
+    "u": 29
+  },
+  {
+    "id": "interpret",
+    "w": "interpret",
+    "ph": "/ɪnˈtɝprɪt/",
+    "pos": "v.",
+    "cn": "解释；说明；口译",
+    "ex": "They spoke good Spanish, and promised to interpret for me.",
+    "exCn": "他们西班牙语说得很好，答应替我翻译。",
+    "cloze": true,
+    "u": 29
+  },
+  {
+    "id": "isolate",
+    "w": "isolate",
+    "ph": "/aɪslˌet/",
+    "pos": "v.",
+    "cn": "使隔离；使孤立",
+    "ex": "The US has sought to isolate Cuba both economically and politically.",
+    "exCn": "美国一直想在经济和政治上孤立古巴。",
+    "cloze": true,
+    "u": 29
+  },
+  {
+    "id": "motivate",
+    "w": "motivate",
+    "ph": "/ˈmotəˈvet/",
+    "pos": "v.",
+    "cn": "促动；激发；诱导",
+    "ex": "A good teacher has to be able to motivate her students.",
+    "exCn": "好教师必须能够激发学生的积极性。",
+    "cloze": true,
+    "u": 29
+  },
+  {
+    "id": "negotiate",
+    "w": "negotiate",
+    "ph": "/nɪˈɡoʃɪet/",
+    "pos": "v.",
+    "cn": "谈判；协商；交涉",
+    "ex": "His first aim is to get the warring parties back to the negotiating table (= discussing something ).",
+    "exCn": "他的首要目标就是把交战各方拉回到谈判桌上。",
+    "cloze": false,
+    "u": 30
+  },
+  {
+    "id": "occupy",
+    "w": "occupy",
+    "ph": "/ˈɑkjupaɪ/",
+    "pos": "v.",
+    "cn": "占领；占；占有",
+    "ex": "Football occupies most of my leisure time.",
+    "exCn": "足球占去了我大部分的闲暇时间。",
+    "cloze": false,
+    "u": 30
+  },
+  {
+    "id": "perceive",
+    "w": "perceive",
+    "ph": "/pɚˈsiv/",
+    "pos": "v.",
+    "cn": "察觉；发觉；理解",
+    "ex": "Cats are not able to perceive colour.",
+    "exCn": "猫不能辨别颜色。",
+    "cloze": true,
+    "u": 30
+  },
+  {
+    "id": "persist",
+    "w": "persist",
+    "ph": "/pɚˈsɪst/",
+    "pos": "v.",
+    "cn": "坚持；固执；持续",
+    "ex": "‘I don’t think it’s right,’ John persisted.",
+    "exCn": "“我认为那不对。”约翰坚持说道。",
+    "cloze": false,
+    "u": 30
+  },
+  {
+    "id": "prohibit",
+    "w": "prohibit",
+    "ph": "/prəˈhɪbɪt/",
+    "pos": "v.",
+    "cn": "禁止；阻止；防止",
+    "ex": "Smoking is strictly prohibited inside the factory.",
+    "exCn": "厂区严禁吸烟。",
+    "cloze": false,
+    "u": 30
+  },
+  {
+    "id": "react",
+    "w": "react",
+    "ph": "/riˈækt/",
+    "pos": "v.",
+    "cn": "对……作出反应；起反应；有影响",
+    "ex": "You have to react quickly to circumstances.",
+    "exCn": "你必须对形势迅速作出反应。",
+    "cloze": true,
+    "u": 30
+  },
+  {
+    "id": "regulate",
+    "w": "regulate",
+    "ph": "/ˈrɛɡjulet/",
+    "pos": "v.",
+    "cn": "管理；控制；调整",
+    "ex": "strict rules regulating the use of chemicals in food",
+    "exCn": "限制化学品在食物中使用的严格规定",
+    "cloze": false,
+    "u": 30
+  },
+  {
+    "id": "revise",
+    "w": "revise",
+    "ph": "/rɪˈvaɪz/",
+    "pos": "v.",
+    "cn": "修订；校订；修改",
+    "ex": "The college has revised its plans because of local objections.",
+    "exCn": "由于地方上的反对，学院已经修改了计划。",
+    "cloze": false,
+    "u": 30
+  },
+  {
+    "id": "sustain",
+    "w": "sustain",
+    "ph": "/səˈsten/",
+    "pos": "v.",
+    "cn": "维持；支撑；持续",
+    "ex": "Wants, or desires, are things we would like to have but they do not sustain us.",
+    "exCn": "想法或愿望，是我们想要拥有的东西但是他们不能维持我们的生活。",
+    "cloze": true,
+    "u": 30
+  },
+  {
+    "id": "tolerate",
+    "w": "tolerate",
+    "ph": "/ˈtɑləret/",
+    "pos": "v.",
+    "cn": "忍受；容忍；宽恕",
+    "ex": "We simply will not tolerate vigilante groups on our streets.",
+    "exCn": "我们决不容许有自行惩办犯罪的组织出现在我们的街头。",
+    "cloze": true,
+    "u": 30
+  }
+];
+
+const CHAPTERS = [
+  {
+    "id": "c1",
+    "no": 1,
+    "title": "基础高频",
+    "range": "1–50",
+    "sub": "打牢基础，先拿下最常考的 50 词",
+    "units": [
+      "u01",
+      "u02",
+      "u03",
+      "u04",
+      "u05"
+    ]
+  },
+  {
+    "id": "c2",
+    "no": 2,
+    "title": "核心高频",
+    "range": "51–100",
+    "sub": "阅读和听力里反复出现的核心词",
+    "units": [
+      "u06",
+      "u07",
+      "u08",
+      "u09",
+      "u10"
+    ]
+  },
+  {
+    "id": "c3",
+    "no": 3,
+    "title": "进阶高频",
+    "range": "101–150",
+    "sub": "从“认得”走向“会用”",
+    "units": [
+      "u11",
+      "u12",
+      "u13",
+      "u14",
+      "u15"
+    ]
+  },
+  {
+    "id": "c4",
+    "no": 4,
+    "title": "拓展高频",
+    "range": "151–200",
+    "sub": "覆盖写作与翻译的常用表达",
+    "units": [
+      "u16",
+      "u17",
+      "u18",
+      "u19",
+      "u20"
+    ]
+  },
+  {
+    "id": "c5",
+    "no": 5,
+    "title": "强化高频",
+    "range": "201–250",
+    "sub": "查漏补缺，巩固记忆",
+    "units": [
+      "u21",
+      "u22",
+      "u23",
+      "u24",
+      "u25"
+    ]
+  },
+  {
+    "id": "c6",
+    "no": 6,
+    "title": "冲刺高频",
+    "range": "251–300",
+    "sub": "考前最后一轮高频扫盲",
+    "units": [
+      "u26",
+      "u27",
+      "u28",
+      "u29",
+      "u30"
+    ]
+  }
+];
+
+const UNITS = [
+  {
+    "id": "u01",
+    "no": 1,
+    "chapter": "c1",
+    "title": "高频 1–10",
+    "sub": "1–10 词",
+    "words": [
+      "policy",
+      "available",
+      "support",
+      "community",
+      "technology",
+      "version",
+      "network",
+      "access",
+      "previous",
+      "provide"
+    ]
+  },
+  {
+    "id": "u02",
+    "no": 2,
+    "chapter": "c1",
+    "title": "高频 11–20",
+    "sub": "11–20 词",
+    "words": [
+      "source",
+      "process",
+      "select",
+      "category",
+      "industry",
+      "legal",
+      "status",
+      "issue",
+      "range",
+      "release"
+    ]
+  },
+  {
+    "id": "u03",
+    "no": 3,
+    "chapter": "c1",
+    "title": "高频 21–30",
+    "sub": "21–30 词",
+    "words": [
+      "specific",
+      "region",
+      "environment",
+      "resource",
+      "federal",
+      "finance",
+      "individual",
+      "function",
+      "global",
+      "submit"
+    ]
+  },
+  {
+    "id": "u04",
+    "no": 4,
+    "chapter": "c1",
+    "title": "高频 31–40",
+    "sub": "31–40 词",
+    "words": [
+      "commercial",
+      "annual",
+      "corporate",
+      "summary",
+      "overall",
+      "administration",
+      "institute",
+      "volume",
+      "mature",
+      "supply"
+    ]
+  },
+  {
+    "id": "u05",
+    "no": 5,
+    "chapter": "c1",
+    "title": "高频 41–50",
+    "sub": "41–50 词",
+    "words": [
+      "particular",
+      "appropriate",
+      "structure",
+      "contract",
+      "potential",
+      "focus",
+      "primary",
+      "foundation",
+      "feature",
+      "approach"
+    ]
+  },
+  {
+    "id": "u06",
+    "no": 6,
+    "chapter": "c2",
+    "title": "高频 51–60",
+    "sub": "51–60 词",
+    "words": [
+      "unique",
+      "survey",
+      "secure",
+      "evidence",
+      "option",
+      "impact",
+      "ensure",
+      "budget",
+      "significant",
+      "authority"
+    ]
+  },
+  {
+    "id": "u07",
+    "no": 7,
+    "chapter": "c2",
+    "title": "高频 61–70",
+    "sub": "61–70 词",
+    "words": [
+      "strategy",
+      "valid",
+      "senior",
+      "abstract",
+      "alternative",
+      "academic",
+      "vehicle",
+      "require",
+      "target",
+      "virtual"
+    ]
+  },
+  {
+    "id": "u08",
+    "no": 8,
+    "chapter": "c2",
+    "title": "高频 71–80",
+    "sub": "71–80 词",
+    "words": [
+      "device",
+      "external",
+      "theory",
+      "remove",
+      "minimum",
+      "capacity",
+      "benefit",
+      "transport",
+      "critical",
+      "relevant"
+    ]
+  },
+  {
+    "id": "u09",
+    "no": 9,
+    "chapter": "c2",
+    "title": "高频 81–90",
+    "sub": "81–90 词",
+    "words": [
+      "monitor",
+      "determine",
+      "architecture",
+      "initial",
+      "phase",
+      "context",
+      "install",
+      "reduce",
+      "component",
+      "enable"
+    ]
+  },
+  {
+    "id": "u10",
+    "no": 10,
+    "chapter": "c2",
+    "title": "高频 91–100",
+    "sub": "91–100 词",
+    "words": [
+      "guarantee",
+      "factor",
+      "protect",
+      "campaign",
+      "challenge",
+      "manage",
+      "procedure",
+      "define",
+      "identify",
+      "sequence"
+    ]
+  },
+  {
+    "id": "u11",
+    "no": 11,
+    "chapter": "c3",
+    "title": "高频 101–110",
+    "sub": "101–110 词",
+    "words": [
+      "reserve",
+      "promote",
+      "maintain",
+      "priority",
+      "revenue",
+      "concept",
+      "obtain",
+      "negative",
+      "perform",
+      "conduct"
+    ]
+  },
+  {
+    "id": "u12",
+    "no": 12,
+    "chapter": "c3",
+    "title": "高频 111–120",
+    "sub": "111–120 词",
+    "words": [
+      "permanent",
+      "appeal",
+      "achieve",
+      "contemporary",
+      "refer",
+      "influence",
+      "instance",
+      "aware",
+      "attempt",
+      "accurate"
+    ]
+  },
+  {
+    "id": "u13",
+    "no": 13,
+    "chapter": "c3",
+    "title": "高频 121–130",
+    "sub": "121–130 词",
+    "words": [
+      "establish",
+      "conflict",
+      "occur",
+      "expand",
+      "participate",
+      "affect",
+      "indicate",
+      "seek",
+      "respond",
+      "symbol"
+    ]
+  },
+  {
+    "id": "u14",
+    "no": 14,
+    "chapter": "c3",
+    "title": "高频 131–140",
+    "sub": "131–140 词",
+    "words": [
+      "efficient",
+      "reflect",
+      "reform",
+      "assume",
+      "confidence",
+      "confirm",
+      "objective",
+      "enhance",
+      "contribute",
+      "estimate"
+    ]
+  },
+  {
+    "id": "u15",
+    "no": 15,
+    "chapter": "c3",
+    "title": "高频 141–150",
+    "sub": "141–150 词",
+    "words": [
+      "modify",
+      "perspective",
+      "vary",
+      "implement",
+      "temporary",
+      "sufficient",
+      "flexible",
+      "revolution",
+      "technique",
+      "regard"
+    ]
+  },
+  {
+    "id": "u16",
+    "no": 16,
+    "chapter": "c4",
+    "title": "高频 151–160",
+    "sub": "151–160 词",
+    "words": [
+      "stable",
+      "generate",
+      "contrast",
+      "mechanism",
+      "welfare",
+      "eventually",
+      "commit",
+      "convert",
+      "principle",
+      "prove"
+    ]
+  },
+  {
+    "id": "u17",
+    "no": 17,
+    "chapter": "c4",
+    "title": "高频 161–170",
+    "sub": "161–170 词",
+    "words": [
+      "evaluate",
+      "exhibit",
+      "trend",
+      "visible",
+      "fundamental",
+      "substantial",
+      "obvious",
+      "emphasis",
+      "extend",
+      "adequate"
+    ]
+  },
+  {
+    "id": "u18",
+    "no": 18,
+    "chapter": "c4",
+    "title": "高频 171–180",
+    "sub": "171–180 词",
+    "words": [
+      "conservative",
+      "demonstrate",
+      "ignore",
+      "publish",
+      "outcome",
+      "tend",
+      "diverse",
+      "exceed",
+      "communicate",
+      "dimension"
+    ]
+  },
+  {
+    "id": "u19",
+    "no": 19,
+    "chapter": "c4",
+    "title": "高频 181–190",
+    "sub": "181–190 词",
+    "words": [
+      "assess",
+      "attitude",
+      "involve",
+      "consult",
+      "decline",
+      "facilitate",
+      "adopt",
+      "restore",
+      "eliminate",
+      "neutral"
+    ]
+  },
+  {
+    "id": "u20",
+    "no": 20,
+    "chapter": "c4",
+    "title": "高频 191–200",
+    "sub": "191–200 词",
+    "words": [
+      "artificial",
+      "considerable",
+      "resolve",
+      "proportion",
+      "invest",
+      "suspect",
+      "crucial",
+      "apparent",
+      "recover",
+      "attach"
+    ]
+  },
+  {
+    "id": "u21",
+    "no": 21,
+    "chapter": "c5",
+    "title": "高频 201–210",
+    "sub": "201–210 词",
+    "words": [
+      "approve",
+      "compete",
+      "profession",
+      "rely",
+      "adjust",
+      "preserve",
+      "acquire",
+      "analyze",
+      "relate",
+      "retain"
+    ]
+  },
+  {
+    "id": "u22",
+    "no": 22,
+    "chapter": "c5",
+    "title": "高频 211–220",
+    "sub": "211–220 词",
+    "words": [
+      "distribute",
+      "radical",
+      "coordinate",
+      "construct",
+      "collapse",
+      "argue",
+      "arise",
+      "survive",
+      "reveal",
+      "intense"
+    ]
+  },
+  {
+    "id": "u23",
+    "no": 23,
+    "chapter": "c5",
+    "title": "高频 221–230",
+    "sub": "221–230 词",
+    "words": [
+      "incentive",
+      "assure",
+      "organize",
+      "advocate",
+      "precise",
+      "pursue",
+      "attract",
+      "integrate",
+      "transform",
+      "encounter"
+    ]
+  },
+  {
+    "id": "u24",
+    "no": 24,
+    "chapter": "c5",
+    "title": "高频 231–240",
+    "sub": "231–240 词",
+    "words": [
+      "notion",
+      "deny",
+      "prospect",
+      "assign",
+      "accommodate",
+      "consist",
+      "acknowledge",
+      "consequence",
+      "arbitrary",
+      "reject"
+    ]
+  },
+  {
+    "id": "u25",
+    "no": 25,
+    "chapter": "c5",
+    "title": "高频 241–250",
+    "sub": "241–250 词",
+    "words": [
+      "conclude",
+      "propose",
+      "widespread",
+      "predict",
+      "accomplish",
+      "phenomenon",
+      "employ",
+      "concentrate",
+      "undertake",
+      "restrict"
+    ]
+  },
+  {
+    "id": "u26",
+    "no": 26,
+    "chapter": "c6",
+    "title": "高频 251–260",
+    "sub": "251–260 词",
+    "words": [
+      "justify",
+      "impose",
+      "abandon",
+      "absorb",
+      "accelerate",
+      "accompany",
+      "accumulate",
+      "adapt",
+      "allocate",
+      "ambitious"
+    ]
+  },
+  {
+    "id": "u27",
+    "no": 27,
+    "chapter": "c6",
+    "title": "高频 261–270",
+    "sub": "261–270 词",
+    "words": [
+      "anticipate",
+      "assemble",
+      "attain",
+      "circumstance",
+      "compel",
+      "compensate",
+      "comprise",
+      "confront",
+      "consume",
+      "convince"
+    ]
+  },
+  {
+    "id": "u28",
+    "no": 28,
+    "chapter": "c6",
+    "title": "高频 271–280",
+    "sub": "271–280 词",
+    "words": [
+      "cooperate",
+      "correspond",
+      "derive",
+      "devote",
+      "distinguish",
+      "dominate",
+      "emerge",
+      "enforce",
+      "evolve",
+      "exploit"
+    ]
+  },
+  {
+    "id": "u29",
+    "no": 29,
+    "chapter": "c6",
+    "title": "高频 281–290",
+    "sub": "281–290 词",
+    "words": [
+      "expose",
+      "illustrate",
+      "imply",
+      "inevitable",
+      "innovate",
+      "insist",
+      "inspire",
+      "interpret",
+      "isolate",
+      "motivate"
+    ]
+  },
+  {
+    "id": "u30",
+    "no": 30,
+    "chapter": "c6",
+    "title": "高频 291–300",
+    "sub": "291–300 词",
+    "words": [
+      "negotiate",
+      "occupy",
+      "perceive",
+      "persist",
+      "prohibit",
+      "react",
+      "regulate",
+      "revise",
+      "sustain",
+      "tolerate"
+    ]
+  }
+];
+
+const WORD_MAP = Object.fromEntries(WORDS.map(w => [w.id, w]));
+const UNIT_MAP = Object.fromEntries(UNITS.map(u => [u.id, u]));
+const CHAPTER_MAP = Object.fromEntries(CHAPTERS.map(c => [c.id, c]));
+
+  </script>
+  <script>
+/* ==========================================================
+   词跃 WordLeap · 交互逻辑（原生 JS，无依赖）
+   预览模式：index.html?preview=1&screen=home|quiz|result|words|review|profile
+   ========================================================== */
+(function () {
+  'use strict';
+
+  /* ---------------- 图标 ---------------- */
+  const ICONS = {
+    flame: `<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5Z" fill="currentColor"/><path d="M12 22a4 4 0 0 0 4-4c0-1.9-1.2-3.2-2.6-4.4-.4 1.3-1 2.1-1.8 2.8.2-1.6-.2-3-1.1-4.3-.9 1.6-2.5 3-2.5 5.1A4 4 0 0 0 12 22Z" fill="#fff" opacity=".32"/>`,
+    gem: `<path d="M7 3h10l4 6-9 12L3 9l4-6Z" fill="currentColor"/><path d="M7 3h10l4 6H3l4-6Z" fill="#fff" opacity=".25"/><path d="M9.2 9h5.6L12 21 9.2 9Z" fill="#0B5E8A" opacity=".18"/>`,
+    heart: `<path d="M12 21.2S3.8 16.3 3.8 10.6A4.5 4.5 0 0 1 12 7.6a4.5 4.5 0 0 1 8.2 3c0 5.7-8.2 10.6-8.2 10.6Z" fill="currentColor"/>`,
+    bolt: `<path d="M13.2 2 4.6 13.4h5.9L9.9 22l8.6-11.5h-6L13.2 2Z" fill="currentColor"/>`,
+    check: `<path d="m5 12.8 4.6 4.6L19 6.9" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>`,
+    close: `<path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>`,
+    lock: `<rect x="4.5" y="10" width="15" height="10.5" rx="3" fill="currentColor"/><path d="M8 10V7.6a4 4 0 0 1 8 0V10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>`,
+    star: `<path d="m12 2.8 2.85 5.8 6.4.93-4.63 4.51 1.1 6.37L12 17.4l-5.72 3.01 1.1-6.37L2.75 9.53l6.4-.93L12 2.8Z" fill="currentColor"/>`,
+    speaker: `<path d="M4 9.2h3.4L12.6 5v14L7.4 14.8H4a1 1 0 0 1-1-1v-3.6a1 1 0 0 1 1-1Z" fill="currentColor"/><path d="M16.2 8.6a4.8 4.8 0 0 1 0 6.8M18.9 6a8.6 8.6 0 0 1 0 12" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>`,
+    search: `<circle cx="11" cy="11" r="6.6" stroke="currentColor" stroke-width="2.2"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>`,
+    arrow: `<path d="M4.5 12h14m-5.6-6 6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`,
+    compass: `<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.2"/><path d="m15.6 8.4-2.1 5.1-5.1 2.1 2.1-5.1 5.1-2.1Z" fill="currentColor"/>`,
+    book: `<path d="M4.5 5.4A2.4 2.4 0 0 1 6.9 3h12.6a1 1 0 0 1 1 1v14.2a1 1 0 0 1-1 1H6.9a2.4 2.4 0 0 0-2.4 2.4V5.4Z" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round"/><path d="M4.5 19.6A2.4 2.4 0 0 1 6.9 17.2h13.6" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/><path d="M8.4 7.4h7M8.4 10.6h5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>`,
+    repeat: `<path d="M20 12a8 8 0 1 1-2.34-5.66" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="M20 3.6v5.2h-5.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>`,
+    user: `<circle cx="12" cy="8.2" r="4.1" stroke="currentColor" stroke-width="2.2"/><path d="M4.4 20.2c.7-4 3.6-6.2 7.6-6.2s6.9 2.2 7.6 6.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>`,
+    target: `<circle cx="12" cy="12" r="8.2" stroke="currentColor" stroke-width="2.1"/><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="2.1"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/>`,
+    medal: `<circle cx="12" cy="9" r="5.4" stroke="currentColor" stroke-width="2.1"/><path d="M8.6 13.4 7 21l5-2.4 5 2.4-1.6-7.6" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>`,
+    calendar: `<rect x="3.5" y="5" width="17" height="15.5" rx="3" stroke="currentColor" stroke-width="2.1"/><path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>`,
+    settings: `<circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2.1"/><path d="M19.4 13.5a7.8 7.8 0 0 0 0-3l1.7-1.3-1.9-3.3-2 .8a7.8 7.8 0 0 0-2.6-1.5L14.3 3h-3.8l-.3 2.2a7.8 7.8 0 0 0-2.6 1.5l-2-.8-1.9 3.3L5.4 10.5a7.8 7.8 0 0 0 0 3l-1.7 1.3 1.9 3.3 2-.8a7.8 7.8 0 0 0 2.6 1.5l.3 2.2h3.8l.3-2.2a7.8 7.8 0 0 0 2.6-1.5l2 .8 1.9-3.3-1.7-1.3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>`,
+    info: `<circle cx="12" cy="12" r="8.8" stroke="currentColor" stroke-width="2.1"/><path d="M12 10.8v5.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="7.9" r="1.25" fill="currentColor"/>`,
+    campus: `<path d="m2.6 9.1 9.4-5.2 9.4 5.2-9.4 5.2L2.6 9.1Z" fill="currentColor"/><path d="M6.4 11.4v4.9c0 1.6 2.5 2.9 5.6 2.9s5.6-1.3 5.6-2.9v-4.9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M21.4 9.2v5.6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>`,
+    chip: `<rect x="7" y="7" width="10" height="10" rx="2.4" stroke="currentColor" stroke-width="2.1"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>`,
+    flask: `<path d="M9.5 3h5M10.2 3v5.2L5.3 17a2.6 2.6 0 0 0 2.2 4h9a2.6 2.6 0 0 0 2.2-4l-4.9-8.8V3" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.4 15.4h9.2" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>`,
+    chart: `<path d="M4 20V9.5M10 20V4M16 20v-7M22 20H2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/>`,
+    volume: `<path d="M4 9.2h3.4L12.6 5v14L7.4 14.8H4a1 1 0 0 1-1-1v-3.6a1 1 0 0 1 1-1Z" fill="currentColor"/><path d="M17 9.5a4 4 0 0 1 0 5" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>`
+  };
+
+  function icon(name, cls) {
+    return `<svg class="ico${cls ? ' ' + cls : ''}" viewBox="0 0 24 24" fill="none" aria-hidden="true">${ICONS[name] || ''}</svg>`;
+  }
+
+  /* ---------------- 吉祥物「小跃」 ---------------- */
+  function mascot(cls) {
+    return `
+    <svg class="mascot${cls ? ' ' + cls : ''}" viewBox="0 0 200 212" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="wlBody" x1="100" y1="32" x2="100" y2="184" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#9BEF5E"/><stop offset=".55" stop-color="#63D40C"/><stop offset="1" stop-color="#4FB800"/>
+        </linearGradient>
+        <linearGradient id="wlLeaf" x1="112" y1="4" x2="132" y2="34" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#93ED52"/><stop offset="1" stop-color="#45A800"/>
+        </linearGradient>
+      </defs>
+      <ellipse cx="100" cy="200" rx="54" ry="9" fill="#3E7A0F" opacity=".12"/>
+      <ellipse cx="76" cy="183" rx="14.5" ry="7.5" fill="#45A800"/>
+      <ellipse cx="124" cy="183" rx="14.5" ry="7.5" fill="#45A800"/>
+      <path d="M100 33c37 0 63 27 63 70 0 45-27 76-63 76s-63-31-63-76c0-43 26-70 63-70Z" fill="url(#wlBody)"/>
+      <ellipse cx="100" cy="149" rx="42" ry="32" fill="#B9F281" opacity=".5"/>
+      <path d="M37 127c-6 3-7.5 10-3.5 14" stroke="#45A800" stroke-width="9" stroke-linecap="round"/>
+      <path d="M163 127c6 3 7.5 10 3.5 14" stroke="#45A800" stroke-width="9" stroke-linecap="round"/>
+      <path d="M100 35c0-9 2-16 6-22" stroke="#45A800" stroke-width="5" stroke-linecap="round"/>
+      <path d="M104 15c2-10 12-15 24-12-1 12-11 17-24 12Z" fill="url(#wlLeaf)"/>
+      <path d="M100 24c-8-8-19-8-27 0 8 8 19 9 27 0Z" fill="#6FDB1E"/>
+      <path d="M64 88c4-4.4 11-5.4 16-2.2" stroke="#3E8F00" stroke-width="4" stroke-linecap="round"/>
+      <path d="M136 88c-4-4.4-11-5.4-16-2.2" stroke="#3E8F00" stroke-width="4" stroke-linecap="round"/>
+      <ellipse cx="77" cy="109" rx="16" ry="17" fill="#fff"/>
+      <ellipse cx="123" cy="109" rx="16" ry="17" fill="#fff"/>
+      <ellipse cx="79.5" cy="111.5" rx="7.4" ry="8.4" fill="#2E4512"/>
+      <ellipse cx="120.5" cy="111.5" rx="7.4" ry="8.4" fill="#2E4512"/>
+      <circle cx="82" cy="108" r="2.9" fill="#fff"/>
+      <circle cx="123" cy="108" r="2.9" fill="#fff"/>
+      <ellipse cx="56" cy="136" rx="9" ry="5.4" fill="#FF9B9B" opacity=".5"/>
+      <ellipse cx="144" cy="136" rx="9" ry="5.4" fill="#FF9B9B" opacity=".5"/>
+      <path d="M90 134c4.6 6.6 15.4 6.6 20 0" stroke="#2F6B00" stroke-width="4.4" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  /* ---------------- 存储 ---------------- */
+  const KEY = 'wordleap:v2';
+  const PREVIEW = new URLSearchParams(location.search).get('preview') === '1';
+
+  const SEED = {
+    name: '同学',
+    xp: 0,
+    goal: 50,
+    streak: 1,
+    gems: 120,
+    hearts: 5,
+    learned: 0,
+    accuracy: 0,
+    completed: [],
+    mistakes: {},
+    saved: [],
+    days: [0, 0, 0, 0, 0, 0, 0]
+  };
+
+  const DEMO = {
+    name: 'Dong',
+    xp: 30,
+    goal: 50,
+    streak: 12,
+    gems: 480,
+    hearts: 5,
+    learned: 30,
+    accuracy: 86,
+    completed: ['u01', 'u02', 'u03'],
+    mistakes: { available: 1, access: 2, annual: 1, specific: 1 },
+    saved: ['abandon', 'policy', 'global'],
+    days: [20, 35, 50, 15, 40, 50, 30]
+  };
+
+  function loadStore() {
+    if (PREVIEW) return JSON.parse(JSON.stringify(DEMO));
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (!raw) return JSON.parse(JSON.stringify(SEED));
+      return Object.assign(JSON.parse(JSON.stringify(SEED)), JSON.parse(raw));
+    } catch (e) {
+      return JSON.parse(JSON.stringify(SEED));
+    }
+  }
+  let store = loadStore();
+  function saveStore() {
+    if (PREVIEW) return;
+    try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) { /* 忽略隐私模式 */ }
+  }
+
+  /* ---------------- 工具 ---------------- */
+  const $ = (s, el) => (el || document).querySelector(s);
+  const $$ = (s, el) => Array.from((el || document).querySelectorAll(s));
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const shuffle = (arr) => {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  };
+  const byId = (id) => WORD_MAP[id];
+  const pad2 = (n) => String(n).padStart(2, '0');
+  const unitTag = (u) => `<span class="tag tag-unit">U${pad2(u)}</span>`;
+
+  /* ---------------- 运行时状态 ---------------- */
+  const app = {
+    screen: 'home',
+    filter: 'all',
+    search: '',
+    quiz: null,
+    result: null,
+    preview: false,
+    activeChapter: 'c1'
+  };
+
+  /* ---------------- 通用 UI 片段 ---------------- */
+  function appbar() {
+    return `
+    <header class="appbar">
+      <div class="brand">
+        <div class="logo">跃</div>
+        <div class="brand-txt"><b>词跃</b><span>WordLeap</span></div>
+      </div>
+      <div class="stats">
+        <div class="stat stat-flame" title="连续学习天数">${icon('flame')}<b>${store.streak}</b></div>
+        <div class="stat" title="宝石">${icon('gem')}<b>${store.gems}</b></div>
+        <div class="stat stat-heart" title="生命值">${icon('heart')}<b>${store.hearts}</b></div>
+      </div>
+    </header>`;
+  }
+
+  function greeting() {
+    const h = new Date().getHours();
+    if (h < 6) return '夜深了';
+    if (h < 12) return '早上好';
+    if (h < 18) return '下午好';
+    return '晚上好';
+  }
+
+  const todayIndex = () => (new Date().getDay() + 6) % 7;
+
+  function currentUnit() {
+    return UNITS.find((u) => !store.completed.includes(u.id)) || UNITS[UNITS.length - 1];
+  }
+  function nextUnit(id) {
+    const i = UNITS.findIndex((u) => u.id === id);
+    return i >= 0 && i < UNITS.length - 1 ? UNITS[i + 1] : null;
+  }
+  function dueWords() {
+    return Object.keys(store.mistakes)
+      .filter((id) => WORD_MAP[id])
+      .map((id) => ({ word: WORD_MAP[id], count: store.mistakes[id] }))
+      .sort((a, b) => b.count - a.count);
+  }
+
+  /* ---------------- 首页 ---------------- */
+  function chapterOf(unit) {
+    return CHAPTER_MAP[unit.chapter] || CHAPTERS[0];
+  }
+  function chapterUnits(ch) {
+    return ch.units.map((id) => UNIT_MAP[id]).filter(Boolean);
+  }
+  function firstIncomplete() {
+    return UNITS.findIndex((u) => !store.completed.includes(u.id));
+  }
+  function unitUnlocked(unit) {
+    const fi = firstIncomplete();
+    return fi === -1 || UNITS.findIndex((u) => u.id === unit.id) <= fi;
+  }
+  function chapterUnlocked(ch) {
+    return chapterUnits(ch).some(unitUnlocked);
+  }
+  function chapterDone(ch) {
+    return chapterUnits(ch).filter((u) => store.completed.includes(u.id)).length;
+  }
+
+  function renderHome() {
+    const cur = currentUnit();
+    const ch = chapterOf(cur);
+    const active = CHAPTER_MAP[app.activeChapter] || ch;
+    const units = chapterUnits(active);
+    const pct = Math.min(100, Math.round((store.xp / store.goal) * 100));
+    const nextXp = Math.max(0, store.goal - store.xp);
+    const doneCount = store.completed.length;
+    const todayWord = byId(cur.words[0]);
+    const due = dueWords();
+    const chDone = chapterDone(active);
+    const chPct = Math.round((chDone / units.length) * 100);
+    const chComplete = chDone === units.length;
+
+    mount(`
+    <div class="screen">
+      ${appbar()}
+
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="hero-eyebrow">CET-4 · 四级高频 300 词</span>
+          <h1>${greeting()}，${esc(store.name)}</h1>
+          <p>${nextXp > 0 ? `再学 <b>${nextXp} XP</b> 就完成今天的目标` : '今天的目标已完成，继续保持！'}</p>
+          <div class="goal">
+            <div class="ring" style="--pct:${pct}"><span>${pct}%</span></div>
+            <div class="goal-txt"><b>${store.xp} / ${store.goal} XP</b><span>每日目标</span></div>
+          </div>
+        </div>
+        <div class="hero-mascot">${mascot()}</div>
+      </section>
+
+      <div class="home-grid">
+        <div class="home-main">
+          <button class="course-card" data-act="unit" data-unit="${cur.id}">
+            <div class="course-flag"><span>CET</span><b>4</b></div>
+            <div class="course-info">
+              <span class="course-kicker">第 ${cur.no} 关 · ${ch.title}</span>
+              <h2>${cur.title}</h2>
+              <div class="mini-progress"><span style="width:${chPct}%"></span></div>
+            </div>
+            <div class="course-cta">${icon('arrow')}</div>
+          </button>
+
+          <div class="chapter-mini">
+            <span class="pill pill-green">第 ${active.no} 阶段 · ${active.title}</span>
+            <span class="chapter-mini-info">${active.range} 词 · ${chDone}/${units.length} 关</span>
+          </div>
+
+          ${chapterPath(active)}
+          ${chapterDirectory(active)}
+        </div>
+
+        <aside class="home-aside">
+          <div class="aside-card">
+            <h3>今日单词</h3>
+            <div class="aside-word">
+              <b>${todayWord.w}</b>
+              <div class="ph">${todayWord.ph}${todayWord.pos ? ' · ' + todayWord.pos : ''}</div>
+              <div class="cn">${todayWord.cn}</div>
+              <button class="speak" data-act="speak" data-word="${todayWord.w}" aria-label="朗读">${icon('speaker')}</button>
+            </div>
+          </div>
+          <div class="aside-card">
+            <h3>连续打卡</h3>
+            <div class="streak-line"><b>${store.streak}</b><span>天 · 保持住！</span></div>
+            <div class="mini-bars">
+              ${store.days.map((v) => {
+                const max = Math.max.apply(null, store.days) || 1;
+                return `<i class="${v > 0 ? 'on' : ''}" style="height:${Math.max(12, Math.round((v / max) * 100))}%"></i>`;
+              }).join('')}
+            </div>
+          </div>
+          <div class="aside-card">
+            <h3>学习小贴士</h3>
+            <p class="aside-tip">${due.length ? `错词本里还有 ${due.length} 个词在等你，复习比新学更划算。` : '每关 10 个词，约 3 分钟。先过一遍，再靠复习巩固。'}</p>
+          </div>
+        </aside>
+      </div>
+    </div>`);
+  }
+
+  const X_OFFSETS = [0, -58, 0, -58, 0];
+
+  function chapterPath(ch) {
+    const units = chapterUnits(ch);
+    const cur = currentUnit();
+    const startY = 58;
+    const gap = 96;
+    const nodes = units.map((u, i) => ({
+      u,
+      x: X_OFFSETS[i % X_OFFSETS.length],
+      y: startY + i * gap
+    }));
+    const height = startY + (units.length - 1) * gap + 50;
+
+    const nodeHTML = nodes.map(({ u, x, y }) => {
+      const done = store.completed.includes(u.id);
+      const isCur = cur.id === u.id && !done;
+      const locked = !done && !isCur;
+      const ic = done ? 'check' : locked ? 'lock' : 'book';
+      const cls = done ? 'node node--done' : isCur ? 'node node--current' : 'node node--locked';
+      return `
+        <button class="${cls}" style="--x:${x}px;--y:${y}px" data-act="unit" data-unit="${u.id}" ${locked ? 'data-locked="1"' : ''} aria-label="第 ${u.no} 关 ${u.title}" title="第 ${u.no} 关 · ${u.title}">
+          ${isCur ? '<span class="node-start">开始</span>' : icon(ic)}
+          ${!isCur ? `<span class="node-num">${u.no}</span>` : ''}
+        </button>
+      `;
+    }).join('');
+
+    const curNode = nodes.find(({ u }) => cur.id === u.id && !store.completed.includes(u.id));
+
+    return `
+      <div class="path-map" style="height:${height}px">
+        ${nodeHTML}
+        ${curNode ? `<div class="path-mascot" style="--x:${curNode.x}px;--y:${curNode.y}px">${mascot()}</div>` : ''}
+      </div>`;
+  }
+
+  function chapterDirectory(active) {
+    return `
+      <div class="section-title">
+        <h2>课程目录</h2>
+        <span>6 个阶段 · 30 关</span>
+      </div>
+      <div class="chapter-list">
+        ${CHAPTERS.map((ch) => {
+          const done = chapterDone(ch);
+          const unlocked = chapterUnlocked(ch);
+          const isActive = ch.id === active.id;
+          const finished = done === ch.units.length;
+          return `
+            <button class="chapter-row${isActive ? ' active' : ''}${unlocked ? '' : ' locked'}" data-act="chapter" data-chapter="${ch.id}" ${unlocked ? '' : 'data-locked="1"'}>
+              <span class="chapter-no">${pad2(ch.no)}</span>
+              <span class="chapter-main">
+                <b>${ch.title}</b>
+                <span>${ch.range} 词 · ${done}/${ch.units.length} 关</span>
+              </span>
+              <span class="chapter-state">
+                ${!unlocked ? icon('lock') : finished ? icon('check') : `${done}/${ch.units.length}`}
+              </span>
+              <span class="chapter-arrow">${unlocked ? icon('arrow') : ''}</span>
+            </button>`;
+        }).join('')}
+      </div>`;
+  }
+
+  /* ---------------- 答题 ---------------- */
+  function buildOptions(word, kind, pool) {
+    const others = pool.filter((w) => w.id !== word.id);
+    const distract = shuffle(others).slice(0, 3);
+    const values = [kind === 'cn' ? word.cn : word.w].concat(
+      distract.map((w) => (kind === 'cn' ? w.cn : w.w))
+    );
+    const options = shuffle(values);
+    return { options, answer: options.indexOf(kind === 'cn' ? word.cn : word.w) };
+  }
+
+  function makeQuestion(word, type, pool) {
+    if (type === 'cloze' && !word.cloze) type = 'en2cn';
+    if (type === 'spell') {
+      return {
+        type,
+        word,
+        title: '根据中文拼出单词',
+        pill: '拼写题'
+      };
+    }
+    if (type === 'cloze') {
+      const re = new RegExp(`\\b${escRe(word.w)}\\b`, 'i');
+      const sentence = word.ex.replace(re, '<span class="blank">_____</span>');
+      const { options, answer } = buildOptions(word, 'en', pool);
+      return { type, word, title: '选词填空，补全句子', pill: '选词填空', sentence, options, answer };
+    }
+    if (type === 'cn2en') {
+      const { options, answer } = buildOptions(word, 'en', pool);
+      return { type, word, title: '选择正确的英文单词', pill: '中译英', options, answer };
+    }
+    const { options, answer } = buildOptions(word, 'cn', pool);
+    return { type, word, title: '选择正确的中文意思', pill: '英译中', options, answer };
+  }
+
+  function startQuiz(opts) {
+    const unit = opts.unitId ? UNIT_MAP[opts.unitId] : null;
+    const ids = opts.wordIds || (unit ? unit.words : []);
+    const words = ids.map(byId).filter(Boolean);
+    if (!words.length) {
+      toast('还没有要复习的单词');
+      return;
+    }
+    const pool = WORDS;
+    const pattern = ['en2cn', 'cloze', 'cn2en', 'en2cn', 'spell', 'cloze', 'cn2en', 'en2cn', 'spell', 'cloze'];
+    const questions = words.map((w, i) => makeQuestion(w, pattern[i % pattern.length], pool));
+    app.quiz = {
+      unitId: unit ? unit.id : null,
+      title: unit ? unit.title : '错词复习',
+      chapter: unit ? unit.chapter : null,
+      wordIds: ids.slice(),
+      questions,
+      qi: 0,
+      picked: null,
+      checked: false,
+      input: '',
+      correct: 0,
+      combo: 0,
+      maxCombo: 0,
+      xp: 0,
+      hearts: 5,
+      wrong: [],
+      preview: !!opts.preview || PREVIEW
+    };
+    go('quiz');
+  }
+
+  function curQ() {
+    return app.quiz.questions[app.quiz.qi];
+  }
+
+  function renderQuiz() {
+    if (!app.quiz) { go('home'); return; }
+    const q = app.quiz;
+    const question = curQ();
+    const total = q.questions.length;
+    const pct = Math.round(((q.qi + (q.checked ? 1 : 0)) / total) * 100);
+    const isLast = q.qi === total - 1;
+
+    mount(`
+    <div class="quiz">
+      <header class="quiz-top">
+        <button class="icon-btn" data-act="quit" aria-label="退出">${icon('close')}</button>
+        <div class="qbar"><span style="width:${Math.max(4, pct)}%"></span></div>
+        <div class="hearts">${icon('heart')}<b>${q.hearts}</b></div>
+      </header>
+
+      <div class="quiz-body">
+        <div class="qmeta">
+          <span class="pill pill-ghost">${question.pill}</span>
+          ${q.combo >= 2 ? `<span class="combo">${icon('flame')}连击 ×${q.combo}</span>` : `<span class="qcount">第 ${q.qi + 1} / ${total} 题</span>`}
+        </div>
+        <h2 class="qtitle">${question.title}</h2>
+        ${questionBlock(question)}
+        ${question.type === 'spell' ? spellBlock(question) : optionsBlock(question)}
+      </div>
+
+      ${feedbackBlock(question, isLast)}
+    </div>`);
+  }
+
+  function questionBlock(q) {
+    const w = q.word;
+    const tagRow = `<div class="tag-row">${unitTag(w.u)}<span class="pos">${w.pos}</span></div>`;
+    if (q.type === 'en2cn') {
+      return `
+        <div class="qword-block">
+          ${tagRow}
+          <div class="qword">${w.w}</div>
+          <div class="qsub">
+            <button class="speak" data-act="speak" data-word="${w.w}" aria-label="朗读">${icon('speaker')}</button>
+            <span>${w.ph}</span>
+          </div>
+        </div>`;
+    }
+    if (q.type === 'cn2en') {
+      return `
+        <div class="qword-block">
+          ${tagRow}
+          <div class="qcn">${w.cn}</div>
+          <div class="qsub"><span>${w.ph}</span></div>
+        </div>`;
+    }
+    if (q.type === 'cloze') {
+      return `
+        <div class="cloze-card">
+          <div class="cloze-sentence">${q.sentence}</div>
+          <div class="cloze-hint">提示：${w.pos} · 四级高频</div>
+        </div>`;
+    }
+    return `
+      <div class="qword-block">
+        ${tagRow}
+        <div class="qcn">${w.cn}</div>
+        <div class="qsub">
+          <button class="speak" data-act="speak" data-word="${w.w}" aria-label="朗读">${icon('speaker')}</button>
+          <span>${w.ph}</span>
+        </div>
+      </div>`;
+  }
+
+  function optionsBlock(q) {
+    const picked = app.quiz.picked;
+    const checked = app.quiz.checked;
+    return `<div class="options">${q.options.map((opt, i) => {
+      let cls = 'option';
+      if (q.type !== 'en2cn') cls += ' opt-en';
+      let mark = '';
+      if (checked) {
+        if (i === q.answer) {
+          cls += ' is-correct';
+          mark = icon('check');
+        } else if (i === picked) {
+          cls += ' is-wrong';
+          mark = icon('close');
+        } else {
+          cls += ' is-dim';
+        }
+      } else if (i === picked) {
+        cls += ' is-selected';
+      }
+      return `
+        <button class="${cls}" data-act="option" data-index="${i}" ${checked ? 'aria-disabled="true"' : ''}>
+          <span class="opt-key">${String.fromCharCode(65 + i)}</span>
+          <span class="opt-text">${esc(opt)}</span>
+          <span class="opt-mark">${mark}</span>
+        </button>`;
+    }).join('')}</div>`;
+  }
+
+  function spellBlock(q) {
+    const w = q.word;
+    const state = app.quiz.checked ? (app.quiz.lastOk ? ' is-correct' : ' is-wrong') : '';
+    return `
+      <div class="spell-wrap">
+        <input id="spell-input" class="spell-input${state}" type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+          placeholder="输入英文单词…" value="${esc(app.quiz.input)}" ${app.quiz.checked ? 'readonly' : ''}>
+        <div class="spell-hint">
+          <span>共 <b>${w.w.length}</b> 个字母</span>
+          <span>首字母 <b>${w.w[0].toUpperCase()}</b></span>
+        </div>
+      </div>`;
+  }
+
+  function highlightExample(w) {
+    if (!w.ex) return '';
+    const re = new RegExp(`\\b${escRe(w.w)}\\b`, 'i');
+    return w.ex.replace(re, (m) => `<b>${m}</b>`);
+  }
+
+  function feedbackBlock(question, isLast) {
+    const q = app.quiz;
+    if (!q.checked) {
+      const needPick = question.type !== 'spell' && q.picked === null;
+      return `
+        <footer class="quiz-foot idle">
+          <button class="btn btn-green btn-block" data-act="check" ${needPick ? 'disabled' : ''}>检查</button>
+          <div class="foot-note">${question.type === 'spell' ? '拼写不区分大小写，Enter 也可以提交' : '选择答案后检查 · 答错会进入错词本'}</div>
+        </footer>`;
+    }
+    const w = question.word;
+    const isRight = !!q.lastOk;
+
+    if (isRight) {
+      return `
+        <footer class="quiz-foot is-right" role="status">
+          <div class="fb-head">
+            <span class="fb-badge ok">${icon('check')}</span>
+            <h3>太棒了！</h3>
+            ${q.combo >= 2 ? `<span class="fb-combo">连击 ×${q.combo}</span>` : ''}
+            <span class="fb-xp">+3 XP</span>
+          </div>
+          <p class="fb-word"><b>${w.w}</b> <span>${w.cn}</span></p>
+          ${w.ex ? `<p class="fb-ex">${highlightExample(w)}</p>` : ''}
+          <button class="btn btn-green btn-block" data-act="next">${isLast ? '查看结果' : '继续'}</button>
+        </footer>`;
+    }
+    return `
+      <footer class="quiz-foot is-wrong" role="status">
+        <div class="fb-head">
+          <span class="fb-badge bad">${icon('close')}</span>
+          <h3>差一点！</h3>
+          <span class="fb-xp" style="color:#c53030;background:#fff">${q.combo === 0 ? '连击中断' : '再试一次'}</span>
+        </div>
+        <p class="fb-answer">正确答案：<b>${w.w}</b> ${w.cn}</p>
+        ${w.ex ? `<p class="fb-ex">${highlightExample(w)}</p>` : ''}
+        ${w.exCn ? `<p class="fb-excn">${w.exCn}</p>` : ''}
+        <button class="btn btn-red btn-block" data-act="next">${isLast ? '查看结果' : '继续'}</button>
+      </footer>`;
+  }
+
+  function checkAnswer() {
+    const q = app.quiz;
+    if (!q || q.checked) return;
+    const question = curQ();
+    let ok;
+    if (question.type === 'spell') {
+      const val = (q.input || '').trim();
+      if (!val) { toast('先把单词拼出来吧'); return; }
+      ok = val.toLowerCase() === question.word.w.toLowerCase();
+      q.picked = val.toLowerCase();
+    } else {
+      if (q.picked === null) { toast('先选一个答案吧'); return; }
+      ok = q.picked === question.answer;
+    }
+    q.checked = true;
+    q.lastOk = ok;
+    if (ok) {
+      q.correct++;
+      q.combo++;
+      q.maxCombo = Math.max(q.maxCombo, q.combo);
+      q.xp += 3;
+    } else {
+      q.combo = 0;
+      q.hearts = Math.max(0, q.hearts - 1);
+      q.wrong.push(question.word.id);
+    }
+    renderQuiz();
+  }
+
+  function nextQuestion() {
+    const q = app.quiz;
+    if (!q || !q.checked) return;
+    if (q.qi < q.questions.length - 1) {
+      q.qi++;
+      q.picked = null;
+      q.checked = false;
+      q.input = '';
+      renderQuiz();
+      window.scrollTo(0, 0);
+      return;
+    }
+    finishQuiz();
+  }
+
+  function finishQuiz() {
+    const q = app.quiz;
+    const total = q.questions.length;
+    const pct = Math.round((q.correct / total) * 100);
+    const perfect = q.correct === total;
+    const passed = q.correct / total >= 0.6;
+    const xpEarned = q.correct * 3 + (perfect ? 5 : 0);
+    const next = q.unitId ? nextUnit(q.unitId) : null;
+
+    if (!q.preview) {
+      store.xp += xpEarned;
+      store.accuracy = store.accuracy ? Math.round((store.accuracy * 4 + pct) / 5) : pct;
+      store.days[todayIndex()] = (store.days[todayIndex()] || 0) + xpEarned;
+      if (q.unitId && passed && !store.completed.includes(q.unitId)) {
+        store.completed.push(q.unitId);
+        store.learned += q.questions.length;
+      }
+      q.questions.forEach((item) => {
+        const id = item.word.id;
+        if (q.wrong.includes(id)) store.mistakes[id] = (store.mistakes[id] || 0) + 1;
+        else delete store.mistakes[id];
+      });
+      saveStore();
+      renderChrome();
+    }
+
+    app.result = {
+      total,
+      correct: q.correct,
+      pct,
+      xpEarned,
+      maxCombo: q.maxCombo,
+      wrong: q.wrong.map(byId).filter(Boolean),
+      title: q.title,
+      chapter: q.chapter,
+      unitId: q.unitId,
+      wordIds: q.wordIds,
+      passed,
+      nextId: passed && next ? next.id : null,
+      preview: q.preview
+    };
+    go('result');
+  }
+
+  /* ---------------- 结算 ---------------- */
+  function renderResult() {
+    if (!app.result) { go('home'); return; }
+    const r = app.result;
+    const passed = r.passed !== false;
+    const isReview = !r.unitId;
+    const confettiColors = ['#58cc02', '#1cb0f6', '#ffc800', '#ce82ff', '#ff9600', '#ff4b4b'];
+    const confetti = Array.from({ length: 14 }, (_, i) => {
+      const left = 8 + ((i * 37) % 84);
+      const top = 4 + ((i * 19) % 46);
+      return `<i style="left:${left}%;top:${top}%;background:${confettiColors[i % 6]};animation-delay:${(i % 7) * 0.18}s;transform:rotate(${i * 27}deg)"></i>`;
+    }).join('');
+
+    const afterXp = r.preview ? 45 : store.xp;
+    const goalPct = Math.min(100, Math.round((afterXp / store.goal) * 100));
+    const remainXp = Math.max(0, store.goal - afterXp);
+
+    const nextData = r.nextId ? UNIT_MAP[r.nextId] : null;
+    const wrongHTML = r.wrong.length
+      ? `<section class="review-card">
+          <div class="review-card-head"><h3>错词回顾</h3><span>已加入错词本</span></div>
+          ${r.wrong.slice(0, 3).map((w) => `
+            <div class="review-row">
+              <div class="rw"><b>${w.w}</b><span>${w.cn}</span></div>
+              <button class="speak" data-act="speak" data-word="${w.w}" aria-label="朗读">${icon('speaker')}</button>
+            </div>`).join('')}
+        </section>`
+      : `<div class="perfect-card">
+          ${icon('star')}
+          <div><b>全对通关，太强了！</b><p>这一关的单词已经稳稳记住，去挑战下一关吧。</p></div>
+        </div>`;
+
+    mount(`
+      <div class="result">
+        <header class="result-top">
+          <span class="pill pill-green">${r.unitId ? '本关结算' : '复习结算'}</span>
+          <button class="icon-btn" data-act="nav" data-screen="home" aria-label="回到首页">${icon('close')}</button>
+        </header>
+
+        <div class="result-hero">
+          <div class="confetti">${confetti}</div>
+          <div class="result-mascot">${mascot()}</div>
+          <h1>${passed ? (isReview ? '复习完成！' : '本关完成！') : '再来一次吧'}</h1>
+          <p class="result-sub">${passed ? `${esc(r.title)} · ${r.total} 个单词` : `正确率 ${r.pct}%，达到 60% 就能通关`}</p>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-tile t-green">
+            <div class="stat-tile-icon">${icon('target')}</div>
+            <b>${r.pct}%</b><small>正确率</small>
+          </div>
+          <div class="stat-tile t-yellow">
+            <div class="stat-tile-icon">${icon('bolt')}</div>
+            <b>+${r.xpEarned}</b><small>获得经验</small>
+          </div>
+          <div class="stat-tile t-orange">
+            <div class="stat-tile-icon">${icon('flame')}</div>
+            <b>${r.maxCombo}</b><small>最高连击</small>
+          </div>
+        </div>
+
+        ${wrongHTML}
+
+        <div class="goal-card">
+          <div class="goal-card-head"><b>今日目标</b><span>${afterXp} / ${store.goal} XP</span></div>
+          <div class="mini-progress"><span style="width:${goalPct}%"></span></div>
+          <p>${remainXp > 0 ? `再得 ${remainXp} XP 就达标，继续保持！` : '今日目标已达成，太棒了！'}</p>
+        </div>
+
+        ${nextData ? `<div class="next-card">
+          <div class="next-copy"><span>下一关</span><b>${nextData.title}</b><small>${nextData.sub} · 约 3 分钟</small></div>
+          <span class="next-arrow">${icon('arrow')}</span>
+        </div>` : ''}
+
+        <div class="result-actions">
+          ${passed
+            ? (r.nextId
+              ? `<button class="btn btn-green btn-block" data-act="result-next">继续下一关 ${icon('arrow')}</button>`
+              : `<button class="btn btn-green btn-block" data-act="result-next">返回学习地图 ${icon('arrow')}</button>`)
+            : `<button class="btn btn-green btn-block" data-act="result-again">再练一次 ${icon('repeat')}</button>`}
+          ${passed
+            ? `<button class="btn btn-white btn-block" data-act="result-again">再练一次</button>`
+            : `<button class="btn btn-white btn-block" data-act="result-next">返回学习地图</button>`}
+        </div>
+      </div>`);
+  }
+
+  /* ---------------- 词库 ---------------- */
+  function filteredWords() {
+    let arr = WORDS.slice();
+    if (app.filter === 'saved') arr = arr.filter((w) => store.saved.includes(w.id));
+    if (app.filter === 'mistakes') arr = arr.filter((w) => store.mistakes[w.id]);
+    if (app.filter === 'new') arr = arr.filter((w) => !store.completed.includes(UNITS[w.u - 1].id));
+    const q = app.search.trim().toLowerCase();
+    if (q) {
+      arr = arr.filter((w) => w.w.toLowerCase().includes(q) || w.cn.includes(q));
+    }
+    return arr;
+  }
+
+  function wordRowsHTML() {
+    const list = filteredWords();
+    if (!list.length) {
+      return `<div class="empty">${mascot()}<b>没找到这个单词</b><span>试试换个拼写，或切到「全部」看看</span></div>`;
+    }
+    return list.map((w) => {
+      const saved = store.saved.includes(w.id);
+      return `
+        <div class="word-row">
+          <div class="word-main">
+            <div class="word-line"><b>${w.w}</b>${unitTag(w.u)}</div>
+            <div class="word-ph">${w.ph}${w.ph ? ' · ' : ''}${w.pos}</div>
+            <div class="word-cn">${w.cn}</div>
+          </div>
+          <button class="icon-btn" data-act="speak" data-word="${w.w}" aria-label="朗读 ${w.w}">${icon('speaker')}</button>
+          <button class="star-btn ${saved ? 'on' : ''}" data-act="star" data-word="${w.id}" aria-label="收藏">${icon('star')}</button>
+        </div>`;
+    }).join('');
+  }
+
+  function renderWords() {
+    const counts = {
+      all: WORDS.length,
+      new: WORDS.filter((w) => !store.completed.includes(UNITS[w.u - 1].id)).length,
+      mistakes: WORDS.filter((w) => store.mistakes[w.id]).length,
+      saved: store.saved.length
+    };
+    const chips = [
+      ['all', '全部'],
+      ['new', '未学'],
+      ['mistakes', '生词'],
+      ['saved', '收藏']
+    ].map(([id, label]) => `
+      <button class="chip ${app.filter === id ? 'active' : ''}" data-act="filter" data-filter="${id}">
+        ${label}<b>${counts[id]}</b>
+      </button>`).join('');
+
+    mount(`
+      <div class="screen">
+        <header class="page-head">
+          <div>
+            <span class="page-kicker">Vocabulary</span>
+            <h1>词库</h1>
+          </div>
+          <span class="count-badge">${WORDS.length} 词</span>
+        </header>
+
+        <div class="search">
+          ${icon('search')}
+          <input id="word-search" type="text" placeholder="搜索单词或中文释义" value="${esc(app.search)}" autocomplete="off">
+          <button id="search-clear" class="search-clear" data-act="clear-search" style="display:${app.search ? 'grid' : 'none'}" aria-label="清空">×</button>
+        </div>
+
+        <div class="chips">${chips}</div>
+        <div class="word-list" id="word-list">${wordRowsHTML()}</div>
+      </div>`);
+  }
+
+  function applyWordFilter() {
+    const list = $('#word-list');
+    if (list) list.innerHTML = wordRowsHTML();
+    const clear = $('#search-clear');
+    if (clear) clear.style.display = app.search ? 'grid' : 'none';
+  }
+
+  /* ---------------- 复习 ---------------- */
+  function renderReview() {
+    const due = dueWords();
+    const total = due.length;
+    mount(`
+      <div class="screen">
+        <header class="page-head">
+          <div>
+            <span class="page-kicker">Review</span>
+            <h1>复习</h1>
+          </div>
+          <span class="count-badge">${total} 词待复习</span>
+        </header>
+
+        <section class="review-hero">
+          <div class="review-copy">
+            <span class="pill pill-blue">今日复习</span>
+            <h2>趁热打铁，<br>把模糊的词捡回来</h2>
+            <p>按错误次数排序，先复习最不熟的词，每次 3 分钟。</p>
+          </div>
+          <div class="review-badge"><b>${total}</b><span>待复习</span></div>
+        </section>
+
+        <button class="btn btn-blue btn-block" data-act="review-start" ${total ? '' : 'disabled'}>
+          ${total ? `开始复习 · ${total} 个词` : '暂无待复习单词'}
+        </button>
+
+        <div class="section-title">
+          <h2>错词本</h2>
+          <span>${total ? '按错误次数排序' : '干干净净'}</span>
+        </div>
+
+        ${due.length ? due.map(({ word, count }) => `
+          <div class="mistake-row">
+            <div class="mk-icon">×${count}</div>
+            <div class="mk-main"><b>${word.w}</b><span>${word.cn}</span></div>
+            <button class="speak" data-act="speak" data-word="${word.w}" aria-label="朗读">${icon('speaker')}</button>
+          </div>`).join('') : `<div class="empty">${mascot()}<b>错词本是空的</b><span>答错的词会自动收进来，复习后再练一次</span></div>`}
+
+        <div class="tip-card">
+          ${icon('info')}
+          <div>
+            <b>为什么复习比新学更划算？</b>
+            <p>遗忘曲线显示，学完 24 小时内复习一次，记忆留存率能提升一倍以上。</p>
+          </div>
+        </div>
+      </div>`);
+  }
+
+  /* ---------------- 我的 ---------------- */
+  function renderProfile() {
+    const maxDay = Math.max.apply(null, store.days) || 1;
+    const days = ['一', '二', '三', '四', '五', '六', '日'];
+    const ti = todayIndex();
+    mount(`
+      <div class="screen">
+        <header class="page-head">
+          <div>
+            <span class="page-kicker">Profile</span>
+            <h1>我的</h1>
+          </div>
+          <button class="icon-btn" data-act="toast" data-msg="设置页还在框架阶段" aria-label="设置">${icon('settings')}</button>
+        </header>
+
+        <section class="profile-card">
+          <div class="avatar">${mascot()}</div>
+          <div class="profile-main">
+            <h2>${esc(store.name)} 同学</h2>
+            <p>已加入 ${store.streak} 天 · 目标：CET-4 通过</p>
+            <span class="level-badge">${icon('star')} Lv.3 词汇学徒</span>
+          </div>
+        </section>
+
+        <div class="course-progress">
+          <div class="course-progress-head">
+            <b>四级高频 300 词</b>
+            <span>${store.completed.length}/${UNITS.length} 关</span>
+          </div>
+          <div class="mini-progress"><span style="width:${Math.round((store.completed.length / UNITS.length) * 100)}%"></span></div>
+          <p>已学 ${store.learned} 词 · 还剩 ${Math.max(0, WORDS.length - store.learned)} 词</p>
+        </div>
+
+        <div class="stat-strip">
+          <div class="stat-cell"><b>${store.streak}</b><span>连续天数</span></div>
+          <div class="stat-cell"><b>${store.learned}</b><span>已学单词</span></div>
+          <div class="stat-cell"><b>${store.accuracy ? store.accuracy + '%' : '—'}</b><span>最近正确率</span></div>
+        </div>
+
+        <section class="chart-card">
+          <div class="chart-head"><h3>本周学习</h3><span>共 ${store.days.reduce((a, b) => a + b, 0)} XP</span></div>
+          <div class="bars">
+            ${store.days.map((v, i) => `
+              <div class="bar-wrap ${i === ti ? 'today' : ''}">
+                <div class="bar ${v > 0 ? 'on' : ''} ${i === ti ? 'today' : ''}" style="height:${Math.max(4, Math.round((v / maxDay) * 100))}%"></div>
+                <span>${days[i]}</span>
+              </div>`).join('')}
+          </div>
+        </section>
+
+        <div class="badges">
+          <div class="badge ${store.streak >= 7 ? 'on' : ''}"><div class="badge-ico">${icon('flame')}</div><b>连续 7 天</b><span>${store.streak >= 7 ? '已达成' : `还差 ${7 - store.streak} 天`}</span></div>
+          <div class="badge ${store.learned >= 100 ? 'on' : ''}"><div class="badge-ico">${icon('star')}</div><b>词汇新手</b><span>学完 100 词</span></div>
+          <div class="badge"><div class="badge-ico">${icon('medal')}</div><b>满分通关</b><span>单关全对</span></div>
+        </div>
+
+        <div class="settings">
+          <button class="setting-row" data-act="toast" data-msg="每日目标将在正式版开放">${icon('target')}每日目标<span class="val">${store.goal} XP</span></button>
+          <button class="setting-row" data-act="toast" data-msg="发音设置将在正式版开放">${icon('volume')}单词发音<span class="val">美式</span></button>
+          <button class="setting-row" data-act="reset">${icon('repeat')}重置学习进度<span class="val">清空</span></button>
+        </div>
+      </div>`);
+  }
+
+  /* ---------------- 侧栏 / 标签栏 ---------------- */
+  function renderChrome() {
+    const due = dueWords().length;
+    $('#rail').innerHTML = `
+      <div class="rail-brand">
+        <div class="logo">跃</div>
+        <div><b>词跃</b><span>WordLeap</span></div>
+      </div>
+      <nav class="rail-nav">
+        <button class="rail-item" data-act="nav" data-screen="home">${icon('compass')}学习路径</button>
+        <button class="rail-item" data-act="nav" data-screen="words">${icon('book')}我的词库<span class="rail-count">${WORDS.length}</span></button>
+        <button class="rail-item" data-act="nav" data-screen="review">${icon('repeat')}今日复习<span class="rail-count">${due}</span></button>
+        <button class="rail-item" data-act="nav" data-screen="profile">${icon('user')}我的</button>
+      </nav>
+      <div class="rail-foot">
+        <div class="rail-goal">
+          <p>今日目标 · ${store.xp} / ${store.goal} XP</p>
+          <div class="streak-line"><b>${store.streak}</b><span>天连续学习</span></div>
+          <div class="mini-progress"><span style="width:${Math.min(100, Math.round((store.xp / store.goal) * 100))}%"></span></div>
+        </div>
+        <button class="rail-reset" data-act="reset">重置学习进度</button>
+        <div class="rail-version">300 词 · 30 关 · 进度保存在本地</div>
+      </div>`;
+
+    $('#tabbar').innerHTML = `
+      <button class="tab" data-act="nav" data-screen="home"><span class="tab-ico">${icon('compass')}</span>学习</button>
+      <button class="tab" data-act="nav" data-screen="words"><span class="tab-ico">${icon('book')}</span>词库</button>
+      <button class="tab" data-act="nav" data-screen="review"><span class="tab-ico">${icon('repeat')}</span>复习</button>
+      <button class="tab" data-act="nav" data-screen="profile"><span class="tab-ico">${icon('user')}</span>我的</button>`;
+    syncNav(app.screen);
+  }
+
+  function syncNav(screen) {
+    const active = screen === 'quiz' || screen === 'result' ? 'home' : screen;
+    $$('[data-screen]').forEach((el) => {
+      if (el.classList.contains('tab') || el.classList.contains('rail-item')) {
+        el.classList.toggle('active', el.dataset.screen === active);
+      }
+    });
+  }
+
+  /* ---------------- 路由 ---------------- */
+  function mount(html) {
+    $('#screen').innerHTML = html;
+  }
+
+  function go(screen) {
+    app.screen = screen;
+    document.body.classList.toggle('focus-mode', screen === 'quiz' || screen === 'result');
+    syncNav(screen);
+    if (screen === 'home') {
+      const cur = currentUnit();
+      app.activeChapter = chapterOf(cur).id;
+      renderHome();
+    }
+    else if (screen === 'words') renderWords();
+    else if (screen === 'review') renderReview();
+    else if (screen === 'profile') renderProfile();
+    else if (screen === 'quiz') renderQuiz();
+    else if (screen === 'result') renderResult();
+    window.scrollTo(0, 0);
+  }
+
+  /* ---------------- 弹层 / Toast ---------------- */
+  let toastTimer = null;
+  function toast(msg) {
+    const el = $('#toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 1800);
+  }
+
+  function openModal(opts) {
+    const layer = $('#layer');
+    layer.innerHTML = `
+      <div class="modal-mask" data-act="close-modal"></div>
+      <div class="modal">
+        ${opts.mascot !== false ? mascot() : ''}
+        <h3>${opts.title}</h3>
+        <p>${opts.text || ''}</p>
+        <div class="modal-actions">
+          ${(opts.actions || []).map((a) => `
+            <button class="btn ${a.cls || 'btn-white'} btn-block" data-act="${a.act}" ${a.value ? `data-value="${a.value}"` : ''}>${a.label}</button>`).join('')}
+        </div>
+      </div>`;
+    layer.classList.add('open');
+  }
+
+  function closeModal() {
+    $('#layer').classList.remove('open');
+    $('#layer').innerHTML = '';
+  }
+
+  /* ---------------- 发音 ---------------- */
+  function speak(text) {
+    if (!('speechSynthesis' in window)) {
+      toast('当前浏览器不支持朗读');
+      return;
+    }
+    try {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      u.rate = 0.86;
+      const voices = window.speechSynthesis.getVoices();
+      const v = voices.find((x) => /en[-_]US/i.test(x.lang)) || voices.find((x) => /^en/i.test(x.lang));
+      if (v) u.voice = v;
+      window.speechSynthesis.speak(u);
+    } catch (e) {
+      toast('朗读失败，请检查系统语音');
+    }
+  }
+
+  /* ---------------- 交互 ---------------- */
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('[data-act]');
+    if (!el) return;
+    const act = el.dataset.act;
+
+    if (act === 'nav') {
+      if (app.screen === 'quiz' && app.quiz && !app.quiz.checked && app.quiz.qi >= 0) {
+        confirmQuit();
+        return;
+      }
+      go(el.dataset.screen);
+    } else if (act === 'chapter') {
+      if (el.dataset.locked) {
+        toast('完成前一阶段后解锁');
+        return;
+      }
+      app.activeChapter = el.dataset.chapter;
+      renderHome();
+      setTimeout(() => {
+        const banner = $('.chapter-mini');
+        if (banner) banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 30);
+    } else if (act === 'unit') {
+      if (el.dataset.locked) {
+        toast('先完成前面的关卡，再解锁这里');
+        return;
+      }
+      startQuiz({ unitId: el.dataset.unit });
+    } else if (act === 'option') {
+      if (!app.quiz || app.quiz.checked) return;
+      app.quiz.picked = Number(el.dataset.index);
+      updateOptionUI();
+    } else if (act === 'check') {
+      checkAnswer();
+    } else if (act === 'next') {
+      nextQuestion();
+    } else if (act === 'quit') {
+      confirmQuit();
+    } else if (act === 'speak') {
+      speak(el.dataset.word);
+    } else if (act === 'star') {
+      const id = el.dataset.word;
+      const i = store.saved.indexOf(id);
+      if (i >= 0) store.saved.splice(i, 1);
+      else store.saved.push(id);
+      saveStore();
+      el.classList.toggle('on', store.saved.includes(id));
+      const chip = $$('.chip').find((c) => c.dataset.filter === 'saved');
+      if (chip) chip.innerHTML = `收藏<b>${store.saved.length}</b>`;
+      if (app.filter === 'saved') renderWords();
+      toast(store.saved.includes(id) ? '已加入收藏' : '已取消收藏');
+    } else if (act === 'filter') {
+      app.filter = el.dataset.filter;
+      renderWords();
+    } else if (act === 'clear-search') {
+      app.search = '';
+      const input = $('#word-search');
+      if (input) { input.value = ''; input.focus(); }
+      applyWordFilter();
+    } else if (act === 'review-start') {
+      const ids = dueWords().map((x) => x.word.id);
+      startQuiz({ wordIds: ids });
+    } else if (act === 'result-next') {
+      const r = app.result;
+      if (r && r.nextId) startQuiz({ unitId: r.nextId });
+      else go('home');
+    } else if (act === 'result-again') {
+      const r = app.result;
+      if (r && r.unitId) startQuiz({ unitId: r.unitId });
+      else if (r && r.wordIds) startQuiz({ wordIds: r.wordIds });
+      else go('home');
+    } else if (act === 'reset') {
+      openModal({
+        title: '重置学习进度？',
+        text: '将清空本地保存的关卡、经验、收藏与错词记录，从第 1 关重新开始。',
+        actions: [
+          { label: '保留进度', act: 'close-modal', cls: 'btn-white' },
+          { label: '确认重置', act: 'do-reset', cls: 'btn-red' }
+        ]
+      });
+    } else if (act === 'do-reset') {
+      store = JSON.parse(JSON.stringify(PREVIEW ? DEMO : SEED));
+      saveStore();
+      closeModal();
+      renderChrome();
+      go('home');
+      toast('学习进度已重置');
+    } else if (act === 'confirm-quit') {
+      closeModal();
+      app.quiz = null;
+      go('home');
+    } else if (act === 'close-modal') {
+      closeModal();
+    } else if (act === 'toast') {
+      toast(el.dataset.msg || '该功能将在后续版本开放');
+    }
+  });
+
+  function updateOptionUI() {
+    const q = app.quiz;
+    if (!q) return;
+    $$('.option').forEach((el, i) => {
+      el.classList.toggle('is-selected', i === q.picked);
+    });
+    const btn = $('[data-act="check"]');
+    if (btn) btn.disabled = false;
+  }
+
+  function confirmQuit() {
+    if (!app.quiz) { go('home'); return; }
+    openModal({
+      title: '要离开本关吗？',
+      text: '当前答题进度不会保存，已获得的经验也不会累计。',
+      actions: [
+        { label: '继续学习', act: 'close-modal', cls: 'btn-green' },
+        { label: '离开本关', act: 'confirm-quit', cls: 'btn-white' }
+      ]
+    });
+  }
+
+  document.addEventListener('input', (e) => {
+    if (e.target.id === 'word-search') {
+      app.search = e.target.value;
+      applyWordFilter();
+    }
+    if (e.target.id === 'spell-input' && app.quiz) {
+      app.quiz.input = e.target.value;
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if ($('#layer').classList.contains('open')) {
+      if (e.key === 'Escape') closeModal();
+      return;
+    }
+    if (app.screen !== 'quiz' || !app.quiz) return;
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (app.quiz.checked) nextQuestion();
+      else checkAnswer();
+      return;
+    }
+    if (e.key === 'Escape') {
+      confirmQuit();
+      return;
+    }
+    if (/^[1-4]$/.test(e.key) && !app.quiz.checked && curQ().type !== 'spell') {
+      const i = Number(e.key) - 1;
+      if (i < curQ().options.length) {
+        app.quiz.picked = i;
+        updateOptionUI();
+      }
+    }
+  });
+
+  /* ---------------- 预览模式（用于生成设计稿截图） ---------------- */
+  function setupPreview(params) {
+    const screen = params.get('screen') || 'home';
+    app.preview = true;
+    if (screen === 'quiz') {
+      const unitId = params.get('unit') || 'u04';
+      const qIndex = Math.max(0, Math.min(Number(params.get('q') || 0), 9));
+      startQuiz({ unitId, preview: true });
+      app.quiz.qi = Math.min(qIndex, app.quiz.questions.length - 1);
+      const question = curQ();
+      const mode = params.get('pick') || 'wrong';
+      let forced = false;
+      if (mode === 'wrong' && question.type === 'en2cn' && question.word.w === 'commercial') {
+        question.options = ['商业的；商品化的；商务的', '每年的；年度的；一年一次的', '公司的；法人的；企业的', '摘要；总结；概要'];
+        question.answer = 0;
+        app.quiz.picked = 1;
+        app.quiz.hearts = 4;
+        app.quiz.wrong = [question.word.id];
+        app.quiz.checked = true;
+        app.quiz.lastOk = false;
+        forced = true;
+      }
+      if (mode !== 'none' && !forced) {
+        if (mode === 'right') {
+          app.quiz.picked = question.type === 'spell' ? question.word.w : question.answer;
+          app.quiz.correct = 1;
+          app.quiz.combo = 3;
+          app.quiz.maxCombo = 3;
+          app.quiz.xp = 3;
+          if (question.type === 'spell') app.quiz.input = question.word.w;
+        } else {
+          app.quiz.picked = question.type === 'spell'
+            ? 'wrong'
+            : question.options.findIndex((_, i) => i !== question.answer);
+          app.quiz.hearts = 4;
+          app.quiz.wrong = [question.word.id];
+          if (question.type === 'spell') app.quiz.input = 'wrod';
+        }
+        app.quiz.checked = true;
+        app.quiz.lastOk = mode === 'right';
+      }
+      renderQuiz();
+    } else if (screen === 'result') {
+      const unit = UNIT_MAP.u04;
+      app.result = {
+        total: 10,
+        correct: 9,
+        pct: 90,
+        xpEarned: 27,
+        maxCombo: 7,
+        wrong: [byId('annual')],
+        title: unit.title,
+        chapter: unit.chapter,
+        unitId: unit.id,
+        wordIds: unit.words.slice(),
+        passed: true,
+        nextId: 'u05',
+        preview: true
+      };
+      app.screen = 'result';
+      document.body.classList.add('focus-mode');
+      syncNav('result');
+      renderResult();
+      window.scrollTo(0, 0);
+    } else if (screen === 'words') {
+      go('words');
+    } else if (screen === 'review') {
+      go('review');
+    } else if (screen === 'profile') {
+      go('profile');
+    } else {
+      app.activeChapter = 'c1';
+      go('home');
+    }
+  }
+
+  /* ---------------- 启动 ---------------- */
+  function init() {
+    renderChrome();
+    const params = new URLSearchParams(location.search);
+    if (params.get('preview') === '1') setupPreview(params);
+    else go('home');
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
+
+  </script>
+</body>
+</html>
